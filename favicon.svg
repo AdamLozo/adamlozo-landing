@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="noteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#64b5f6"/>
+      <stop offset="100%" stop-color="#42a5f5"/>
+    </linearGradient>
+  </defs>
+  <!-- Eighth note (quaver) -->
+  <ellipse cx="10" cy="24" rx="6" ry="4.5" fill="url(#noteGrad)" transform="rotate(-20 10 24)"/>
+  <rect x="14" y="4" width="3" height="20" fill="url(#noteGrad)"/>
+  <path d="M17 4 Q24 6 26 12 Q28 18 24 22" stroke="url(#noteGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
