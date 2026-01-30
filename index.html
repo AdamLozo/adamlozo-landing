@@ -15,81 +15,144 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: #ffffff;
+            background: #1c1917;
+            color: #e7e5e4;
+            padding: 3rem 1.5rem;
         }
 
         .container {
-            text-align: center;
-            padding: 3rem;
-            max-width: 600px;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 3rem;
         }
 
         .name {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fafaf9;
+            margin-bottom: 0.25rem;
         }
 
-        .email {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
+        .tagline {
+            font-size: 0.95rem;
+            color: #a8a29e;
+        }
+
+        .projects {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .project {
+            background: #292524;
+            border: 1px solid #3f3f46;
+            border-radius: 8px;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.2s ease, background 0.2s ease;
+            display: block;
+        }
+
+        .project:hover {
+            border-color: #57534e;
+            background: #302e2b;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #fafaf9;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .tag-game {
+            background: #365314;
+            color: #bef264;
+        }
+
+        .tag-dashboard {
+            background: #7c2d12;
+            color: #fdba74;
+        }
+
+        .tag-experiment {
+            background: #713f12;
+            color: #fcd34d;
+        }
+
+        .project-description {
+            font-size: 0.95rem;
+            color: #a8a29e;
+            line-height: 1.4;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #292524;
         }
 
         .email a {
-            color: #64b5f6;
+            font-size: 0.95rem;
+            color: #a8a29e;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease;
         }
 
         .email a:hover {
-            color: #90caf9;
-        }
-
-        .divider {
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #64b5f6, #42a5f5);
-            margin: 2rem auto;
-            border-radius: 2px;
-        }
-
-        .coming-soon {
-            font-size: 1rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-bottom: 2rem;
-        }
-
-        .game-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: linear-gradient(90deg, #64b5f6, #42a5f5);
-            color: #1a1a2e;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .game-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(100, 181, 246, 0.3);
+            color: #d6d3d1;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="name">Adam Lozo</h1>
-        <p class="email"><a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a></p>
-        <div class="divider"></div>
-        <p class="coming-soon">More coming soon...</p>
-        <a href="https://wicked-smaht.adamlozo.com" class="game-button">Play Wicked Smaht Trivia</a>
+        <header class="header">
+            <h1 class="name">Adam Lozo</h1>
+            <p class="tagline">Things I've built</p>
+        </header>
+
+        <section class="projects">
+            <a href="https://wicked-smaht.adamlozo.com" class="project">
+                <div class="project-header">
+                    <span class="project-title">Wicked Smaht Trivia</span>
+                    <span class="tag tag-game">game</span>
+                </div>
+                <p class="project-description">Test your Boston knowledge. How local are you, really?</p>
+            </a>
+
+            <!-- Add more projects like this:
+            <a href="URL" class="project">
+                <div class="project-header">
+                    <span class="project-title">Project Name</span>
+                    <span class="tag tag-dashboard">dashboard</span>
+                </div>
+                <p class="project-description">One-line description.</p>
+            </a>
+            -->
+        </section>
+
+        <footer class="footer">
+            <p class="email"><a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a></p>
+        </footer>
     </div>
 </body>
 </html>
