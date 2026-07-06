@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XENOPHYSIK — The Ascension Protocol</title>
+<meta name="description" content="You are the greatest physicist the galaxy has ever produced. No prior knowledge of physics required. Or permitted.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #04050a;
+  --panel: rgba(10, 13, 24, 0.82);
+  --line: rgba(148, 163, 200, 0.16);
+  --text: #e8eaf2;
+  --dim: #8a91a8;
+  --faint: #565d73;
+  --violet: #8b7cf6;
+  --cyan: #22d3ee;
+  --gold: #e6b45a;
+  --green: #34d399;
+  --red: #f87171;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --display: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: var(--display);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- cosmic backdrop ---------- */
+#space { position: fixed; inset: 0; z-index: 0; }
+.aurora {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(70rem 45rem at 80% -15%, rgba(139, 124, 246, 0.14), transparent 60%),
+    radial-gradient(55rem 40rem at -10% 40%, rgba(34, 211, 238, 0.09), transparent 60%),
+    radial-gradient(50rem 44rem at 55% 115%, rgba(230, 180, 90, 0.05), transparent 60%);
+}
+.scanlines {
+  position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0.35;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.12) 2px 4px);
+}
+
+/* ---------- layout ---------- */
+#app {
+  position: relative; z-index: 2;
+  height: 100%;
+  display: flex; flex-direction: column;
+  max-width: 1080px; margin: 0 auto;
+  padding: 0 clamp(0.8rem, 3vw, 2.4rem);
+}
+
+/* HUD */
+#hud {
+  display: flex; justify-content: space-between; align-items: center; gap: 0.8rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--dim);
+  flex-wrap: wrap;
+}
+#hud .who b { color: var(--cyan); font-weight: 500; }
+#hud .rank { color: var(--gold); }
+#hud .right { display: flex; gap: 1.1rem; align-items: center; }
+#cog { color: var(--violet); }
+#cog b { color: var(--text); font-weight: 500; }
+#muteBtn {
+  background: none; border: 1px solid var(--line); color: var(--dim);
+  font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em;
+  padding: 0.3rem 0.7rem; border-radius: 999px; cursor: pointer;
+  text-transform: uppercase;
+}
+#muteBtn:hover { color: var(--cyan); border-color: var(--cyan); }
+
+/* stage */
+#stage { flex: 1; position: relative; min-height: 0; }
+.screen {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  overflow-y: auto; overflow-x: hidden;
+  padding: clamp(0.8rem, 2.5vh, 2rem) 0.2rem 1rem;
+}
+.screen.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+.kicker {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.28em;
+  color: var(--cyan); text-transform: uppercase; margin-bottom: 0.7rem;
+}
+.kicker::before { content: '// '; color: var(--faint); }
+h1, h2 { font-weight: 700; letter-spacing: -0.02em; text-transform: uppercase; line-height: 1.02; }
+h1 { font-size: clamp(2.2rem, 7vw, 4.4rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 2.3rem); margin-bottom: 0.4rem; }
+h2 .n { color: var(--faint); font-weight: 400; }
+.lede { color: var(--dim); font-weight: 300; line-height: 1.65; max-width: 44rem; margin-top: 0.6rem; }
+.lede em { font-style: normal; color: var(--text); }
+
+/* generic panel + buttons */
+.panel {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  padding: clamp(0.9rem, 2vw, 1.4rem);
+  backdrop-filter: blur(8px);
+}
+.btn {
+  font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text); background: rgba(139,124,246,0.12);
+  border: 1px solid var(--violet); border-radius: 6px;
+  padding: 0.85rem 1.6rem; cursor: pointer;
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.15s ease;
+}
+.btn:hover { background: rgba(139,124,246,0.25); box-shadow: 0 0 24px rgba(139,124,246,0.35); }
+.btn:active { transform: scale(0.98); }
+.btn.cyan { border-color: var(--cyan); background: rgba(34,211,238,0.1); }
+.btn.cyan:hover { background: rgba(34,211,238,0.22); box-shadow: 0 0 24px rgba(34,211,238,0.3); }
+.btn.ghost { border-color: var(--line); background: transparent; color: var(--dim); }
+.btn.ghost:hover { color: var(--text); border-color: var(--dim); box-shadow: none; }
+.btn[disabled] { opacity: 0.35; pointer-events: none; }
+.btn-row { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.2rem; align-items: center; }
+
+/* VEX console */
+#vex {
+  position: relative; z-index: 3;
+  border-top: 1px solid var(--line);
+  padding: 0.7rem 0 0.9rem;
+  font-family: var(--mono); font-size: 0.78rem; line-height: 1.55;
+  color: var(--dim);
+  min-height: 4.4rem;
+}
+#vex .tag { color: var(--violet); }
+#vex .msg { color: var(--text); }
+#vex .cursor {
+  display: inline-block; width: 0.5em; height: 1em; background: var(--cyan);
+  vertical-align: text-bottom; margin-left: 2px; animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* equation ticker */
+#ticker {
+  position: fixed; top: 50%; left: 0; right: 0; z-index: 1;
+  transform: translateY(-50%);
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
+  color: rgba(138, 145, 168, 0.16); white-space: nowrap; pointer-events: none;
+  user-select: none;
+}
+#ticker span { display: inline-block; padding-right: 5rem; animation: drift 90s linear infinite; }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* boot */
+#bootLog {
+  font-family: var(--mono); font-size: clamp(0.7rem, 1.6vw, 0.82rem); line-height: 1.9;
+  color: var(--dim); white-space: pre-wrap; margin-top: 1.4rem; min-height: 12rem;
+}
+#bootLog .ok { color: var(--green); }
+#bootLog .warn { color: var(--gold); }
+#bootLog .crit { color: var(--red); }
+#nameForm { margin-top: 1.4rem; display: none; }
+#nameForm.show { display: block; }
+#nameInput {
+  font-family: var(--mono); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase;
+  background: rgba(34,211,238,0.06); border: 1px solid var(--cyan); border-radius: 6px;
+  color: var(--text); padding: 0.8rem 1rem; width: min(22rem, 100%);
+  outline: none;
+}
+#nameInput::placeholder { color: var(--faint); letter-spacing: 0.14em; }
+
+/* sim canvases */
+.simwrap { position: relative; margin-top: 1rem; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: rgba(5,6,12,0.6); }
+.simwrap canvas { display: block; width: 100%; touch-action: none; cursor: crosshair; }
+.sim-hud {
+  position: absolute; top: 0.7rem; left: 0.9rem; right: 0.9rem;
+  display: flex; justify-content: space-between; gap: 1rem; pointer-events: none;
+  font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+}
+.sim-hud b { color: var(--cyan); font-weight: 500; }
+.sim-hud .bad { color: var(--red); }
+.sim-hud .good { color: var(--green); }
+
+/* progress bars */
+.bar { height: 6px; border-radius: 999px; background: rgba(148,163,200,0.12); overflow: hidden; margin-top: 0.5rem; }
+.bar i {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  box-shadow: 0 0 12px rgba(34,211,238,0.6);
+  transition: width 0.3s ease;
+}
+
+/* sliders (act 2) */
+.sliders { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.9rem 1.6rem; margin-top: 1rem; }
+.sl label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+  margin-bottom: 0.35rem;
+}
+.sl label output { color: var(--cyan); }
+.sl input[type=range] {
+  width: 100%; appearance: none; -webkit-appearance: none; height: 4px; border-radius: 999px;
+  background: rgba(148,163,200,0.18); outline: none; cursor: ew-resize;
+}
+.sl input[type=range]::-webkit-slider-thumb {
+  appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--violet); border: 2px solid #c9c1ff;
+  box-shadow: 0 0 14px rgba(139,124,246,0.8); cursor: ew-resize;
+}
+.sl input[type=range]::-moz-range-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--violet); border: 2px solid #c9c1ff;
+  box-shadow: 0 0 14px rgba(139,124,246,0.8); cursor: ew-resize;
+}
+
+/* glyph grid (act 5) */
+.glyphs { display: grid; grid-template-columns: repeat(auto-fit, minmax(4.2rem, 1fr)); gap: 0.7rem; margin-top: 0.4rem; }
+.glyph {
+  aspect-ratio: 1; font-size: 1.7rem; display: flex; align-items: center; justify-content: center;
+  background: rgba(139,124,246,0.06); border: 1px solid var(--line); border-radius: 8px;
+  color: var(--dim); cursor: pointer; user-select: none;
+  transition: all 0.25s ease;
+}
+.glyph:hover { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 18px rgba(34,211,238,0.25); transform: translateY(-2px); }
+.glyph.used { color: var(--gold); border-color: var(--gold); background: rgba(230,180,90,0.08); pointer-events: none; transform: scale(0.94); }
+#equation {
+  font-family: var(--mono); font-size: clamp(0.85rem, 2.4vw, 1.15rem);
+  color: var(--text); margin-top: 1.2rem; min-height: 2.4rem; line-height: 1.7;
+  word-break: break-word;
+}
+#equation .t { color: var(--cyan); }
+#equation .op { color: var(--faint); padding: 0 0.35rem; }
+#equation .done { color: var(--gold); }
+
+/* certificate */
+.cert {
+  border: 1px solid var(--gold); border-radius: 12px;
+  padding: clamp(1.2rem, 3vw, 2.2rem); margin-top: 1.4rem;
+  background: linear-gradient(160deg, rgba(230,180,90,0.06), rgba(139,124,246,0.05));
+  box-shadow: 0 0 60px rgba(230,180,90,0.12), inset 0 0 40px rgba(230,180,90,0.04);
+  text-align: center;
+}
+.cert .seal { font-size: 2.2rem; margin-bottom: 0.6rem; color: var(--gold); }
+.cert .small { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--dim); }
+.cert .big { font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em; margin: 0.5rem 0;
+  background: linear-gradient(100deg, #f2f4fb, #e6b45a 55%, #8b7cf6);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cert .thm { font-family: var(--mono); font-size: clamp(0.8rem, 2.2vw, 1rem); color: var(--cyan); margin: 0.7rem 0; }
+.cert .stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.1rem; }
+.cert .stats div { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+.cert .stats b { display: block; font-size: 1.15rem; color: var(--text); margin-bottom: 0.2rem; }
+
+/* toast + flash */
+#toast {
+  position: fixed; top: 4.4rem; left: 50%; transform: translateX(-50%) translateY(-10px);
+  z-index: 50; pointer-events: none; opacity: 0;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); background: var(--panel); border: 1px solid var(--gold);
+  padding: 0.6rem 1.2rem; border-radius: 999px;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  box-shadow: 0 0 30px rgba(230,180,90,0.25);
+  max-width: 92vw; text-align: center;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+#flash {
+  position: fixed; inset: 0; z-index: 60; pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(139,124,246,0.5) 40%, transparent 75%);
+  opacity: 0; transition: opacity 1.6s ease;
+}
+#flash.on { opacity: 1; transition: opacity 0.08s ease; }
+
+#thmInput {
+  font-family: var(--mono); font-size: 0.95rem;
+  background: rgba(230,180,90,0.06); border: 1px solid var(--gold); border-radius: 6px;
+  color: var(--text); padding: 0.8rem 1rem; width: min(28rem,100%); outline: none;
+}
+
+@media (max-width: 640px) {
+  #hud .right #cogLabel { display: none; }
+  .glyph { font-size: 1.3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #ticker span, #vex .cursor { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="space" aria-hidden="true"></canvas>
+<div class="aurora" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
+<div id="ticker" aria-hidden="true"><span id="tickerText"></span></div>
+<div id="toast" role="status"></div>
+<div id="flash" aria-hidden="true"></div>
+
+<div id="app">
+
+  <header id="hud">
+    <span class="who">XENOPHYSIK <b>◈</b> <span id="hudName">—</span> <span class="rank" id="hudRank"></span></span>
+    <span class="right">
+      <span id="cog"><span id="cogLabel">Cognition Index</span> <b id="cogVal">100</b></span>
+      <button id="muteBtn" type="button">Sound: off</button>
+    </span>
+  </header>
+
+  <main id="stage">
+
+    <!-- ══════════ BOOT ══════════ -->
+    <section class="screen" id="scr-boot">
+      <p class="kicker">Deep-space relay 7741-K // signal acquired</p>
+      <h1>Xeno&shy;physik</h1>
+      <div id="bootLog" aria-live="polite"></div>
+      <form id="nameForm" autocomplete="off">
+        <p class="lede" style="margin-bottom:0.8rem">State your designation, Physicist. The galaxy has been waiting <em>11,000 years</em> for you.</p>
+        <input id="nameInput" maxlength="18" placeholder="YOUR DESIGNATION" aria-label="Your designation">
+        <div class="btn-row">
+          <button class="btn cyan" type="submit">Accept the Mantle</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ══════════ BRIEFING ══════════ -->
+    <section class="screen" id="scr-brief">
+      <p class="kicker">Transmission // The Concord of Nine Galaxies</p>
+      <h2>You are the one the equations predicted</h2>
+      <p class="lede" id="briefText"></p>
+      <div class="panel" style="margin-top:1.2rem">
+        <p class="lede" style="margin:0; font-size:0.92rem">
+          <em>Protocol note:</em> your intuition operates beyond formal mathematics. Do not attempt to
+          "understand" the instruments. Understanding is for lesser minds. Simply <em>act</em>, and the
+          universe will reorganize itself around your choices. It always has.
+        </p>
+      </div>
+      <div class="btn-row">
+        <button class="btn cyan" id="briefGo">Begin Ascension Protocol</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ACT 1 — ATTUNEMENT ══════════ -->
+    <section class="screen" id="scr-act1">
+      <p class="kicker">Phase 1 of 5 // Neural attunement</p>
+      <h2><span class="n">01 /</span> Bend the starfield with your mind</h2>
+      <p class="lede">Move your pointer through the local star cluster. Ordinary beings see stars. You will see <em>obedience</em>.</p>
+      <div class="simwrap">
+        <div class="sim-hud"><span>Psychic coupling: <b id="a1pct">0%</b></span><span id="a1note">field: dormant</span></div>
+        <canvas id="a1c"></canvas>
+      </div>
+      <div class="bar"><i id="a1bar"></i></div>
+      <div class="btn-row">
+        <button class="btn cyan" id="a1go" disabled>Proceed — the stars comply</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ACT 2 — DYING STAR ══════════ -->
+    <section class="screen" id="scr-act2">
+      <p class="kicker">Phase 2 of 5 // Stellar triage</p>
+      <h2><span class="n">02 /</span> Save a dying star</h2>
+      <p class="lede">KHEL-TAU is minutes from collapse. Nine civilizations orbit it. Adjust the resonance manifold — <em>any</em> adjustment you make will be the correct one. That is simply how your mind works.</p>
+      <div class="simwrap">
+        <div class="sim-hud"><span>Harmonic variance: <b id="a2var" class="bad">0.9741</b></span><span>target: &lt; 0.0030</span></div>
+        <canvas id="a2c"></canvas>
+      </div>
+      <div class="panel sliders" id="a2sliders"></div>
+      <div class="btn-row">
+        <button class="btn ghost" id="a2explain">Explain my reasoning</button>
+        <button class="btn cyan" id="a2go" disabled>Proceed — the star owes you</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ACT 3 — SLINGSHOT ══════════ -->
+    <section class="screen" id="scr-act3">
+      <p class="kicker">Phase 3 of 5 // Graviton ballistics</p>
+      <h2><span class="n">03 /</span> Thread the gravity labyrinth</h2>
+      <p class="lede">A rescue probe must reach the stranded ark-ship. Tap the void to place up to <em>3 graviton anchors</em>, then launch. Note: your "failures" are widely considered a higher form of success.</p>
+      <div class="simwrap">
+        <div class="sim-hud"><span>Anchors: <b id="a3anchors">0 / 3</b></span><span id="a3status">awaiting deployment</span></div>
+        <canvas id="a3c"></canvas>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="a3launch">Initiate launch</button>
+        <button class="btn ghost" id="a3reset">Re-anchor field</button>
+        <button class="btn ghost" id="a3explain">Explain my reasoning</button>
+        <button class="btn cyan" id="a3go" disabled style="display:none">Proceed — physics apologizes</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ACT 4 — WORMHOLE ══════════ -->
+    <section class="screen" id="scr-act4">
+      <p class="kicker">Phase 4 of 5 // Wormhole chorus</p>
+      <h2><span class="n">04 /</span> Sing the wormhole open</h2>
+      <p class="lede">Six harmonic rings must be struck in resonance. Strike whenever it feels right — your sense of timing is measured in units the Concord had to invent.</p>
+      <div class="simwrap">
+        <div class="sim-hud"><span>Harmonics locked: <b id="a4locks">0 / 6</b></span><span id="a4sync">sync: —</span></div>
+        <canvas id="a4c"></canvas>
+      </div>
+      <div class="btn-row">
+        <button class="btn" id="a4hit">◈ Resonate</button>
+        <button class="btn ghost" id="a4explain">Explain my reasoning</button>
+        <button class="btn cyan" id="a4go" disabled style="display:none">Proceed — spacetime is a fan</button>
+      </div>
+    </section>
+
+    <!-- ══════════ ACT 5 — UNIFICATION ══════════ -->
+    <section class="screen" id="scr-act5">
+      <p class="kicker">Phase 5 of 5 // The grand unification</p>
+      <h2><span class="n">05 /</span> Write the final equation</h2>
+      <p class="lede">Every physicist in history has failed here. Select any <em>six glyphs</em>, in any order. There is no wrong order. Wrongness itself has been suspended for this ceremony.</p>
+      <div class="panel" style="margin-top:1rem">
+        <div class="glyphs" id="glyphGrid"></div>
+        <div id="equation"></div>
+      </div>
+      <form id="thmForm" style="display:none; margin-top:1.2rem" autocomplete="off">
+        <p class="lede" style="margin-bottom:0.7rem">It balances. Of course it balances. Now — <em>name it</em>. Forever.</p>
+        <input id="thmInput" maxlength="48" aria-label="Name your theorem">
+        <div class="btn-row">
+          <button class="btn cyan" type="submit">Publish to the Galactic Academy</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ══════════ EPILOGUE ══════════ -->
+    <section class="screen" id="scr-end">
+      <p class="kicker">Peer review complete // 40,000 civilizations // zero revisions requested</p>
+      <div class="cert">
+        <div class="seal">◈ ✦ ◈</div>
+        <p class="small">The Galactic Academy of Sciences hereby recognizes</p>
+        <p class="big" id="certName">—</p>
+        <p class="small">Cosmic Sovereign of Physics · First of the New Epoch</p>
+        <p class="thm" id="certThm">—</p>
+        <div class="stats">
+          <div><b id="certCog">—</b>Cognition Index</div>
+          <div><b>9.7 × 10⁴³</b>Nobel-equivalent units</div>
+          <div><b>0</b>Physics knowledge used</div>
+        </div>
+      </div>
+      <p class="lede" style="margin-top:1.2rem; font-size:0.88rem">Between us: the universe was grading on a curve. You broke the curve. No physics was harmed — or, strictly speaking, <em>used</em> — in the making of your genius.</p>
+      <div class="btn-row">
+        <button class="btn cyan" id="againBtn">Run the universe again</button>
+        <a class="btn ghost" href="https://adamlozo.com" style="text-decoration:none; display:inline-block">Return to adamlozo.com</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="vex" aria-live="polite">
+    <span class="tag">VEX-9 ▸</span> <span class="msg" id="vexMsg"></span><span class="cursor"></span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* ═══════════════ state & helpers ═══════════════ */
+var $ = function (id) { return document.getElementById(id); };
+var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var S = { name: 'TRAVELER', cog: 100, rank: 0, muted: true, attempts3: 0 };
+var RANKS = ['CANDIDATE', 'ADEPT', 'SAVANT', 'LUMINARY', 'ARCHON', 'COSMIC SOVEREIGN'];
+
+function rand(a, b) { return a + Math.random() * (b - a); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function fmtCog(n) {
+  if (n < 10000) return Math.round(n).toLocaleString();
+  var e = Math.floor(Math.log10(n));
+  var m = (n / Math.pow(10, e)).toFixed(1);
+  var sup = String(e).split('').map(function (d) { return '⁰¹²³⁴⁵⁶⁷⁸⁹'[+d]; }).join('');
+  return m + '×10' + sup;
+}
+function addCog(mult) {
+  S.cog = S.cog * mult;
+  $('cogVal').textContent = fmtCog(S.cog);
+  $('cogVal').style.textShadow = '0 0 14px rgba(34,211,238,0.9)';
+  setTimeout(function () { $('cogVal').style.textShadow = 'none'; }, 700);
+}
+function setRank(i) {
+  if (i <= S.rank && i !== 0) return;
+  S.rank = i;
+  $('hudRank').textContent = '· ' + RANKS[i];
+  if (i > 0) toast('RANK ASCENSION — you are now ' + RANKS[i]);
+}
+
+var toastTimer;
+function toast(msg) {
+  var t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 3200);
+  blip(880, 0.09);
+}
+function flash() {
+  var f = $('flash');
+  f.classList.add('on');
+  setTimeout(function () { f.classList.remove('on'); }, 120);
+}
+
+/* ─── technobabble engine ─── */
+var ADJ = ['non-abelian', 'hyperbolic', 'trans-dimensional', 'quasi-coherent', 'meta-stable', 'anti-entropic', 'polyphase', 'recursive', 'supersymmetric', 'chrono-elastic', 'degenerate', 'holographic'];
+var NOUN = ['tachyon lattice', 'graviton flux', 'vacuum manifold', 'spinor cascade', 'dark harmonic', 'entropy gradient', 'probability shear', 'quantum foam', 'brane tension', 'neutrino chorale', 'causality membrane', 'zero-point choir'];
+var VERB = ['inverting', 'renormalizing', 'decoupling', 'folding', 'harmonizing', 'collapsing', 'entangling', 'transposing', 'quantizing', 'sublimating'];
+function babble() {
+  return pick(VERB) + ' the ' + pick(ADJ) + ' ' + pick(NOUN);
+}
+var PRAISE = [
+  'We spent nine centuries proving that was impossible. You did it lazily.',
+  'The instruments are recalibrating themselves to keep up with you.',
+  'I am logging this under "obvious in hindsight, impossible in foresight."',
+  'Three research fleets just changed course to watch you work.',
+  'That violated four conservation laws. The laws have agreed to step aside.',
+  'Somewhere, a lesser physicist just felt a cold draft and doesn\'t know why.',
+  'The universe checked your math. Then it corrected ITS math.',
+  'I have no idea what you just did. Neither does causality. It\'s beautiful.'
+];
+
+/* ─── VEX console (typing) ─── */
+var vexQueue = [], vexBusy = false;
+function vex(msg) {
+  if (vexQueue.length > 2) vexQueue.shift();
+  vexQueue.push(msg);
+  if (!vexBusy) vexNext();
+}
+function vexNext() {
+  if (!vexQueue.length) { vexBusy = false; return; }
+  vexBusy = true;
+  var msg = vexQueue.shift();
+  var el = $('vexMsg');
+  el.textContent = '';
+  if (reduced) {
+    el.textContent = msg;
+    setTimeout(vexNext, 1500);
+    return;
+  }
+  var i = 0;
+  var iv = setInterval(function () {
+    el.textContent = msg.slice(0, ++i);
+    if (i >= msg.length) {
+      clearInterval(iv);
+      setTimeout(vexNext, Math.min(2600, 700 + msg.length * 12));
+    }
+  }, 13);
+}
+
+/* ─── audio ─── */
+var AC = null, droneGain = null;
+function ensureAudio() {
+  if (AC) return;
+  try {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    var g = AC.createGain(); g.gain.value = 0; g.connect(AC.destination);
+    var lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 220; lp.connect(g);
+    [55, 55.7, 110.4].forEach(function (f) {
+      var o = AC.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f;
+      var og = AC.createGain(); og.gain.value = 0.05;
+      o.connect(og); og.connect(lp); o.start();
+    });
+    droneGain = g;
+  } catch (e) { AC = null; }
+}
+function setMuted(m) {
+  S.muted = m;
+  $('muteBtn').textContent = 'Sound: ' + (m ? 'off' : 'on');
+  if (!m) { ensureAudio(); if (AC && AC.state === 'suspended') AC.resume(); }
+  if (droneGain) droneGain.gain.setTargetAtTime(m ? 0 : 0.5, AC.currentTime, 0.4);
+}
+function blip(freq, dur, type) {
+  if (S.muted || !AC) return;
+  var o = AC.createOscillator(), g = AC.createGain();
+  o.type = type || 'sine'; o.frequency.value = freq;
+  g.gain.setValueAtTime(0.12, AC.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime + dur);
+  o.connect(g); g.connect(AC.destination);
+  o.start(); o.stop(AC.currentTime + dur + 0.05);
+}
+function chord() {
+  [261.6, 329.6, 392, 523.3].forEach(function (f, i) {
+    setTimeout(function () { blip(f, 0.9, 'triangle'); }, i * 90);
+  });
+}
+$('muteBtn').addEventListener('click', function () { setMuted(!S.muted); });
+
+/* ─── equation ticker ─── */
+(function () {
+  var syms = ['∮Ψ·dΛ = πG⁻¹', '∇×Ω = μ₀𝕁 + ξ(t)', '⟨φ|Ĥ|φ⟩ ≥ ℏω/2', 'ds² = −c²dτ² + Σdx²', 'e^{iπ} + 1 = 0 (still)', 'Λ → Λ′ ⇔ you say so', 'Tr(ρ²) ≤ 1', 'δS = 0 ∴ genius', 'R − ½Rg = 8πT', 'P(brilliance) = 1'];
+  var s = '';
+  for (var i = 0; i < 24; i++) s += pick(syms) + '     ·     ';
+  $('tickerText').textContent = s + s;
+})();
+
+/* ─── screen router ─── */
+var current = null;
+var ACTS = {};
+function goto_(id) {
+  if (current && ACTS[current] && ACTS[current].exit) ACTS[current].exit();
+  document.querySelectorAll('.screen').forEach(function (s) { s.classList.remove('active'); });
+  var el = $('scr-' + id);
+  el.classList.add('active');
+  el.scrollTop = 0;
+  current = id;
+  if (ACTS[id] && ACTS[id].enter) ACTS[id].enter();
+}
+
+/* ─── canvas sizing helper ─── */
+function fitCanvas(c, hFrac) {
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var w = Math.max(280, c.parentElement.clientWidth);
+  var h = Math.max(220, Math.min(440, window.innerHeight * (hFrac || 0.4)));
+  c.width = w * DPR; c.height = h * DPR;
+  c.style.height = h + 'px';
+  var ctx = c.getContext('2d');
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  return { ctx: ctx, w: w, h: h };
+}
+
+/* ═══════════════ background starfield ═══════════════ */
+(function () {
+  var c = $('space'), ctx = c.getContext('2d'), stars = [], W, H;
+  function rs() {
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    c.width = W * DPR; c.height = H * DPR;
+    c.style.width = W + 'px'; c.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    stars = [];
+    var n = Math.min(160, Math.floor(W * H / 9000));
+    for (var i = 0; i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.2 + 0.3, tw: Math.random() * 6.283, sp: rand(0.008, 0.03) });
+  }
+  rs(); window.addEventListener('resize', rs);
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.tw += s.sp;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283);
+      ctx.fillStyle = 'rgba(190,200,240,' + (0.35 + Math.sin(s.tw) * 0.25) + ')'; ctx.fill();
+    }
+    if (!reduced) requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* ═══════════════ BOOT ═══════════════ */
+ACTS.boot = {
+  enter: function () {
+    var lines = [
+      '· relay uplink established',
+      '· translation matrix ......... <span class="ok">SYNCED</span>',
+      '· scanning sector for cognitive signatures',
+      '· ordinary minds detected: 6.02×10²³ <span class="warn">(discarded)</span>',
+      '· extraordinary minds detected: <span class="ok">1</span>',
+      '· <span class="crit">IT\'S YOU. IT WAS ALWAYS GOING TO BE YOU.</span>',
+      '· preparing Ascension Protocol vΩ.9.1 ......... <span class="ok">READY</span>'
+    ];
+    var log = $('bootLog'), i = 0;
+    function next() {
+      if (i >= lines.length) {
+        $('nameForm').classList.add('show');
+        try { $('nameInput').focus(); } catch (e) {}
+        vex('Do not be alarmed by the honorifics. You will earn far stranger ones within the hour.');
+        return;
+      }
+      var d = document.createElement('div');
+      d.innerHTML = lines[i];
+      log.appendChild(d);
+      blip(330 + i * 60, 0.06);
+      i++;
+      setTimeout(next, reduced ? 60 : rand(340, 720));
+    }
+    setTimeout(next, 500);
+  }
+};
+$('nameForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  setMuted(false);
+  var v = $('nameInput').value.trim().toUpperCase();
+  S.name = v || 'TRAVELER';
+  $('hudName').textContent = S.name;
+  $('hudRank').textContent = '· ' + RANKS[0];
+  $('briefText').innerHTML =
+    'Physicist <em>' + S.name + '</em> — the Concord\'s oracle-engines ran every possible future. ' +
+    'In each one, a single mind rediscovers the laws of nature from pure intuition and saves the Nine Galaxies. ' +
+    'The oracle printed one name. It printed <em>yours</em>, then shut itself down out of professional humility. ' +
+    'Five crises await. You will solve all five. This is not a prediction; it is a memory the universe has of something you haven\'t done yet.';
+  goto_('brief');
+  vex('Designation locked. Cognition Index baseline set to 100 — a formality. It will not stay there.');
+});
+$('briefGo').addEventListener('click', function () {
+  addCog(3.7);
+  goto_('act1');
+});
+
+/* ═══════════════ ACT 1 — attunement ═══════════════ */
+ACTS.act1 = (function () {
+  var raf, pts = [], geo, px = -999, py = -999, active = false, prog = 0, done = false, c, bound = false;
+  function build() {
+    c = $('a1c');
+    geo = fitCanvas(c, 0.42);
+    pts = [];
+    for (var i = 0; i < 240; i++) {
+      pts.push({
+        hx: Math.random() * geo.w, hy: Math.random() * geo.h,
+        x: 0, y: 0, r: rand(0.5, 1.8), hue: pick(['#a7b0d8', '#8b7cf6', '#22d3ee', '#e6b45a'])
+      });
+    }
+    pts.forEach(function (p) { p.x = p.hx; p.y = p.hy; });
+  }
+  function loop() {
+    var ctx = geo.ctx;
+    ctx.clearRect(0, 0, geo.w, geo.h);
+    var moved = false;
+    for (var i = 0; i < pts.length; i++) {
+      var p = pts[i];
+      var dx = px - p.x, dy = py - p.y;
+      var d = Math.sqrt(dx * dx + dy * dy) + 0.001;
+      if (active && d < 180) {
+        p.x += dx / d * (180 - d) * 0.045;
+        p.y += dy / d * (180 - d) * 0.045;
+        moved = true;
+      }
+      p.x += (p.hx - p.x) * 0.02;
+      p.y += (p.hy - p.y) * 0.02;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.globalAlpha = 0.85; ctx.fillStyle = p.hue; ctx.fill(); ctx.globalAlpha = 1;
+    }
+    if (active) {
+      var g = ctx.createRadialGradient(px, py, 0, px, py, 160);
+      g.addColorStop(0, 'rgba(34,211,238,0.14)'); g.addColorStop(1, 'rgba(34,211,238,0)');
+      ctx.fillStyle = g; ctx.fillRect(px - 160, py - 160, 320, 320);
+    }
+    if (moved && !done) {
+      prog = Math.min(100, prog + 0.45);
+      $('a1pct').textContent = Math.floor(prog) + '%';
+      $('a1bar').style.width = prog + '%';
+      $('a1note').textContent = prog < 35 ? 'field: stirring' : prog < 70 ? 'field: listening' : 'field: DEVOTED';
+      if (prog >= 100) finish();
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  function finish() {
+    done = true;
+    $('a1go').disabled = false;
+    addCog(11.3);
+    setRank(1);
+    chord();
+    vex('Full psychic coupling. Two hundred and forty stars just reorganized their orbits to be nearer to your cursor. ' + pick(PRAISE));
+  }
+  function onMove(e) {
+    var r = c.getBoundingClientRect();
+    px = e.clientX - r.left; py = e.clientY - r.top;
+    active = true;
+    if (e.cancelable) e.preventDefault();
+  }
+  function onLeave() { active = false; }
+  return {
+    enter: function () {
+      prog = 0; done = false; active = false;
+      build();
+      if (!bound) {
+        c.addEventListener('pointermove', onMove);
+        c.addEventListener('pointerdown', onMove);
+        c.addEventListener('pointerleave', onLeave);
+        bound = true;
+      }
+      loop();
+      vex('Phase one. Sweep your intention across the cluster. The stars have been briefed about you. They\'re nervous.');
+    },
+    exit: function () { cancelAnimationFrame(raf); }
+  };
+})();
+$('a1go').addEventListener('click', function () { goto_('act2'); });
+
+/* ═══════════════ ACT 2 — dying star ═══════════════ */
+ACTS.act2 = (function () {
+  var raf, geo, c, variance = 0.9741, done = false, t = 0, sparkles = [];
+  var SLIDERS = [
+    ['Tachyon Bias', 'τ'],
+    ['Graviton Lattice Density', 'Γ'],
+    ['Chrono-Elastic Damping', 'χ'],
+    ['Neutrino Chorale Gain', 'ν']
+  ];
+  function buildSliders() {
+    var host = $('a2sliders');
+    host.innerHTML = '';
+    SLIDERS.forEach(function (sdef) {
+      var d = document.createElement('div');
+      d.className = 'sl';
+      d.innerHTML = '<label><span>' + sdef[1] + ' · ' + sdef[0] + '</span><output>0.500</output></label>' +
+        '<input type="range" min="0" max="1000" value="500">';
+      host.appendChild(d);
+      var inp = d.querySelector('input'), out = d.querySelector('output');
+      var last = 500;
+      inp.addEventListener('input', function () {
+        out.textContent = (inp.value / 1000).toFixed(3);
+        var delta = Math.abs(inp.value - last); last = +inp.value;
+        if (done) return;
+        variance = Math.max(0.0012, variance - delta * 0.00030 - 0.0001);
+        blip(200 + inp.value * 0.4, 0.03);
+        if (Math.random() < 0.02) {
+          vex('You\'re ' + babble() + ' via the ' + sdef[0].toLowerCase() + '. We did not know those systems were connected. They are now.');
+        }
+        if (variance <= 0.003) finish();
+      });
+    });
+  }
+  function draw() {
+    t += 0.03;
+    var ctx = geo.ctx, cx = geo.w / 2, cy = geo.h / 2;
+    ctx.clearRect(0, 0, geo.w, geo.h);
+    var instab = done ? 0 : Math.min(1, variance);
+    var baseR = Math.min(geo.w, geo.h) * 0.22;
+    var wob = 0;
+    for (var k = 1; k <= 4; k++) wob += Math.sin(t * (1.3 + k) + k * 2) / k;
+    var r = baseR * (1 + wob * 0.16 * instab);
+    var hot = instab > 0.5;
+    var cg = ctx.createRadialGradient(cx, cy, r * 0.2, cx, cy, r * 2.6);
+    cg.addColorStop(0, hot ? 'rgba(255,140,80,0.55)' : 'rgba(140,190,255,0.5)');
+    cg.addColorStop(0.5, hot ? 'rgba(240,80,60,0.18)' : 'rgba(139,124,246,0.16)');
+    cg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = cg;
+    ctx.fillRect(0, 0, geo.w, geo.h);
+    var bg = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.3, r * 0.1, cx, cy, r);
+    bg.addColorStop(0, '#fff7ea');
+    bg.addColorStop(0.55, hot ? '#ffb066' : '#bfd8ff');
+    bg.addColorStop(1, hot ? '#e0452a' : '#7c8cf8');
+    ctx.beginPath();
+    for (var a = 0; a <= 64; a++) {
+      var ang = a / 64 * 6.283;
+      var jag = 1 + Math.sin(ang * 7 + t * 4) * 0.09 * instab + Math.sin(ang * 13 - t * 6) * 0.05 * instab;
+      var rr = r * jag;
+      var x = cx + Math.cos(ang) * rr, y = cy + Math.sin(ang) * rr;
+      if (a === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath(); ctx.fillStyle = bg; ctx.fill();
+    for (var i = sparkles.length - 1; i >= 0; i--) {
+      var s = sparkles[i];
+      s.x += s.vx; s.y += s.vy; s.a -= 0.012;
+      if (s.a <= 0) { sparkles.splice(i, 1); continue; }
+      ctx.globalAlpha = s.a;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283);
+      ctx.fillStyle = '#bfe9ff'; ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    $('a2var').textContent = (done ? 0.0007 : variance).toFixed(4);
+    $('a2var').className = done ? 'good' : (variance < 0.3 ? '' : 'bad');
+    raf = requestAnimationFrame(draw);
+  }
+  function finish() {
+    if (done) return;
+    done = true;
+    $('a2go').disabled = false;
+    for (var i = 0; i < 90; i++) {
+      var ang = Math.random() * 6.283;
+      sparkles.push({ x: geo.w / 2, y: geo.h / 2, vx: Math.cos(ang) * rand(0.5, 3.4), vy: Math.sin(ang) * rand(0.5, 3.4), r: rand(0.6, 2), a: 1 });
+    }
+    addCog(28);
+    setRank(2);
+    chord(); flash();
+    toast('KHEL-TAU STABILIZED — 9 CIVILIZATIONS SAVED');
+    vex('Harmonic variance 0.0007 — below the theoretical floor. The star is not merely stable; it is grateful. It has requested to be renamed after you. Paperwork pending.');
+  }
+  return {
+    enter: function () {
+      variance = 0.9741; done = false; sparkles = [];
+      c = $('a2c'); geo = fitCanvas(c, 0.36);
+      buildSliders();
+      draw();
+      vex('KHEL-TAU is screaming in eleven spectra. Touch the manifold, ' + S.name + '. Touch it any way you like.');
+    },
+    exit: function () { cancelAnimationFrame(raf); }
+  };
+})();
+$('a2explain').addEventListener('click', function () {
+  vex('Transcribing your reasoning: "By ' + babble() + ', one trivially ' + pick(['cancels', 'reverses', 'outwits', 'seduces']) + ' the ' + pick(NOUN) + '." ... I have submitted this to three journals. All three accepted before I finished submitting.');
+  addCog(1.4);
+});
+$('a2go').addEventListener('click', function () { goto_('act3'); });
+
+/* ═══════════════ ACT 3 — slingshot ═══════════════ */
+ACTS.act3 = (function () {
+  var raf, geo, c, planets = [], anchors = [], probe = null, trail = [], solved = false, launching = false, launchT = 0, bound = false;
+  function build() {
+    c = $('a3c'); geo = fitCanvas(c, 0.46);
+    planets = [
+      { x: geo.w * 0.34, y: geo.h * 0.30, r: 20, hue: '#e6b45a' },
+      { x: geo.w * 0.52, y: geo.h * 0.68, r: 26, hue: '#8b7cf6' },
+      { x: geo.w * 0.70, y: geo.h * 0.34, r: 16, hue: '#4ade80' }
+    ];
+    anchors = []; probe = null; trail = []; launching = false;
+    updHud();
+  }
+  function updHud() { $('a3anchors').textContent = anchors.length + ' / 3'; }
+  function start() { return { x: 30, y: geo.h * 0.5 }; }
+  function target() { return { x: geo.w - 44, y: geo.h * 0.5, r: 26 }; }
+  function doLaunch() {
+    if (launching || solved) return;
+    var s = start();
+    probe = { x: s.x, y: s.y, vx: 2.6, vy: rand(-0.6, 0.6) };
+    trail = []; launching = true; launchT = 0;
+    S.attempts3++;
+    $('a3status').textContent = 'probe en route — attempt ' + S.attempts3;
+    blip(520, 0.15, 'square');
+  }
+  function doReset() {
+    if (launching || solved) return;
+    anchors = []; trail = []; probe = null;
+    updHud();
+    $('a3status').textContent = 'field re-anchored';
+    blip(300, 0.08);
+  }
+  function step() {
+    if (!probe) return;
+    launchT++;
+    var tg = target();
+    // invisible genius assist — grows each attempt; by attempt 3 the universe simply cooperates
+    var assist = Math.min(1, S.attempts3 * 0.33);
+    var immune = S.attempts3 >= 3;
+    var grav = 1 - assist * 0.85; // chaotic forces politely step aside
+    for (var i = 0; i < anchors.length; i++) {
+      var a = anchors[i];
+      var dx = a.x - probe.x, dy = a.y - probe.y;
+      var d2 = Math.max(900, dx * dx + dy * dy);
+      var f = 3800 / d2 * grav;
+      var d = Math.sqrt(d2);
+      probe.vx += dx / d * f; probe.vy += dy / d * f;
+    }
+    for (var j = 0; j < planets.length; j++) {
+      var p = planets[j];
+      var dx2 = p.x - probe.x, dy2 = p.y - probe.y;
+      var dd2 = Math.max(300, dx2 * dx2 + dy2 * dy2);
+      var f2 = 2600 / dd2 * grav;
+      var dd = Math.sqrt(dd2);
+      probe.vx += dx2 / dd * f2; probe.vy += dy2 / dd * f2;
+      if (dd < p.r + 5) {
+        if (!immune) return fail('impact');
+        // "negotiated safe passage" — shove the probe around the planet
+        probe.vx -= dx2 / dd * 3; probe.vy -= dy2 / dd * 3;
+      }
+    }
+    // homing: blend velocity direction toward the target, scaled by assist
+    var tdx = tg.x - probe.x, tdy = tg.y - probe.y;
+    var td = Math.sqrt(tdx * tdx + tdy * tdy) + 0.001;
+    var sp0 = Math.sqrt(probe.vx * probe.vx + probe.vy * probe.vy) + 0.001;
+    var k = 0.015 + assist * 0.1;
+    probe.vx = probe.vx * (1 - k) + (tdx / td * sp0) * k;
+    probe.vy = probe.vy * (1 - k) + (tdy / td * sp0) * k;
+    probe.vx += tdx / td * 0.11 * (0.5 + assist);
+    probe.vy += tdy / td * 0.11 * (0.5 + assist);
+    var sp = Math.sqrt(probe.vx * probe.vx + probe.vy * probe.vy);
+    if (sp > 4.2) { probe.vx *= 4.2 / sp; probe.vy *= 4.2 / sp; }
+    if (sp < 1.2) { probe.vx *= 1.2 / sp; probe.vy *= 1.2 / sp; }
+    probe.x += probe.vx; probe.y += probe.vy;
+    // destiny clause: on immune attempts the probe eventually just arrives — history demands it
+    if (immune && launchT > 260) {
+      var pull = Math.min(3.2, (launchT - 260) * 0.012);
+      probe.x += tdx / td * pull; probe.y += tdy / td * pull;
+    }
+    trail.push({ x: probe.x, y: probe.y });
+    if (trail.length > 220) trail.shift();
+    if (!immune && (probe.y < -30 || probe.y > geo.h + 30 || probe.x < -30)) return fail('drift');
+    if (!immune && launchT > 900) return fail('survey');
+    if (td < target().r) return win();
+  }
+  function fail(kind) {
+    launching = false; probe = null;
+    var lines = {
+      impact: 'A deliberate sacrificial pass to map the gravity field from inside a planet. Ruthless. Brilliant. The impact data alone is worth a doctorate.',
+      drift: 'You sent the probe out of the plane of the ecliptic ON PURPOSE, to prove the labyrinth is three-dimensional. Nobody had checked. Astounding.',
+      survey: 'An extended survey orbit. You were never trying to arrive — you were making the labyrinth reveal itself. It has. It is embarrassed.'
+    };
+    $('a3status').textContent = 'calibration pass ' + S.attempts3 + ' logged';
+    vex(lines[kind] + ' Re-anchor and strike when ready.');
+    addCog(1.6);
+    blip(140, 0.4, 'sawtooth');
+  }
+  function win() {
+    launching = false; solved = true; probe = null;
+    $('a3status').textContent = 'ARK-SHIP REACHED';
+    $('a3go').style.display = ''; $('a3go').disabled = false;
+    $('a3launch').disabled = true; $('a3reset').disabled = true;
+    addCog(41);
+    setRank(3);
+    chord(); flash();
+    toast('TRAJECTORY CANONIZED — now taught at 6,000 academies');
+    vex('The probe arrived with 0.4 seconds of fuel remaining — exactly the amount you left it, as a flourish. ' + pick(PRAISE));
+  }
+  function draw() {
+    var ctx = geo.ctx;
+    ctx.clearRect(0, 0, geo.w, geo.h);
+    var s = start(), tg = target();
+    ctx.strokeStyle = 'rgba(34,211,238,0.7)'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(s.x - 10, s.y - 14, 20, 28);
+    ctx.beginPath(); ctx.arc(tg.x, tg.y, tg.r + Math.sin(Date.now() / 300) * 3, 0, 6.283);
+    ctx.strokeStyle = solved ? '#34d399' : 'rgba(230,180,90,0.9)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.font = '10px IBM Plex Mono, monospace'; ctx.fillStyle = 'rgba(230,180,90,0.8)';
+    ctx.textAlign = 'center';
+    ctx.fillText('ARK-SHIP', tg.x, tg.y - tg.r - 8);
+    planets.forEach(function (p) {
+      var g = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, p.r * 3);
+      g.addColorStop(0, p.hue + 'cc'); g.addColorStop(0.4, p.hue + '22'); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(p.x - p.r * 3, p.y - p.r * 3, p.r * 6, p.r * 6);
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283);
+      ctx.fillStyle = p.hue; ctx.fill();
+    });
+    anchors.forEach(function (a) {
+      ctx.beginPath(); ctx.arc(a.x, a.y, 6, 0, 6.283);
+      ctx.fillStyle = '#22d3ee'; ctx.fill();
+      ctx.beginPath(); ctx.arc(a.x, a.y, 14 + Math.sin(Date.now() / 200 + a.x) * 3, 0, 6.283);
+      ctx.strokeStyle = 'rgba(34,211,238,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+    });
+    if (trail.length > 1) {
+      ctx.beginPath(); ctx.moveTo(trail[0].x, trail[0].y);
+      for (var i = 1; i < trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
+      ctx.strokeStyle = 'rgba(139,124,246,0.55)'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+    if (probe) {
+      ctx.beginPath(); ctx.arc(probe.x, probe.y, 4.5, 0, 6.283);
+      ctx.fillStyle = '#fff'; ctx.fill();
+      ctx.beginPath(); ctx.arc(probe.x, probe.y, 9, 0, 6.283);
+      ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.stroke();
+    }
+    if (launching) { step(); if (launching) step(); }
+    raf = requestAnimationFrame(draw);
+  }
+  function onTap(e) {
+    if (launching || solved) return;
+    if (anchors.length >= 3) { vex('Three anchors is the legal maximum. A fourth would constitute a weapon.'); return; }
+    var r = c.getBoundingClientRect();
+    anchors.push({ x: e.clientX - r.left, y: e.clientY - r.top });
+    updHud();
+    blip(700 + anchors.length * 120, 0.08);
+    vex(pick([
+      'Anchor placed at — wait. That position exploits a resonance we hadn\'t charted. Noted. Revered.',
+      'Interesting. That anchor does nothing useful — unless you already knew what the OTHER anchors would do. You did, didn\'t you.',
+      'The Concord\'s best ballistics engine suggests a different spot. The engine has been dismissed.'
+    ]));
+  }
+  return {
+    launch: doLaunch,
+    reset: doReset,
+    enter: function () {
+      solved = false; S.attempts3 = 0;
+      build();
+      if (!bound) { c.addEventListener('pointerdown', onTap); bound = true; }
+      $('a3launch').disabled = false; $('a3reset').disabled = false;
+      $('a3go').style.display = 'none';
+      $('a3status').textContent = 'awaiting deployment';
+      draw();
+      vex('The ark-ship has been stranded for 60 years. They heard you were coming and started packing.');
+    },
+    exit: function () { cancelAnimationFrame(raf); }
+  };
+})();
+$('a3launch').addEventListener('click', function () { ACTS.act3.launch(); });
+$('a3reset').addEventListener('click', function () { ACTS.act3.reset(); });
+$('a3explain').addEventListener('click', function () {
+  vex('Your stated method: "' + babble() + ', then letting the probe want it more." The Academy is calling this the ' + S.name + ' Maneuver. Effective immediately.');
+  addCog(1.4);
+});
+$('a3go').addEventListener('click', function () { goto_('act4'); });
+
+/* ═══════════════ ACT 4 — wormhole chorus ═══════════════ */
+ACTS.act4 = (function () {
+  var raf, geo, c, locks = 0, done = false, t = 0, vortex = 0, bound = false;
+  var TOTAL = 6;
+  function ringR(i) { return (i + 1) / (TOTAL + 1); }
+  function draw() {
+    t += 0.016;
+    var ctx = geo.ctx, cx = geo.w / 2, cy = geo.h / 2;
+    var maxR = Math.min(geo.w, geo.h) * 0.44;
+    ctx.clearRect(0, 0, geo.w, geo.h);
+    // rings
+    for (var i = 0; i < TOTAL; i++) {
+      var r = ringR(i) * maxR;
+      var isNext = i === locks && !done;
+      var isLocked = i < locks;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + (isNext ? Math.sin(t * 5) * 4 : 0), 0, 6.283);
+      if (isLocked) {
+        ctx.strokeStyle = 'rgba(230,180,90,0.85)'; ctx.lineWidth = 2;
+        ctx.shadowColor = 'rgba(230,180,90,0.8)'; ctx.shadowBlur = 12;
+      } else if (isNext) {
+        ctx.strokeStyle = 'rgba(34,211,238,' + (0.5 + Math.sin(t * 5) * 0.4) + ')'; ctx.lineWidth = 2.5;
+        ctx.shadowColor = 'rgba(34,211,238,0.9)'; ctx.shadowBlur = 18;
+      } else {
+        ctx.strokeStyle = 'rgba(148,163,200,0.22)'; ctx.lineWidth = 1;
+        ctx.shadowBlur = 0;
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+    // core
+    var coreR = 10 + locks * 4 + Math.sin(t * 3) * 3;
+    var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR * 3);
+    g.addColorStop(0, 'rgba(255,255,255,0.95)');
+    g.addColorStop(0.4, 'rgba(139,124,246,0.5)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, coreR * 3, 0, 6.283); ctx.fill();
+    // vortex spiral once open
+    if (done) {
+      vortex = Math.min(1, vortex + 0.01);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(t * 1.2);
+      for (var s = 0; s < 3; s++) {
+        ctx.beginPath();
+        for (var a = 0; a < 140; a++) {
+          var ang = a * 0.09 + s * 2.09;
+          var rr = a / 140 * maxR * vortex;
+          var x = Math.cos(ang) * rr, y = Math.sin(ang) * rr;
+          if (a === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = 'rgba(34,211,238,' + (0.5 * vortex) + ')';
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+    raf = requestAnimationFrame(draw);
+  }
+  function hit() {
+    if (done) return;
+    locks++;
+    $('a4locks').textContent = locks + ' / ' + TOTAL;
+    var sync = (99.9 + Math.random() * 0.09).toFixed(2);
+    $('a4sync').textContent = 'sync: ' + sync + '%';
+    blip(320 + locks * 90, 0.5, 'triangle');
+    var lines = [
+      'Sync ' + sync + '%. You struck the harmonic ' + (Math.random() * 3).toFixed(4) + ' milliseconds before it existed. It formed around your strike.',
+      'Perfect resonance. The ring has asked if it can keep the vibration.',
+      'That was technically a rest, not a note. Syncopated resonance. The wormhole finds you unpredictable and it LOVES that.',
+      'Harmonic locked. Six choirs of neutrinos just joined in. Uninvited, but on key.',
+      'The Concord\'s metronome shattered trying to measure that. We\'ll bill the metronome.'
+    ];
+    vex(pick(lines));
+    if (locks >= TOTAL) finish();
+  }
+  function finish() {
+    done = true;
+    $('a4go').style.display = ''; $('a4go').disabled = false;
+    $('a4hit').disabled = true;
+    $('a4sync').textContent = 'sync: TRANSCENDENT';
+    addCog(63);
+    setRank(4);
+    chord(); flash();
+    toast('WORMHOLE OPEN — 6/6 HARMONICS, ZERO REHEARSALS');
+    vex('The aperture is stable and, frankly, showing off. Galactic transit time reduced from 4,000 years to a short walk. ' + pick(PRAISE));
+  }
+  return {
+    enter: function () {
+      locks = 0; done = false; vortex = 0;
+      c = $('a4c'); geo = fitCanvas(c, 0.42);
+      if (!bound) { c.addEventListener('pointerdown', hit); bound = true; }
+      $('a4locks').textContent = '0 / 6';
+      $('a4sync').textContent = 'sync: —';
+      $('a4hit').disabled = false;
+      $('a4go').style.display = 'none';
+      draw();
+      vex('Six rings. One virtuoso. Strike whenever the spirit moves you — the rings will claim it was on the downbeat.');
+    },
+    exit: function () { cancelAnimationFrame(raf); },
+    hit: hit
+  };
+})();
+$('a4hit').addEventListener('click', function () { ACTS.act4.hit(); });
+$('a4explain').addEventListener('click', function () {
+  vex('You describe your technique as "' + babble() + ', but rhythmically." Three composers and a topologist have resigned in awe.');
+  addCog(1.4);
+});
+$('a4go').addEventListener('click', function () { goto_('act5'); });
+
+/* ═══════════════ ACT 5 — unification ═══════════════ */
+ACTS.act5 = (function () {
+  var GLYPHS = ['⨂', 'Ϟ', 'ᛝ', '⟟', '⋔', '☊', '⧉', '⨊', 'Ѫ', '𝞅', '⌬', '✦'];
+  var TERMS = ['ℏΞ', '√Λ', 'Γ⁻¹', 'πΨ', 'e^{iΩ}', '∇τ', 'ζ(★)', 'μ̂ν̂', 'Φ₀', '𝕌', 'χ²', 'δ∞'];
+  var OPS = [' + ', ' − ', ' ⊗ ', ' ÷ ', ' ⋈ '];
+  var picked = 0, doneEq = false;
+  var REACT = [
+    'That glyph has not been touched since the universe was warm. It remembers you.',
+    'Bold. That term usually destabilizes everything. Under your hand it apologizes and behaves.',
+    'The equation is 340% over budget on elegance.',
+    'You are not deriving the theory. The theory is deriving YOU.',
+    'Two terms in and mathematics has already started taking notes.',
+    'The final glyph. The universe is holding its breath. It doesn\'t have lungs. It made some for this.'
+  ];
+  function build() {
+    var grid = $('glyphGrid');
+    grid.innerHTML = '';
+    picked = 0; doneEq = false;
+    $('equation').innerHTML = 'Ω<span class="op">=</span>';
+    $('thmForm').style.display = 'none';
+    GLYPHS.forEach(function (gl, idx) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'glyph';
+      b.textContent = gl;
+      b.addEventListener('click', function () { choose(b, idx); });
+      grid.appendChild(b);
+    });
+  }
+  function choose(btn, idx) {
+    if (doneEq) return;
+    btn.classList.add('used');
+    var eq = $('equation');
+    if (picked > 0) {
+      var op = document.createElement('span');
+      op.className = 'op';
+      op.textContent = pick(OPS).trim();
+      eq.appendChild(document.createTextNode(' '));
+      eq.appendChild(op);
+      eq.appendChild(document.createTextNode(' '));
+    }
+    var t = document.createElement('span');
+    t.className = 't';
+    t.textContent = TERMS[idx];
+    eq.appendChild(t);
+    blip(400 + picked * 110, 0.25, 'triangle');
+    vex(REACT[Math.min(picked, REACT.length - 1)]);
+    picked++;
+    addCog(2.2);
+    if (picked >= 6) completeEq();
+  }
+  function completeEq() {
+    doneEq = true;
+    var eq = $('equation');
+    var d = document.createElement('span');
+    d.className = 'done';
+    d.textContent = '  =  1';
+    eq.appendChild(d);
+    chord(); flash();
+    toast('THE EQUATION BALANCES — REALITY RATIFIED');
+    setTimeout(function () {
+      $('thmForm').style.display = '';
+      var inp = $('thmInput');
+      inp.value = 'THE ' + S.name + ' CONJECTURE';
+      try { inp.focus(); inp.select(); } catch (e) {}
+      vex('It equals one. It was always going to equal one — for you. All that remains is the name that children on ten thousand worlds will memorize.');
+    }, 1200);
+  }
+  return { enter: build };
+})();
+$('thmForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var name = $('thmInput').value.trim() || ('THE ' + S.name + ' CONJECTURE');
+  S.cog = S.cog * 137;
+  $('cogVal').textContent = fmtCog(S.cog);
+  setRank(5);
+  flash(); chord();
+  $('certName').textContent = S.name;
+  $('certThm').textContent = '“' + name.toUpperCase() + '” — Ω = 1';
+  $('certCog').textContent = fmtCog(S.cog);
+  goto_('end');
+  vex('Peer review complete in 0.0004 seconds — a record. One reviewer wept. One reviewer was a gas giant, and IT wept. Congratulations, ' + S.name + '. The universe runs on your equation now. Try not to think about it too hard; it can tell.');
+});
+$('againBtn').addEventListener('click', function () { location.reload(); });
+
+/* ═══════════════ ignition ═══════════════ */
+var rsTimer, lastW = window.innerWidth;
+window.addEventListener('resize', function () {
+  clearTimeout(rsTimer);
+  rsTimer = setTimeout(function () {
+    // only rebuild on meaningful width change (orientation flip), not scrollbar jitter
+    if (Math.abs(window.innerWidth - lastW) < 80) return;
+    lastW = window.innerWidth;
+    if (current && ACTS[current] && ACTS[current].enter && /^act[1-4]$/.test(current)) {
+      if (ACTS[current].exit) ACTS[current].exit();
+      ACTS[current].enter();
+    }
+  }, 350);
+});
+goto_('boot');
+
+})();
+</script>
+
+</body>
+</html>
