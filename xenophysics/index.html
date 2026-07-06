@@ -206,6 +206,7 @@ h2 .n { color: var(--faint); font-weight: 400; }
 .sl input[type=range] {
   width: 100%; appearance: none; -webkit-appearance: none; height: 4px; border-radius: 999px;
   background: rgba(148,163,200,0.18); outline: none; cursor: ew-resize;
+  touch-action: none;
 }
 .sl input[type=range]::-webkit-slider-thumb {
   appearance: none; -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
@@ -366,6 +367,7 @@ h2 .n { color: var(--faint); font-weight: 400; }
         <div class="sim-hud"><span>Harmonic variance: <b id="a2var" class="bad">0.9741</b></span><span>target: &lt; 0.0030</span></div>
         <canvas id="a2c"></canvas>
       </div>
+      <div class="bar"><i id="a2bar"></i></div>
       <div class="panel sliders" id="a2sliders"></div>
       <div class="btn-row">
         <button class="btn ghost" id="a2explain">Explain my reasoning</button>
@@ -779,6 +781,23 @@ $('a1go').addEventListener('click', function () { goto_('act2'); });
 /* ═══════════════ ACT 2 — dying star ═══════════════ */
 ACTS.act2 = (function () {
   var raf, geo, c, variance = 0.9741, done = false, t = 0, sparkles = [];
+  var START_VAR = 0.9741, firstTouch = 0, momentum = 0, m50 = false, m10 = false;
+  function milestones() {
+    if (!m50 && variance < 0.5) {
+      m50 = true;
+      vex('Variance halved. The collapse has stopped collapsing. It says it needs to think about some things.');
+    }
+    if (!m10 && variance < 0.1) {
+      m10 = true;
+      vex('0.1 and falling. The star\'s core is copying your slider positions by hand.');
+    }
+  }
+  function reduce(amt) {
+    if (done) return;
+    variance = Math.max(0.0012, variance - amt);
+    milestones();
+    if (variance <= 0.003) finish();
+  }
   var SLIDERS = [
     ['Tachyon Bias', 'τ'],
     ['Graviton Lattice Density', 'Γ'],
@@ -800,17 +819,25 @@ ACTS.act2 = (function () {
         out.textContent = (inp.value / 1000).toFixed(3);
         var delta = Math.abs(inp.value - last); last = +inp.value;
         if (done) return;
-        variance = Math.max(0.0012, variance - delta * 0.00030 - 0.0001);
+        if (!firstTouch) firstTouch = Date.now();
+        momentum = Math.min(0.005, momentum + 0.0007);
+        reduce(delta * 0.0009 + 0.0006);
         blip(200 + inp.value * 0.4, 0.03);
         if (Math.random() < 0.02) {
           vex('You\'re ' + babble() + ' via the ' + sdef[0].toLowerCase() + '. We did not know those systems were connected. They are now.');
         }
-        if (variance <= 0.003) finish();
       });
     });
   }
   function draw() {
     t += 0.03;
+    // once touched, the star yields on its own — it knows who it's dealing with
+    if (firstTouch && !done) {
+      var late = (Date.now() - firstTouch) / 1000 > 8;
+      reduce(0.0004 + momentum + (late ? 0.004 : 0));
+      momentum *= 0.995;
+    }
+    $('a2bar').style.width = Math.min(100, Math.max(0, (1 - variance / START_VAR) * 100)) + '%';
     var ctx = geo.ctx, cx = geo.w / 2, cy = geo.h / 2;
     ctx.clearRect(0, 0, geo.w, geo.h);
     var instab = done ? 0 : Math.min(1, variance);
@@ -867,7 +894,8 @@ ACTS.act2 = (function () {
   }
   return {
     enter: function () {
-      variance = 0.9741; done = false; sparkles = [];
+      variance = START_VAR; done = false; sparkles = [];
+      firstTouch = 0; momentum = 0; m50 = false; m10 = false;
       c = $('a2c'); geo = fitCanvas(c, 0.36);
       buildSliders();
       draw();
