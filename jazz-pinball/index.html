@@ -492,10 +492,12 @@ function buildShell() {
   const walls = [];
   walls.push(...arcSegs(240, 245, 228, Math.PI, 0, 30));
   walls.push(seg(12, 245, 12, 640));
-  walls.push(seg(12, 640, 154, 712));
+  // inlane guides end exactly tangent to the lowered flipper capsules,
+  // so the ball rolls from guide onto blade with no lip to catch on
+  walls.push(seg(12, 640, 162, 716));
   walls.push(seg(468, 245, 468, 760));
   walls.push(seg(438, 320, 438, 760));
-  walls.push(seg(438, 660, 328, 713));
+  walls.push(seg(438, 655, 318, 716));
   walls.push(seg(438, 760, 468, 760, { e: 0.2 }));
   const gate = seg(438, 320, 462, 288, { oneway: true, e: 0.3 });
   const t = { x: 400 - gate.a.x, y: 320 - gate.a.y };
@@ -505,8 +507,10 @@ function buildShell() {
     walls,
     slings: [makeSling(118, 586, 158, 660, 118, 660), makeSling(362, 586, 322, 660, 362, 660)],
     flippers: [
-      Object.assign(makeFlipper(158, 712, 74, 0.52, -0.55), { side: 'L' }),
-      Object.assign(makeFlipper(322, 712, 74, Math.PI - 0.52, Math.PI + 0.55), { side: 'R' })
+      // pivots sit 8px (one capsule radius) below the guide lines; rest angle
+      // matches the guide slope so the blade is flush with the inlane
+      Object.assign(makeFlipper(158, 723, 71, 0.47, -0.60), { side: 'L' }),
+      Object.assign(makeFlipper(322, 723, 71, Math.PI - 0.47, Math.PI + 0.60), { side: 'R' })
     ]
   };
 }
@@ -705,10 +709,12 @@ const dmdCache = new Map();
 function rasterize(text) {
   if (dmdCache.has(text)) return dmdCache.get(text);
   dmdCtx.clearRect(0, 0, DMD_COLS, DMD_ROWS);
-  dmdCtx.font = 'bold 15px "IBM Plex Mono", monospace';
   dmdCtx.textBaseline = 'middle';
   dmdCtx.textAlign = 'center';
   dmdCtx.fillStyle = '#fff';
+  dmdCtx.font = 'bold 15px "IBM Plex Mono", monospace';
+  if (dmdCtx.measureText(text).width > DMD_COLS - 4) dmdCtx.font = 'bold 11px "IBM Plex Mono", monospace';
+  if (dmdCtx.measureText(text).width > DMD_COLS - 4) dmdCtx.font = 'bold 9px "IBM Plex Mono", monospace';
   dmdCtx.fillText(text, DMD_COLS / 2, DMD_ROWS / 2 + 1);
   const img = dmdCtx.getImageData(0, 0, DMD_COLS, DMD_ROWS).data;
   const grid = new Uint8Array(DMD_COLS * DMD_ROWS);
