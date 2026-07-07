@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Jazz Legends Pinball — Adam Lozo</title>
-<meta name="description" content="A pinball tribute to the giants of jazz. Light the legends, answer history challenges, chase the multiplier.">
+<meta name="description" content="Three-table jazz pinball. Pick your set, light the solo, answer jazz history to climb the multiplier. Multiball, lock shots, and a dot-matrix display.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,36 +44,44 @@ body {
   padding: 0.35rem 0.8rem; background: rgba(10,8,16,0.7); backdrop-filter: blur(4px);
 }
 .back:hover { color: var(--brass); border-color: var(--brass); }
-#mute {
-  position: fixed; top: 10px; right: 12px; z-index: 40;
-  font-family: var(--mono); font-size: 0.8rem; color: var(--dim);
+.topbtns { position: fixed; top: 10px; right: 12px; z-index: 40; display: flex; gap: 6px; }
+.topbtns button {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--dim);
   border: 1px solid rgba(217,164,65,0.25); border-radius: 999px;
   padding: 0.3rem 0.7rem; background: rgba(10,8,16,0.7); cursor: pointer;
 }
-#mute:hover { color: var(--brass); border-color: var(--brass); }
+.topbtns button:hover { color: var(--brass); border-color: var(--brass); }
 
 #stage {
   position: fixed; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 6px;
+  gap: 4px;
 }
 #hud {
-  display: flex; gap: 1.6rem; align-items: baseline;
-  font-size: 0.72rem; letter-spacing: 0.1em; color: var(--dim); text-transform: uppercase;
+  display: flex; gap: 1.5rem; align-items: baseline;
+  font-size: 0.68rem; letter-spacing: 0.1em; color: var(--dim); text-transform: uppercase;
 }
-#hud b { color: var(--brass); font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em; }
+#hud b { color: var(--brass); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.02em; }
 #hud .mult b { color: #8b7cf6; }
 #wrap { position: relative; }
 canvas { display: block; border-radius: 14px; }
+#launchBtn, #nudgeBtn {
+  position: absolute; z-index: 20;
+  font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
+  border: none; border-radius: 999px; font-weight: 600; cursor: pointer;
+  display: none;
+}
 #launchBtn {
-  position: absolute; right: 8px; bottom: 10px; z-index: 20;
-  font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em;
+  right: 8px; bottom: 10px; padding: 0.8rem 0.9rem;
   color: #0a0810; background: linear-gradient(180deg, var(--brass), var(--gold));
-  border: none; border-radius: 999px; padding: 0.8rem 1rem; font-weight: 600;
-  cursor: pointer; display: none; box-shadow: 0 0 18px rgba(242,193,78,0.5);
+  box-shadow: 0 0 18px rgba(242,193,78,0.5);
+}
+#nudgeBtn {
+  left: 8px; bottom: 10px; padding: 0.7rem 0.8rem;
+  color: var(--brass); background: rgba(20,16,30,0.85); border: 1px solid rgba(217,164,65,0.4);
 }
 #hint {
-  font-size: 0.62rem; letter-spacing: 0.12em; color: var(--dim); text-transform: uppercase;
+  font-size: 0.6rem; letter-spacing: 0.1em; color: var(--dim); text-transform: uppercase;
   text-align: center; padding: 0 1rem;
 }
 
@@ -81,111 +89,143 @@ canvas { display: block; border-radius: 14px; }
 .overlay {
   position: fixed; inset: 0; z-index: 50;
   display: none; align-items: center; justify-content: center;
-  background: rgba(6, 5, 10, 0.82); backdrop-filter: blur(6px);
+  background: rgba(6, 5, 10, 0.85); backdrop-filter: blur(6px);
   padding: 1rem;
 }
 .overlay.show { display: flex; }
 .card {
-  width: min(480px, 94vw); max-height: 92vh; overflow-y: auto;
+  width: min(520px, 94vw); max-height: 92vh; overflow-y: auto;
   background: linear-gradient(180deg, #171225, #0e0b18);
   border: 1px solid rgba(217, 164, 65, 0.4);
-  border-radius: 16px; padding: 1.6rem 1.5rem;
+  border-radius: 16px; padding: 1.5rem 1.4rem;
   box-shadow: 0 0 60px rgba(217, 164, 65, 0.12), 0 24px 60px rgba(0,0,0,0.6);
   text-align: center;
 }
 .deco-title {
-  font-family: var(--deco); font-size: clamp(1.9rem, 7vw, 2.7rem); line-height: 1.05;
+  font-family: var(--deco); font-size: clamp(1.7rem, 6.5vw, 2.5rem); line-height: 1.05;
   color: var(--brass);
   text-shadow: 0 0 24px rgba(242, 193, 78, 0.45);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 .deco-sub {
-  font-size: 0.62rem; letter-spacing: 0.34em; text-transform: uppercase; color: var(--dim);
-  margin-bottom: 1.2rem;
+  font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--dim);
+  margin-bottom: 1rem;
 }
-.rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(217,164,65,0.5), transparent); margin: 1rem 0; }
-.card p.copy { font-size: 0.78rem; line-height: 1.7; color: #c9bfa8; text-align: left; margin-bottom: 0.8rem; }
+.rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(217,164,65,0.5), transparent); margin: 0.9rem 0; }
+.card p.copy { font-size: 0.74rem; line-height: 1.65; color: #c9bfa8; text-align: left; margin-bottom: 0.7rem; }
 .card p.copy b { color: var(--brass); font-weight: 600; }
-.controls-list { font-size: 0.68rem; line-height: 2; color: var(--dim); text-align: left; }
-.controls-list b { color: var(--cream); font-weight: 500; }
 .btn {
-  font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase;
   font-weight: 600; color: #0a0810;
   background: linear-gradient(180deg, var(--brass), var(--gold));
-  border: none; border-radius: 999px; padding: 0.85rem 2.2rem;
-  cursor: pointer; margin-top: 1.1rem;
+  border: none; border-radius: 999px; padding: 0.8rem 2rem;
+  cursor: pointer; margin-top: 0.9rem;
   box-shadow: 0 0 24px rgba(242, 193, 78, 0.35);
 }
 .btn:hover { filter: brightness(1.1); }
 .btn.ghost { background: none; color: var(--dim); border: 1px solid rgba(217,164,65,0.3); box-shadow: none; }
 
+/* table select */
+.tables { display: grid; gap: 0.7rem; margin: 0.4rem 0; }
+.tcard {
+  --tc: #38bdf8;
+  display: grid; grid-template-columns: 8px 1fr auto; gap: 0.9rem; align-items: center;
+  text-align: left; padding: 0.85rem 0.9rem;
+  background: rgba(217,164,65,0.05);
+  border: 1px solid rgba(217,164,65,0.28); border-radius: 12px;
+  cursor: pointer; font-family: var(--mono); color: var(--cream);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tcard:hover { background: rgba(217,164,65,0.13); border-color: var(--tc); }
+.tcard .bar { width: 8px; height: 100%; min-height: 44px; border-radius: 4px; background: var(--tc); box-shadow: 0 0 12px var(--tc); }
+.tcard .tname { font-family: var(--deco); font-size: 1.15rem; color: var(--tc); }
+.tcard .tdesc { font-size: 0.62rem; color: var(--dim); line-height: 1.5; margin-top: 2px; }
+.tcard .tbest { font-size: 0.6rem; color: var(--dim); text-align: right; text-transform: uppercase; letter-spacing: 0.1em; }
+.tcard .tbest b { display: block; color: var(--cream); font-size: 0.8rem; }
+.howto {
+  font-size: 0.66rem; line-height: 1.8; color: var(--dim); text-align: left;
+}
+.howto b { color: var(--cream); font-weight: 500; }
+details.rules { text-align: left; margin-top: 0.6rem; }
+details.rules summary {
+  font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brass);
+  cursor: pointer; padding: 0.3rem 0;
+}
+details.rules p { font-size: 0.7rem; line-height: 1.65; color: #c9bfa8; margin: 0.5rem 0; }
+details.rules p b { color: var(--brass); }
+
 /* -------- quiz -------- */
 #quizTag {
-  display: inline-block; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+  display: inline-block; font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase;
   color: #0a0810; background: var(--brass); border-radius: 3px; padding: 0.3rem 0.7rem;
-  margin-bottom: 0.9rem; font-weight: 600;
+  margin-bottom: 0.4rem; font-weight: 600;
 }
 #quizTag.encore { background: var(--red); color: var(--cream); }
-#quizQ { font-size: 0.92rem; line-height: 1.6; color: var(--cream); margin-bottom: 1.1rem; }
-#quizAnswers { display: grid; gap: 0.55rem; }
+#quizProgress { font-size: 0.6rem; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; margin-bottom: 0.8rem; }
+#quizQ { font-size: 0.88rem; line-height: 1.6; color: var(--cream); margin-bottom: 1rem; }
+#quizAnswers { display: grid; gap: 0.5rem; }
 #quizAnswers button {
-  font-family: var(--mono); font-size: 0.78rem; line-height: 1.45; text-align: left;
+  font-family: var(--mono); font-size: 0.76rem; line-height: 1.45; text-align: left;
   color: var(--cream); background: rgba(217, 164, 65, 0.07);
   border: 1px solid rgba(217, 164, 65, 0.3); border-radius: 10px;
-  padding: 0.75rem 0.9rem; cursor: pointer; transition: background 0.15s ease;
+  padding: 0.7rem 0.85rem; cursor: pointer; transition: background 0.15s ease;
 }
 #quizAnswers button:hover:not(:disabled) { background: rgba(217, 164, 65, 0.18); }
 #quizAnswers button:disabled { cursor: default; opacity: 0.55; }
 #quizAnswers button.right { background: rgba(74, 222, 128, 0.18); border-color: var(--green); color: var(--green); opacity: 1; }
 #quizAnswers button.wrong { background: rgba(224, 82, 82, 0.16); border-color: var(--red); color: var(--red); opacity: 1; }
-#quizVerdict { font-family: var(--deco); font-size: 1.5rem; margin-top: 1rem; display: none; }
+#quizVerdict { font-family: var(--deco); font-size: 1.35rem; margin-top: 0.9rem; display: none; }
 #quizVerdict.good { color: var(--green); text-shadow: 0 0 18px rgba(74,222,128,0.4); }
 #quizVerdict.bad { color: var(--red); text-shadow: 0 0 18px rgba(224,82,82,0.4); }
-#quizFact { font-size: 0.72rem; line-height: 1.7; color: #c9bfa8; margin-top: 0.6rem; display: none; text-align: left; }
+#quizFact { font-size: 0.7rem; line-height: 1.7; color: #c9bfa8; margin-top: 0.5rem; display: none; text-align: left; }
 #quizFact b { color: var(--brass); }
 #quizGo { display: none; }
 
-.score-final { font-family: var(--deco); font-size: 2.6rem; color: var(--brass); text-shadow: 0 0 24px rgba(242,193,78,0.45); }
-.stat-row { display: flex; justify-content: center; gap: 2rem; margin-top: 0.8rem; font-size: 0.68rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.12em; }
-.stat-row b { color: var(--cream); display: block; font-size: 1rem; margin-top: 0.2rem; }
+.score-final { font-family: var(--deco); font-size: 2.4rem; color: var(--brass); text-shadow: 0 0 24px rgba(242,193,78,0.45); }
+.stat-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.4rem; margin-top: 0.8rem; font-size: 0.62rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; }
+.stat-row b { color: var(--cream); display: block; font-size: 0.95rem; margin-top: 0.2rem; }
 
-@media (max-height: 720px) { #hint { display: none; } }
+@media (max-height: 760px) { #hint { display: none; } }
 </style>
 </head>
 <body>
 
 <a class="back" href="/">&larr; adam.lozo</a>
-<button id="mute" aria-label="Toggle sound">&#9834; on</button>
+<div class="topbtns">
+  <button id="pauseBtn" aria-label="Pause">&#10073;&#10073;</button>
+  <button id="mute" aria-label="Toggle sound">&#9834; on</button>
+</div>
 
 <div id="stage">
   <div id="hud">
-    <span>Score <b id="hScore">0</b></span>
     <span class="mult">Mult <b id="hMult">1x</b></span>
     <span>Ball <b id="hBall">1/3</b></span>
+    <span>Sets <b id="hSets">0/5</b></span>
     <span>Best <b id="hHigh">0</b></span>
   </div>
   <div id="wrap">
     <canvas id="pf"></canvas>
     <button id="launchBtn">HOLD TO<br>LAUNCH</button>
+    <button id="nudgeBtn">NUDGE</button>
   </div>
-  <div id="hint">&larr; / Z &nbsp;left flipper &nbsp;&middot;&nbsp; &rarr; / &frasl; &nbsp;right flipper &nbsp;&middot;&nbsp; hold SPACE to launch &nbsp;&middot;&nbsp; touch: tap sides</div>
+  <div id="hint">&larr;/Z &rarr;/&frasl; flippers &middot; hold SPACE launch &middot; flippers change SET before launch &middot; X nudge &middot; P pause</div>
 </div>
 
-<!-- start -->
-<div class="overlay show" id="startOverlay">
+<!-- menu / table select -->
+<div class="overlay show" id="menuOverlay">
   <div class="card">
     <div class="deco-title">Jazz Legends<br>Pinball</div>
-    <div class="deco-sub">A history-powered table</div>
-    <div class="rule"></div>
-    <p class="copy">Five giants — <b>Satchmo, Duke, Bird, Ella and Miles</b> — hold court on this table. Hit a legend's bumper <b>3 times</b> to set it glowing, then strike it again to face a <b>Solo Challenge</b>: a question from jazz history.</p>
-    <p class="copy">Answer right and your <b>multiplier climbs</b> (up to 5x). Answer wrong and it resets — the bandstand is unforgiving.</p>
-    <p class="copy">Drain the ball and the crowd may grant you an <b>Encore</b>: one trivia question per ball to win it back. Know your jazz, keep your ball.</p>
-    <div class="rule"></div>
-    <div class="controls-list">
-      <b>&larr; or Z</b> — left flipper &nbsp;&nbsp; <b>&rarr; or &frasl;</b> — right flipper<br>
-      <b>SPACE (hold &amp; release)</b> — plunger &nbsp;&nbsp; <b>Touch</b> — tap left/right side
-    </div>
-    <button class="btn" id="startBtn">Take the Stage</button>
+    <div class="deco-sub">Three tables &middot; Five sets &middot; One history</div>
+    <div class="tables" id="tableCards"></div>
+    <details class="rules">
+      <summary>How it plays</summary>
+      <p><b>Pick your set.</b> Before launching, flip the flippers to choose one of five jazz standards. Its featured table element scores <b>2x</b>, and racking up enough of them completes the <b>Ovation Challenge</b>.</p>
+      <p><b>Light the Solo.</b> Complete the challenge and the spotlight scoop lights up. Sink it to face 3 questions from that era of jazz history — get 2 right to <b>complete the set</b>, raise your multiplier, and bank 500K. Miss, and the ovation resets.</p>
+      <p><b>After Hours Multiball.</b> Complete the top lanes to light LOCK, then sink the scoop to lock a ball. Two locks, then one more scoop shot starts <b>3-ball multiball</b> — orbits score 350K jackpots.</p>
+      <p><b>Bebop Frenzy.</b> Spell B-E-B-O-P on the roundel targets for a 2-ball frenzy — targets pay 25K each while it runs.</p>
+      <p><b>Encore.</b> Drain a ball and the crowd offers one trivia question per ball to win it back. Complete all five sets for an <b>extra ball</b> and 2.5M.</p>
+      <p><b>Controls.</b> &larr;/Z and &rarr;/&frasl; flippers &middot; SPACE (hold, release) plunger &middot; X nudge (3 = TILT) &middot; P pause. Touch: tap sides, on-screen buttons.</p>
+    </details>
   </div>
 </div>
 
@@ -193,11 +233,22 @@ canvas { display: block; border-radius: 14px; }
 <div class="overlay" id="quizOverlay">
   <div class="card">
     <span id="quizTag">Solo Challenge</span>
+    <div id="quizProgress"></div>
     <div id="quizQ"></div>
     <div id="quizAnswers"></div>
     <div id="quizVerdict"></div>
     <p id="quizFact"></p>
-    <button class="btn" id="quizGo">Resume Play</button>
+    <button class="btn" id="quizGo">Next</button>
+  </div>
+</div>
+
+<!-- pause -->
+<div class="overlay" id="pauseOverlay">
+  <div class="card">
+    <div class="deco-title" style="font-size:1.8rem">Intermission</div>
+    <div class="rule"></div>
+    <button class="btn" id="resumeBtn">Resume</button><br>
+    <button class="btn ghost" id="quitBtn">Quit to Table Select</button>
   </div>
 </div>
 
@@ -205,18 +256,18 @@ canvas { display: block; border-radius: 14px; }
 <div class="overlay" id="overOverlay">
   <div class="card">
     <div class="deco-sub" style="margin-bottom:0.4rem">Last call</div>
-    <div class="deco-title" style="font-size:2rem">Set&rsquo;s Over</div>
+    <div class="deco-title" style="font-size:1.9rem">Set&rsquo;s Over</div>
     <div class="rule"></div>
     <div class="score-final" id="finalScore">0</div>
     <div class="stat-row">
       <span>Best<b id="finalHigh">0</b></span>
-      <span>Solos Won<b id="finalSolos">0</b></span>
+      <span>Sets<b id="finalSets">0/5</b></span>
+      <span>Jackpots<b id="finalJack">0</b></span>
       <span>Encores<b id="finalEncores">0</b></span>
     </div>
-    <div id="newBest" style="display:none; color:var(--green); font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:0.8rem;">&#9733; New house record &#9733;</div>
-    <button class="btn" id="againBtn">One More Set</button>
-    <br>
-    <button class="btn ghost" id="homeBtn" onclick="location.href='/'">Back to adamlozo.com</button>
+    <div id="newBest" style="display:none; color:var(--green); font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; margin-top:0.8rem;">&#9733; New house record &#9733;</div>
+    <button class="btn" id="againBtn">Same Table</button>
+    <button class="btn ghost" id="menuBtn">Table Select</button>
   </div>
 </div>
 
@@ -225,13 +276,13 @@ canvas { display: block; border-radius: 14px; }
 'use strict';
 
 /* ============================================================
-   JAZZ HISTORY QUESTION BANK
+   JAZZ HISTORY QUESTION BANK — by era
    ============================================================ */
-const MUSICIANS = {
-  armstrong: { name: 'Louis Armstrong', tag: 'SATCHMO', color: '#f2b134', qs: [
+const QBANK = {
+  early: [
     { q: 'In which city was Louis Armstrong born in 1901?',
       a: ['New Orleans, Louisiana', 'Chicago, Illinois', 'Memphis, Tennessee', 'St. Louis, Missouri'], c: 0,
-      f: 'Armstrong grew up in a rough New Orleans neighborhood nicknamed "The Battlefield" and first learned cornet in the Colored Waif’s Home band.' },
+      f: 'Armstrong grew up in a New Orleans neighborhood nicknamed "The Battlefield" and learned cornet in the Colored Waif’s Home band.' },
     { q: 'Which small groups did Armstrong lead on his landmark recordings of the late 1920s?',
       a: ['The Hot Five and Hot Seven', 'The Red Hot Peppers', 'The Creole Jazz Band', 'The Original Dixieland Jass Band'], c: 0,
       f: 'The opening trumpet cadenza of "West End Blues" (1928) remains one of the most celebrated moments ever recorded in jazz.' },
@@ -241,34 +292,70 @@ const MUSICIANS = {
     { q: 'Young Armstrong moved to Chicago in 1922 to play second cornet in whose Creole Jazz Band?',
       a: ['King Oliver’s', 'Duke Ellington’s', 'Fletcher Henderson’s', 'Count Basie’s'], c: 0,
       f: 'Joe "King" Oliver was Armstrong’s mentor from New Orleans; their two-cornet breaks stunned Chicago audiences.' },
+    { q: 'The first jazz record ever released (1917) was cut by:',
+      a: ['The Original Dixieland Jass Band', 'The Hot Five', 'King Oliver’s Creole Jazz Band', 'Fletcher Henderson’s Orchestra'], c: 0,
+      f: '"Livery Stable Blues" — complete with barnyard-animal effects — became a national sensation.' },
+    { q: 'Storyville, the red-light district where early jazz brewed, was located in:',
+      a: ['New Orleans', 'Memphis', 'Chicago', 'St. Louis'], c: 0,
+      f: 'When the Navy shut Storyville down in 1917, its musicians headed north — accelerating jazz’s migration to Chicago.' },
+    { q: 'Which New Orleans pianist immodestly claimed to have "invented jazz" in 1902?',
+      a: ['Jelly Roll Morton', 'Scott Joplin', 'Fats Waller', 'Earl Hines'], c: 0,
+      f: 'Braggadocio aside, Morton’s Red Hot Peppers sides of 1926–27 are the first masterpieces of jazz composition.' },
+    { q: 'Sidney Bechet, New Orleans’ first great reed virtuoso, made which instrument a jazz voice?',
+      a: ['Soprano saxophone', 'Baritone saxophone', 'Bass clarinet', 'Flute'], c: 0,
+      f: 'Bechet picked up the straight soprano in London in 1919 and its piercing vibrato became his signature for 40 years.' },
+    { q: 'Buddy Bolden, jazz’s semi-legendary first bandleader, blew his cornet in which city around 1900?',
+      a: ['New Orleans', 'Kansas City', 'Atlanta', 'Havana'], c: 0,
+      f: 'No recording of Bolden survives — only stories that his horn could be heard "fourteen miles away on a clear night."' },
     { q: 'Which 1967 recording became one of Armstrong’s most beloved late-career hits?',
       a: ['"What a Wonderful World"', '"Mack the Knife"', '"Blueberry Hill"', '"When You’re Smiling"'], c: 0,
       f: 'It topped the UK charts in 1968. Three years earlier, his "Hello, Dolly!" had knocked The Beatles off the top of the US chart.' }
-  ]},
-  ellington: { name: 'Duke Ellington', tag: 'DUKE', color: '#8b7cf6', qs: [
+  ],
+  swing: [
     { q: 'Duke Ellington’s orchestra rose to national fame in the late 1920s during a residency at which Harlem venue?',
       a: ['The Cotton Club', 'The Savoy Ballroom', 'Birdland', 'The Village Vanguard'], c: 0,
       f: 'Nightly radio broadcasts from the Cotton Club carried Ellington’s "jungle sound" into homes across America.' },
     { q: 'Who composed "Take the ’A’ Train," the Ellington orchestra’s signature theme?',
       a: ['Billy Strayhorn', 'Duke Ellington himself', 'Juan Tizol', 'Johnny Hodges'], c: 0,
-      f: 'Strayhorn, Ellington’s writing partner for nearly 30 years, reportedly built the song from the subway directions Duke gave him to reach Harlem.' },
+      f: 'Strayhorn reportedly built the song from the subway directions Ellington gave him to reach Harlem.' },
     { q: 'What was Duke Ellington’s given first name?',
       a: ['Edward', 'Ernest', 'Elliott', 'Earl'], c: 0,
       f: 'Edward Kennedy Ellington — boyhood friends dubbed him "Duke" for his elegant manners and sharp dress.' },
-    { q: 'In which city was Duke Ellington born and raised?',
-      a: ['Washington, D.C.', 'New York City', 'Chicago', 'New Orleans'], c: 0,
-      f: 'Born in 1899, he began piano lessons at seven and wrote his first piece, "Soda Fountain Rag," as a teenage soda jerk.' },
-    { q: 'Ellington co-wrote which exotic-tinged standard with his valve trombonist Juan Tizol?',
-      a: ['"Caravan"', '"Satin Doll"', '"Mood Indigo"', '"Sophisticated Lady"'], c: 0,
-      f: '"Caravan" (1936) became a jazz and Latin standard — and decades later, the obsession soundtrack of the film Whiplash.' }
-  ]},
-  parker: { name: 'Charlie Parker', tag: 'BIRD', color: '#38bdf8', qs: [
+    { q: 'Ella Fitzgerald was discovered in 1934 after winning Amateur Night at which Harlem theater?',
+      a: ['The Apollo', 'Radio City Music Hall', 'The Cotton Club', 'Carnegie Hall'], c: 0,
+      f: 'She had planned to dance that night — but following a slick dance act, the 17-year-old chose to sing instead.' },
+    { q: 'Ella first rose to fame singing with whose swing orchestra?',
+      a: ['Chick Webb’s', 'Duke Ellington’s', 'Benny Goodman’s', 'Count Basie’s'], c: 0,
+      f: 'Their 1938 smash "A-Tisket, A-Tasket" was a #1 hit. After Webb died in 1939, Ella led the band herself.' },
+    { q: 'Benny Goodman brought swing into the concert hall with a famous 1938 concert at:',
+      a: ['Carnegie Hall', 'The Apollo', 'Royal Albert Hall', 'The Hollywood Bowl'], c: 0,
+      f: 'Billed as the first jazz concert there by a headline swing band, it featured an integrated stage — radical for 1938.' },
+    { q: 'Count Basie’s hard-swinging orchestra came roaring out of which city in 1936?',
+      a: ['Kansas City', 'New York City', 'Detroit', 'Atlanta'], c: 0,
+      f: 'Built on the riff-driven Kansas City style — "One O’Clock Jump" became the band’s eternal theme.' },
+    { q: 'Billie Holiday’s harrowing 1939 protest song about lynching was:',
+      a: ['"Strange Fruit"', '"God Bless the Child"', '"Gloomy Sunday"', '"Fine and Mellow"'], c: 0,
+      f: 'Columbia refused to record it, so she cut it for tiny Commodore Records. Time later named it the song of the century.' },
+    { q: 'The Lindy Hop, swing’s signature dance, was born at which Harlem ballroom?',
+      a: ['The Savoy', 'The Cotton Club', 'The Alhambra', 'Small’s Paradise'], c: 0,
+      f: 'The Savoy was one of the first integrated ballrooms in America — its house band battles were legendary.' },
+    { q: 'Which Basie tenor saxophonist, nicknamed "Prez," defined the light, floating swing style?',
+      a: ['Lester Young', 'Coleman Hawkins', 'Ben Webster', 'Chu Berry'], c: 0,
+      f: 'Billie Holiday gave Young the nickname "President." He answered by calling her "Lady Day."' },
+    { q: 'After a 1928 caravan fire, guitarist Django Reinhardt famously soloed using how many fretting fingers?',
+      a: ['Two', 'Three', 'Four', 'One'], c: 0,
+      f: 'His ring finger and pinky were paralyzed, so he rebuilt his technique — then co-founded the Quintette du Hot Club de France.' },
+    { q: 'Ella’s celebrated "Songbook" series began in 1956 with the music of which composer?',
+      a: ['Cole Porter', 'George Gershwin', 'Irving Berlin', 'Hoagy Carmichael'], c: 0,
+      f: 'Eight Songbook volumes for Verve (1956–64) helped define the Great American Songbook as a canon.' }
+  ],
+  bebop: [
     { q: 'What was Charlie Parker’s famous nickname?',
       a: ['Bird', 'Trane', 'Prez', 'Cannonball'], c: 0,
       f: 'Short for "Yardbird." New York’s famous club Birdland was named in his honor in 1949.' },
-    { q: 'Parker was a chief architect of which revolutionary jazz style of the 1940s?',
-      a: ['Bebop', 'Swing', 'Cool jazz', 'Dixieland'], c: 0,
-      f: 'Bebop’s blazing tempos and advanced harmony were forged in after-hours Harlem jam sessions — music for listening, not dancing.' },
+    { q: 'Bebop was incubated at after-hours jam sessions at which Harlem club?',
+      a: ['Minton’s Playhouse', 'The Savoy Ballroom', 'The Cotton Club', 'The Village Vanguard'], c: 0,
+      f: 'Thelonious Monk was the house pianist at Minton’s, where Parker, Gillespie and Christian rewrote the rules nightly.' },
     { q: 'In which city did Charlie Parker grow up, absorbing its all-night club scene?',
       a: ['Kansas City', 'New Orleans', 'Detroit', 'Philadelphia'], c: 0,
       f: 'Under "Boss Tom" Pendergast, 1930s Kansas City ran wide open — its marathon jam sessions were Parker’s conservatory.' },
@@ -277,143 +364,118 @@ const MUSICIANS = {
       f: 'Their 1945 recordings like "Groovin’ High" and "Salt Peanuts" codified the new language of modern jazz.' },
     { q: 'Which instrument did Charlie Parker play?',
       a: ['Alto saxophone', 'Tenor saxophone', 'Trumpet', 'Clarinet'], c: 0,
-      f: 'His 1945 recording "Ko-Ko," a supersonic sprint over the chords of "Cherokee," is a bebop landmark.' }
-  ]},
-  fitzgerald: { name: 'Ella Fitzgerald', tag: 'ELLA', color: '#f472b6', qs: [
-    { q: 'Ella Fitzgerald was discovered in 1934 after winning Amateur Night at which Harlem theater?',
-      a: ['The Apollo', 'Radio City Music Hall', 'The Cotton Club', 'Carnegie Hall'], c: 0,
-      f: 'She had planned to dance that night — but following a slick dance act, the 17-year-old chose to sing instead. History followed.' },
-    { q: 'Ella first rose to fame singing with whose swing orchestra?',
-      a: ['Chick Webb’s', 'Duke Ellington’s', 'Benny Goodman’s', 'Count Basie’s'], c: 0,
-      f: 'Their 1938 smash "A-Tisket, A-Tasket" was a #1 hit. After drummer Webb died in 1939, Ella led the band herself.' },
-    { q: 'By what title was Ella Fitzgerald universally known?',
-      a: ['The First Lady of Song', 'The Queen of Soul', 'The Empress of the Blues', 'Lady Day'], c: 0,
-      f: 'She won 13 Grammy Awards and sold over 40 million records across a six-decade career.' },
-    { q: 'Ella’s celebrated "Songbook" series began in 1956 with the music of which composer?',
-      a: ['Cole Porter', 'George Gershwin', 'Irving Berlin', 'Hoagy Carmichael'], c: 0,
-      f: 'Eight Songbook volumes for Verve (1956–64) helped define the Great American Songbook as a canon.' },
-    { q: 'Ella was renowned above all for her mastery of which improvisational vocal style?',
-      a: ['Scat', 'Vocalese', 'Field hollers', 'Talking blues'], c: 0,
-      f: 'Her live "How High the Moon" (Berlin, 1960) is a five-minute scat masterclass — quoting a dozen songs mid-flight.' }
-  ]},
-  davis: { name: 'Miles Davis', tag: 'MILES', color: '#34d399', qs: [
+      f: 'His 1945 recording "Ko-Ko," a supersonic sprint over the chords of "Cherokee," is a bebop landmark.' },
+    { q: 'Thelonious Monk’s most-recorded composition is:',
+      a: ['"’Round Midnight"', '"Straight, No Chaser"', '"Blue Monk"', '"Epistrophy"'], c: 0,
+      f: 'It is the most-recorded jazz standard written by a jazz musician — covered thousands of times since 1944.' },
+    { q: 'Dizzy Gillespie’s visual trademark was:',
+      a: ['A trumpet with an upturned bell', 'Playing two horns at once', 'A plastic saxophone', 'Conducting with a cane'], c: 0,
+      f: 'A dancer fell on his horn in 1953 and bent it skyward — Dizzy decided he liked the sound and kept it that way for life.' },
+    { q: 'What was Thelonious Monk’s remarkable middle name?',
+      a: ['Sphere', 'Orbit', 'Cosmo', 'Saturn'], c: 0,
+      f: 'Thelonious Sphere Monk — inherited from his grandfather Sphere Batts. His son T.S. Monk carries it on.' },
+    { q: 'The 1953 concert billed as "the greatest jazz concert ever" — Parker, Gillespie, Powell, Mingus, Roach — took place at Massey Hall in:',
+      a: ['Toronto', 'New York', 'Chicago', 'Montreal'], c: 0,
+      f: 'The hall was half-empty — the concert competed with the Marciano–Walcott heavyweight title fight.' },
+    { q: 'Sarah Vaughan, the great bebop-era vocalist, was affectionately nicknamed:',
+      a: ['Sassy', 'Lady Day', 'First Lady of Song', 'The Velvet Fog'], c: 0,
+      f: 'Also billed as "The Divine One." Like Ella, she was discovered at an Apollo Theater Amateur Night — in 1942.' }
+  ],
+  cool: [
     { q: 'Miles Davis’s 1959 album, often called the best-selling jazz record of all time, is:',
       a: ['Kind of Blue', 'A Love Supreme', 'Time Out', 'Giant Steps'], c: 0,
-      f: 'Recorded in just two sessions, mostly in first takes, from modal sketches Miles handed the band on the spot.' },
-    { q: 'Which 1970 double album launched Miles’s electric jazz-fusion era?',
-      a: ['Bitches Brew', 'In a Silent Way', 'On the Corner', 'Head Hunters'], c: 0,
-      f: 'It went gold and won a Grammy — and its alumni went on to found Weather Report, Mahavishnu Orchestra, and Return to Forever.' },
+      f: 'Recorded in just two sessions, mostly first takes, from modal sketches Miles handed the band on the spot.' },
     { q: 'Which saxophonist played tenor on Kind of Blue?',
       a: ['John Coltrane', 'Charlie Parker', 'Sonny Rollins', 'Stan Getz'], c: 0,
       f: 'Alongside Cannonball Adderley on alto and Bill Evans on piano — arguably the greatest studio band ever assembled.' },
     { q: 'The nonet sessions Miles led in 1949–50 were later collected under what title?',
       a: ['Birth of the Cool', 'Sketches of Spain', 'Milestones', 'Round About Midnight'], c: 0,
       f: 'With Gil Evans’s pastel arrangements, these sides seeded the entire "cool jazz" movement of the 1950s.' },
+    { q: '"Take Five," the first jazz single to sell a million copies, was composed by:',
+      a: ['Paul Desmond', 'Dave Brubeck', 'Gerry Mulligan', 'Stan Getz'], c: 0,
+      f: 'Desmond was the Brubeck Quartet’s alto player. The tune’s famous 5/4 meter gave the album Time Out its name.' },
     { q: 'Miles Davis grew up in which city, the son of a prosperous dental surgeon?',
       a: ['East St. Louis, Illinois', 'New York City', 'Chicago', 'Kansas City'], c: 0,
-      f: 'He left for Juilliard in 1944 — then spent his nights hunting down Charlie Parker on 52nd Street instead.' }
-  ]}
+      f: 'He left for Juilliard in 1944 — then spent his nights hunting down Charlie Parker on 52nd Street instead.' },
+    { q: 'Gil Evans and Miles Davis’s 1960 orchestral collaboration steeped in Spanish music was:',
+      a: ['Sketches of Spain', 'Porgy and Bess', 'Miles Ahead', 'Quiet Nights'], c: 0,
+      f: 'Its centerpiece adapts Rodrigo’s Concierto de Aranjuez — Miles said playing it softly was the hardest thing he’d done.' },
+    { q: 'Which West Coast trumpeter, famous for singing "My Funny Valentine," embodied cool jazz’s fragile lyricism?',
+      a: ['Chet Baker', 'Art Farmer', 'Shorty Rogers', 'Jack Sheldon'], c: 0,
+      f: 'Baker’s 1954 vocal sessions made him a matinee idol; photographer William Claxton’s portraits made him an icon.' },
+    { q: 'Which pianist’s trio recorded the landmark live album "Sunday at the Village Vanguard" in 1961?',
+      a: ['Bill Evans', 'Ahmad Jamal', 'Oscar Peterson', 'Red Garland'], c: 0,
+      f: 'Bassist Scott LaFaro died in a car crash ten days after the recording. Evans barely played for months afterward.' },
+    { q: 'The Modern Jazz Quartet fused bebop with chamber-music elegance under which pianist and musical director?',
+      a: ['John Lewis', 'Horace Silver', 'Hank Jones', 'Tommy Flanagan'], c: 0,
+      f: 'The MJQ performed in tuxedos in concert halls for over 40 years — swing dressed in Bach’s counterpoint.' }
+  ],
+  postbop: [
+    { q: 'Who recorded the 1965 spiritual suite "A Love Supreme"?',
+      a: ['John Coltrane', 'Ornette Coleman', 'Charles Mingus', 'Sonny Rollins'], c: 0,
+      f: 'Coltrane cut the entire four-part suite in a single December 1964 evening at Van Gelder Studio.' },
+    { q: 'John Coltrane’s 1960 album whose title track’s chord cycle became a rite of passage for improvisers:',
+      a: ['Giant Steps', 'Blue Train', 'My Favorite Things', 'Impressions'], c: 0,
+      f: 'The "Coltrane changes" move through three key centers a major third apart — at 290 beats per minute.' },
+    { q: 'Ornette Coleman’s prophetic 1959 album, which announced the free jazz movement, was titled:',
+      a: ['The Shape of Jazz to Come', 'Free Jazz', 'Out to Lunch', 'Ascension'], c: 0,
+      f: 'His residency at NYC’s Five Spot that year split the jazz world — Leonard Bernstein loved it; many boppers walked out.' },
+    { q: 'Charles Mingus’s primary instrument was the:',
+      a: ['Double bass', 'Piano', 'Trombone', 'Baritone saxophone'], c: 0,
+      f: 'His elegy "Goodbye Pork Pie Hat" mourns saxophonist Lester Young, who died two months before its recording.' },
+    { q: 'Which drummer led the Jazz Messengers, hard bop’s great finishing school?',
+      a: ['Art Blakey', 'Max Roach', 'Buddy Rich', 'Elvin Jones'], c: 0,
+      f: 'Alumni include Wayne Shorter, Lee Morgan, Freddie Hubbard, Keith Jarrett and Wynton Marsalis — four decades of them.' },
+    { q: 'Herbie Hancock’s 1973 album that fused jazz with funk and became a platinum classic:',
+      a: ['Head Hunters', 'Maiden Voyage', 'Thrust', 'Empyrean Isles'], c: 0,
+      f: 'Its opener "Chameleon," with that immortal synth-bass line, changed jazz’s economics overnight.' },
+    { q: 'Which 1970 double album launched Miles Davis’s electric jazz-fusion era?',
+      a: ['Bitches Brew', 'In a Silent Way', 'On the Corner', 'Jack Johnson'], c: 0,
+      f: 'It went gold — and its alumni founded Weather Report, Mahavishnu Orchestra, and Return to Forever.' },
+    { q: 'Saxophonist Wayne Shorter left Miles Davis’s quintet to co-found which pioneering fusion group?',
+      a: ['Weather Report', 'Return to Forever', 'The Headhunters', 'Steps Ahead'], c: 0,
+      f: 'With keyboardist Joe Zawinul — their 1977 hit "Birdland" was named for the club, itself named for Charlie Parker.' },
+    { q: 'The pianist in John Coltrane’s classic quartet — of "My Favorite Things" and "A Love Supreme" — was:',
+      a: ['McCoy Tyner', 'Herbie Hancock', 'Bill Evans', 'Red Garland'], c: 0,
+      f: 'Tyner’s thunderous fourths and pentatonics behind Coltrane defined the sound of 1960s modal jazz.' }
+  ]
 };
 
-const GENERAL = [
-  { q: 'Bebop was incubated at after-hours jam sessions at which Harlem club?',
-    a: ['Minton’s Playhouse', 'The Savoy Ballroom', 'The Cotton Club', 'The Village Vanguard'], c: 0,
-    f: 'Thelonious Monk was the house pianist at Minton’s, where Parker, Gillespie and Christian rewrote the rules nightly.' },
-  { q: 'Who recorded the 1965 spiritual suite "A Love Supreme"?',
-    a: ['John Coltrane', 'Ornette Coleman', 'Charles Mingus', 'Sonny Rollins'], c: 0,
-    f: 'Coltrane cut the entire four-part suite in a single December 1964 evening at Van Gelder Studio.' },
-  { q: '"Take Five," the first jazz single to sell a million copies, was composed by:',
-    a: ['Paul Desmond', 'Dave Brubeck', 'Gerry Mulligan', 'Stan Getz'], c: 0,
-    f: 'Desmond was the Brubeck Quartet’s alto player. The tune’s famous 5/4 meter gave the album Time Out its name.' },
-  { q: 'Billie Holiday’s harrowing 1939 protest song about lynching was:',
-    a: ['"Strange Fruit"', '"God Bless the Child"', '"Gloomy Sunday"', '"Fine and Mellow"'], c: 0,
-    f: 'Columbia refused to record it, so she cut it for tiny Commodore Records. Time magazine later named it the song of the century.' },
-  { q: 'The first jazz record ever released (1917) was cut by:',
-    a: ['The Original Dixieland Jass Band', 'The Hot Five', 'King Oliver’s Creole Jazz Band', 'Fletcher Henderson’s Orchestra'], c: 0,
-    f: '"Livery Stable Blues" — complete with barnyard-animal effects — became a national sensation and sold in the hundreds of thousands.' },
-  { q: 'Benny Goodman brought swing into the concert hall with a famous 1938 concert at:',
-    a: ['Carnegie Hall', 'The Apollo', 'Royal Albert Hall', 'The Hollywood Bowl'], c: 0,
-    f: 'Billed as the first jazz concert there by a headline swing band, it featured an integrated stage — radical for 1938.' },
-  { q: 'Thelonious Monk’s most-recorded composition is:',
-    a: ['"’Round Midnight"', '"Straight, No Chaser"', '"Blue Monk"', '"Epistrophy"'], c: 0,
-    f: 'It is the most-recorded jazz standard written by a jazz musician — covered thousands of times since 1944.' },
-  { q: 'After a 1928 caravan fire, guitarist Django Reinhardt famously soloed using how many fretting fingers?',
-    a: ['Two', 'Three', 'Four', 'One'], c: 0,
-    f: 'His left ring finger and pinky were paralyzed, so he rebuilt his whole technique — then co-founded the Quintette du Hot Club de France.' },
-  { q: 'Which drummer led the Jazz Messengers, hard bop’s great finishing school?',
-    a: ['Art Blakey', 'Max Roach', 'Buddy Rich', 'Elvin Jones'], c: 0,
-    f: 'Alumni include Wayne Shorter, Lee Morgan, Freddie Hubbard, Keith Jarrett and Wynton Marsalis — four decades of them.' },
-  { q: 'Ornette Coleman’s prophetic 1959 album, which announced the free jazz movement, was titled:',
-    a: ['The Shape of Jazz to Come', 'Free Jazz', 'Out to Lunch', 'Ascension'], c: 0,
-    f: 'His residency at NYC’s Five Spot that year split the jazz world in two — Leonard Bernstein loved it; many boppers walked out.' },
-  { q: 'Charles Mingus’s primary instrument was the:',
-    a: ['Double bass', 'Piano', 'Trombone', 'Baritone saxophone'], c: 0,
-    f: 'His elegy "Goodbye Pork Pie Hat" mourns saxophonist Lester Young, who died two months before its recording.' },
-  { q: 'John Coltrane’s 1960 album whose title track’s chord cycle became a rite of passage for improvisers:',
-    a: ['Giant Steps', 'Blue Train', 'My Favorite Things', 'Impressions'], c: 0,
-    f: 'The "Coltrane changes" move through three key centers a major third apart — at 290 beats per minute.' },
-  { q: 'Storyville, the red-light district where early jazz brewed, was located in:',
-    a: ['New Orleans', 'Memphis', 'Chicago', 'St. Louis'], c: 0,
-    f: 'When the Navy shut Storyville down in 1917, its musicians headed north — accelerating the Great Migration of jazz to Chicago.' },
-  { q: 'Count Basie’s hard-swinging orchestra came roaring out of which city in 1936?',
-    a: ['Kansas City', 'New York City', 'Detroit', 'Atlanta'], c: 0,
-    f: 'Built on the riff-driven "Kansas City stomp" style — "One O’Clock Jump" became the band’s eternal theme.' },
-  { q: 'Herbie Hancock’s 1973 album that fused jazz with funk and became a platinum classic:',
-    a: ['Head Hunters', 'Maiden Voyage', 'Thrust', 'Empyrean Isles'], c: 0,
-    f: 'Its opener "Chameleon," with that immortal synth-bass line, is 15 minutes of groove that changed jazz’s economics.' },
-  { q: 'Sarah Vaughan’s affectionate nickname among musicians was:',
-    a: ['Sassy', 'Lady Day', 'First Lady of Song', 'The Velvet Fog'], c: 0,
-    f: 'Also billed as "The Divine One." Like Ella, she was discovered at an Apollo Theater Amateur Night — in 1942.' },
-  { q: 'Which New Orleans pianist immodestly claimed to have "invented jazz" in 1902?',
-    a: ['Jelly Roll Morton', 'Scott Joplin', 'Fats Waller', 'Earl Hines'], c: 0,
-    f: 'Braggadocio aside, Morton’s Red Hot Peppers sides of 1926–27 are the first masterpieces of jazz composition.' },
-  { q: 'Dizzy Gillespie’s visual trademark was:',
-    a: ['A trumpet with an upturned bell', 'Playing two horns at once', 'A plastic saxophone', 'Conducting with a cane'], c: 0,
-    f: 'A dancer fell on his horn in 1953 and bent it skyward — Dizzy decided he liked the sound, and kept it that way for life.' }
+/* ============================================================
+   SETS (the jukebox — pick with flippers before launch)
+   ============================================================ */
+const SETS = [
+  { key: 'early',   title: 'WEST END BLUES',   era: 'Early Jazz',       feature: 'bumpers',   goal: 20, unit: 'BUMPERS',   color: '#f2b134' },
+  { key: 'swing',   title: "TAKE THE 'A' TRAIN", era: 'The Swing Era',  feature: 'orbits',    goal: 5,  unit: 'ORBITS',    color: '#e6b45a' },
+  { key: 'bebop',   title: 'KO-KO',            era: 'Bebop',            feature: 'targets',   goal: 10, unit: 'TARGETS',   color: '#38bdf8' },
+  { key: 'cool',    title: 'SO WHAT',          era: 'Cool & Modal',     feature: 'scoops',    goal: 3,  unit: 'CAPTURES',  color: '#34d399' },
+  { key: 'postbop', title: 'A LOVE SUPREME',   era: 'Post-Bop & Beyond', feature: 'lanes',    goal: 12, unit: 'ROLLOVERS', color: '#8b7cf6' }
 ];
 
 /* ============================================================
-   TABLE GEOMETRY
+   GEOMETRY HELPERS
    ============================================================ */
-const W = 480, H = 820;
-const GRAV = 1500, MAXV = 1500;
+const W = 480, H = 820, DMD_H = 72;
+const GRAV = 1500, MAXV = 1500, BALL_R = 9;
 
 function seg(x1, y1, x2, y2, opts) {
-  const s = { a: {x: x1, y: y1}, b: {x: x2, y: y2}, e: 0.45, ...opts };
+  const s = Object.assign({ a: {x: x1, y: y1}, b: {x: x2, y: y2}, e: 0.45 }, opts || {});
   const dx = s.b.x - s.a.x, dy = s.b.y - s.a.y, len = Math.hypot(dx, dy) || 1;
-  s.n = { x: dy / len, y: -dx / len }; // default normal (one of the two)
+  s.n = { x: dy / len, y: -dx / len };
   return s;
 }
-
-const walls = [];
-// top arc
-(function () {
-  const CX = 240, CY = 245, R = 228, N = 30;
+function arcSegs(cx, cy, r, th1, th2, n, opts) {
+  const out = [];
   let prev = null;
-  for (let i = 0; i <= N; i++) {
-    const th = Math.PI - Math.PI * i / N;
-    const p = { x: CX + R * Math.cos(th), y: CY - R * Math.sin(th) };
-    if (prev) walls.push(seg(prev.x, prev.y, p.x, p.y));
+  for (let i = 0; i <= n; i++) {
+    const th = th1 + (th2 - th1) * i / n;
+    const p = { x: cx + r * Math.cos(th), y: cy - r * Math.sin(th) };
+    if (prev) out.push(seg(prev.x, prev.y, p.x, p.y, opts));
     prev = p;
   }
-})();
-walls.push(seg(12, 245, 12, 640));            // left wall
-walls.push(seg(12, 640, 154, 712));           // left inlane guide (end tucks under flipper capsule)
-walls.push(seg(468, 245, 468, 760));          // right outer wall
-walls.push(seg(438, 320, 438, 760));          // lane inner wall
-walls.push(seg(438, 660, 328, 713));          // right inlane guide (end tucks under flipper capsule)
-walls.push(seg(438, 760, 468, 760, { e: 0.2 })); // lane floor
-
-// one-way gate at the lane opening: blocks playfield -> lane, lets ball fall through from above
-const gate = seg(438, 320, 462, 288, { oneway: true, e: 0.3 });
-{ // normal must point toward the playfield (test point (400,320) should be on + side)
-  const t = { x: 400 - gate.a.x, y: 320 - gate.a.y };
-  if (t.x * gate.n.x + t.y * gate.n.y < 0) { gate.n.x *= -1; gate.n.y *= -1; }
+  return out;
 }
-walls.push(gate);
-
-// slingshots (triangles, first face is the kicker)
-function sling(ax, ay, bx, by, cx, cy) {
+function makeSling(ax, ay, bx, by, cx, cy) {
   return {
     face: seg(ax, ay, bx, by, { e: 0.6 }),
     back: [seg(bx, by, cx, cy, { e: 0.3 }), seg(cx, cy, ax, ay, { e: 0.3 })],
@@ -421,55 +483,159 @@ function sling(ax, ay, bx, by, cx, cy) {
     cool: 0, flash: 0
   };
 }
-const slings = [
-  sling(118, 586, 158, 660, 118, 660),
-  sling(362, 586, 322, 660, 362, 660)
-];
-
-// musician pop bumpers
-const bumpers = [
-  { key: 'armstrong',  x: 140, y: 320, r: 27 },
-  { key: 'ellington',  x: 240, y: 262, r: 27 },
-  { key: 'parker',     x: 340, y: 320, r: 27 },
-  { key: 'fitzgerald', x: 185, y: 412, r: 27 },
-  { key: 'davis',      x: 295, y: 412, r: 27 }
-].map(b => ({ ...b, hits: 0, lit: false, cool: 0, flash: 0 }));
-
-// small posts framing the JAZZ rollover lanes
-const posts = [
-  { x: 180, y: 205, r: 7 }, { x: 240, y: 190, r: 7 }, { x: 300, y: 205, r: 7 }
-];
-
-// JAZZ rollover sensors
-const sensors = [
-  { x: 150, y: 218, ch: 'J' }, { x: 210, y: 200, ch: 'A' },
-  { x: 270, y: 200, ch: 'Z' }, { x: 330, y: 218, ch: 'Z' }
-].map(s => ({ ...s, lit: false, cool: 0 }));
-
-// flippers
-function flipper(px, py, rest, active) {
-  return { px, py, len: 74, r: 8, rest, active, ang: rest, vel: 0, pressed: false };
+function makeFlipper(px, py, len, rest, active) {
+  return { px, py, len, r: 8, rest, active, ang: rest, vel: 0, pressed: false };
 }
-const flipL = flipper(158, 712, 0.52, -0.55);
-const flipR = flipper(322, 712, Math.PI - 0.52, Math.PI + 0.55);
-const FLIP_SPD = 24;
+
+/* shared shell for every table */
+function buildShell() {
+  const walls = [];
+  walls.push(...arcSegs(240, 245, 228, Math.PI, 0, 30));
+  walls.push(seg(12, 245, 12, 640));
+  walls.push(seg(12, 640, 154, 712));
+  walls.push(seg(468, 245, 468, 760));
+  walls.push(seg(438, 320, 438, 760));
+  walls.push(seg(438, 660, 328, 713));
+  walls.push(seg(438, 760, 468, 760, { e: 0.2 }));
+  const gate = seg(438, 320, 462, 288, { oneway: true, e: 0.3 });
+  const t = { x: 400 - gate.a.x, y: 320 - gate.a.y };
+  if (t.x * gate.n.x + t.y * gate.n.y < 0) { gate.n.x *= -1; gate.n.y *= -1; }
+  walls.push(gate);
+  return {
+    walls,
+    slings: [makeSling(118, 586, 158, 660, 118, 660), makeSling(362, 586, 322, 660, 362, 660)],
+    flippers: [
+      Object.assign(makeFlipper(158, 712, 74, 0.52, -0.55), { side: 'L' }),
+      Object.assign(makeFlipper(322, 712, 74, Math.PI - 0.52, Math.PI + 0.55), { side: 'R' })
+    ]
+  };
+}
 
 /* ============================================================
-   GAME STATE
+   TABLE DEFINITIONS
    ============================================================ */
-const ball = { x: 453, y: 745, vx: 0, vy: 0, r: 9 };
-let state = 'attract'; // attract | play | quiz | over
-let score = 0, mult = 1, ballNum = 1, high = 0;
-let encoreUsed = false, solosWon = 0, encoresWon = 0;
-let launchHeld = false, launchPower = 0, ballLive = false;
-let usedQ = new Set();
-let quizCtx = null; // { mode:'solo'|'encore', bumper?, q }
-let shake = 0, msgText = '', msgTime = 0;
-
-try { high = parseInt(localStorage.getItem('jazzPinballHigh') || '0', 10) || 0; } catch (e) {}
+const TABLES = {
+  birdland: {
+    name: 'Birdland', sub: 'Full orbit loop · 3-bumper nest · classic flow', accent: '#38bdf8',
+    felt: ['#101a30', '#0b1222', '#080c18'], line: '#4cc3f0',
+    laneLetters: ['J', 'A', 'M'],
+    build() {
+      const sh = buildShell();
+      // orbit inner boundary
+      sh.walls.push(seg(100, 430, 100, 250));
+      sh.walls.push(...arcSegs(240, 245, 140, Math.PI, 0, 24));
+      sh.walls.push(seg(380, 250, 380, 400));
+      return Object.assign(sh, {
+        posts: [{ x: 192, y: 67, r: 7 }, { x: 288, y: 67, r: 7 }],
+        lanes: [
+          { x: 122, y: 104, ch: 'J' }, { x: 240, y: 61, ch: 'A' }, { x: 358, y: 104, ch: 'M' }
+        ],
+        orbits: [{ x: 56, y: 330 }, { x: 410, y: 360 }],
+        bumpers: [
+          { x: 190, y: 300, r: 26 }, { x: 290, y: 300, r: 26 }, { x: 240, y: 375, r: 26 }
+        ],
+        targets: [
+          { x: 130, y: 480 }, { x: 178, y: 508 }, { x: 240, y: 520 }, { x: 302, y: 508 }, { x: 350, y: 480 }
+        ],
+        scoop: { x: 240, y: 172, r: 13, ejectA: -2.05 },
+        deco: { burst: { x: 240, y: 470 }, title: 'BIRDLAND', titleY: 575 }
+      });
+    }
+  },
+  cottonclub: {
+    name: 'The Cotton Club', sub: 'Twin side loops · upper flipper · tight scoop shot', accent: '#e6b45a',
+    felt: ['#2a1420', '#1c0e18', '#120a12'], line: '#e6b45a',
+    laneLetters: ['J', 'A', 'M'],
+    build() {
+      const sh = buildShell();
+      // left loop inner boundary
+      sh.walls.push(seg(105, 560, 105, 300));
+      sh.walls.push(...arcSegs(240, 245, 135, Math.PI, 2.05, 10));
+      // right loop inner boundary
+      sh.walls.push(seg(375, 560, 375, 300));
+      sh.walls.push(...arcSegs(240, 245, 135, 1.09, 0, 10));
+      // upper flipper (fires with right key)
+      sh.flippers.push(Object.assign(makeFlipper(356, 300, 48, Math.PI - 0.5, Math.PI + 0.5), { side: 'R', r: 7 }));
+      return Object.assign(sh, {
+        posts: [{ x: 206, y: 100, r: 6 }, { x: 274, y: 100, r: 6 }],
+        lanes: [
+          { x: 192, y: 110, ch: 'J' }, { x: 240, y: 100, ch: 'A' }, { x: 288, y: 110, ch: 'M' }
+        ],
+        orbits: [{ x: 56, y: 400 }, { x: 407, y: 400 }],
+        bumpers: [
+          { x: 240, y: 230, r: 25 }, { x: 185, y: 295, r: 25 }, { x: 295, y: 295, r: 25 }, { x: 240, y: 360, r: 25 }
+        ],
+        targets: [
+          { x: 128, y: 470 }, { x: 170, y: 500 }, { x: 215, y: 516 }, { x: 260, y: 516 }, { x: 305, y: 498 }
+        ],
+        scoop: { x: 140, y: 225, r: 13, ejectA: -1.05 },
+        deco: { burst: { x: 240, y: 480 }, title: 'COTTON CLUB', titleY: 575 }
+      });
+    }
+  },
+  storyville: {
+    name: 'Storyville', sub: 'Five-legend spread · side alleys · four lanes', accent: '#34d399',
+    felt: ['#0e2018', '#0a1712', '#070f0c'], line: '#3fd9a4',
+    laneLetters: ['J', 'A', 'Z', 'Z'],
+    build() {
+      const sh = buildShell();
+      sh.walls.push(seg(95, 555, 95, 235));
+      sh.walls.push(seg(385, 555, 385, 280));
+      return Object.assign(sh, {
+        posts: [{ x: 180, y: 205, r: 7 }, { x: 240, y: 190, r: 7 }, { x: 300, y: 205, r: 7 }],
+        lanes: [
+          { x: 150, y: 218, ch: 'J' }, { x: 210, y: 200, ch: 'A' }, { x: 270, y: 200, ch: 'Z' }, { x: 330, y: 218, ch: 'Z' }
+        ],
+        orbits: [{ x: 53, y: 340 }, { x: 411, y: 430 }],
+        bumpers: [
+          { x: 142, y: 322, r: 26 }, { x: 240, y: 264, r: 26 }, { x: 338, y: 322, r: 26 },
+          { x: 187, y: 414, r: 26 }, { x: 293, y: 414, r: 26 }
+        ],
+        targets: [
+          { x: 130, y: 492 }, { x: 178, y: 514 }, { x: 240, y: 526 }, { x: 302, y: 514 }, { x: 350, y: 492 }
+        ],
+        scoop: { x: 240, y: 150, r: 13, ejectA: -2.05 },
+        deco: { burst: { x: 240, y: 480 }, title: 'STORYVILLE', titleY: 580 }
+      });
+    }
+  }
+};
+const TARGET_LETTERS = ['B', 'E', 'B', 'O', 'P'];
+const BUMPER_TAGS = ['SATCHMO', 'DUKE', 'BIRD', 'ELLA', 'MILES'];
+const BUMPER_COLORS = ['#f2b134', '#8b7cf6', '#38bdf8', '#f472b6', '#34d399'];
 
 /* ============================================================
-   AUDIO (tiny synth)
+   RUNTIME STATE
+   ============================================================ */
+let tableKey = 'birdland';
+let T = null;                  // built table entities
+let TD = TABLES[tableKey];     // table def
+let staticLayer = null;
+
+let state = 'menu';            // menu | play | quiz | pause | over
+let balls = [];
+let score = 0, mult = 1, ballNum = 1, high = 0, extraBalls = 0;
+let setIdx = 0;
+let setProgress = {}, setDone = {};
+let soloLit = false, lockLit = false, locks = 0;
+let multiball = false, frenzy = false, frenzyTime = 0;
+let jackpots = 0, encoresWon = 0;
+let encoreUsed = false;
+let saveTimer = 0, launchTime = -99, skillDone = false;
+let launchHeld = false, launchPower = 0;
+let tiltWarn = 0, tilted = false, nudgeCool = 0;
+let usedQ = new Set();
+let quiz = null;               // { mode, setKey, qs:[..], idx, correct }
+let shake = 0, gameTime = 0;
+let scoop = null;              // runtime scoop state { holdT, pending, ejectQ }
+
+const $ = id => document.getElementById(id);
+function fmt(n) { return n.toLocaleString('en-US'); }
+function highKey(k) { return 'jazzPinball2High_' + k; }
+function getHigh(k) { try { return parseInt(localStorage.getItem(highKey(k)) || '0', 10) || 0; } catch (e) { return 0; } }
+
+/* ============================================================
+   AUDIO
    ============================================================ */
 let AC = null, muted = false;
 try { muted = localStorage.getItem('jazzPinballMute') === '1'; } catch (e) {}
@@ -493,22 +659,33 @@ function tone(freq, dur, type, gain, delay, glide) {
   o.start(t0); o.stop(t0 + dur + 0.05);
 }
 const sfx = {
-  flip: () => tone(95, 0.06, 'square', 0.05),
-  bumper: () => { // jazzy dominant-chord stab, random root
+  flip: () => tone(95, 0.06, 'square', 0.045),
+  bumper: () => {
     const roots = [220, 246.9, 196, 233.1];
     const r = roots[Math.floor(Math.random() * roots.length)];
-    [1, 1.26, 1.5, 1.78].forEach((iv, i) => tone(r * iv, 0.14, 'triangle', 0.045, i * 0.012));
+    [1, 1.26, 1.5, 1.78].forEach((iv, i) => tone(r * iv, 0.13, 'triangle', 0.04, i * 0.012));
   },
-  sling: () => tone(160, 0.08, 'sawtooth', 0.04, 0, 120),
-  roll: () => tone(660, 0.12, 'sine', 0.05),
-  jackpot: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.16, 'triangle', 0.06, i * 0.09)),
+  sling: () => tone(160, 0.08, 'sawtooth', 0.035, 0, 120),
+  roll: () => tone(660, 0.11, 'sine', 0.045),
+  target: () => tone(520, 0.09, 'square', 0.035, 0, 700),
+  orbit: () => [330, 440].forEach((f, i) => tone(f, 0.1, 'triangle', 0.05, i * 0.05)),
   lit: () => [392, 523].forEach((f, i) => tone(f, 0.12, 'sine', 0.05, i * 0.07)),
   launch: () => tone(140, 0.3, 'sawtooth', 0.05, 0, 700),
-  correct: () => [392, 494, 587, 784].forEach((f, i) => tone(f, 0.15, 'triangle', 0.06, i * 0.08)),
-  wrong: () => { tone(220, 0.4, 'sawtooth', 0.05); tone(233, 0.4, 'sawtooth', 0.05); },
-  drain: () => tone(300, 0.5, 'triangle', 0.06, 0, 60)
+  correct: () => [392, 494, 587, 784].forEach((f, i) => tone(f, 0.15, 'triangle', 0.055, i * 0.08)),
+  wrong: () => { tone(220, 0.4, 'sawtooth', 0.045); tone(233, 0.4, 'sawtooth', 0.045); },
+  drain: () => tone(300, 0.5, 'triangle', 0.055, 0, 60),
+  lock: () => [523, 392, 262].forEach((f, i) => tone(f, 0.14, 'triangle', 0.06, i * 0.07)),
+  mball: () => [262, 330, 392, 523, 659, 784].forEach((f, i) => tone(f, 0.18, 'triangle', 0.06, i * 0.07)),
+  jackpot: () => [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.16, 'triangle', 0.06, i * 0.08)),
+  skill: () => [784, 988, 1175].forEach((f, i) => tone(f, 0.12, 'sine', 0.05, i * 0.06)),
+  save: () => [440, 554, 659].forEach((f, i) => tone(f, 0.12, 'triangle', 0.05, i * 0.06)),
+  scoopIn: () => tone(500, 0.25, 'sine', 0.05, 0, 120),
+  nudge: () => tone(70, 0.08, 'square', 0.06),
+  tilt: () => [180, 170, 160].forEach((f, i) => tone(f, 0.3, 'sawtooth', 0.06, i * 0.15)),
+  extra: () => [523, 659, 784, 659, 1047].forEach((f, i) => tone(f, 0.15, 'triangle', 0.06, i * 0.09)),
+  tick: () => tone(880, 0.03, 'square', 0.02)
 };
-const muteBtn = document.getElementById('mute');
+const muteBtn = $('mute');
 function muteLabel() { muteBtn.innerHTML = muted ? '&#9834; off' : '&#9834; on'; }
 muteLabel();
 muteBtn.addEventListener('click', () => {
@@ -518,47 +695,284 @@ muteBtn.addEventListener('click', () => {
 });
 
 /* ============================================================
-   HUD / MESSAGES
+   DMD — dot matrix display
    ============================================================ */
-const $ = id => document.getElementById(id);
-function fmt(n) { return n.toLocaleString('en-US'); }
-function hud() {
-  $('hScore').textContent = fmt(score);
-  $('hMult').textContent = mult + 'x';
-  $('hBall').textContent = ballNum + '/3';
-  $('hHigh').textContent = fmt(high);
+const DMD_COLS = 120, DMD_ROWS = 18, DOT = 4;
+const dmdOff = document.createElement('canvas');
+dmdOff.width = DMD_COLS; dmdOff.height = DMD_ROWS;
+const dmdCtx = dmdOff.getContext('2d', { willReadFrequently: true });
+const dmdCache = new Map();
+function rasterize(text) {
+  if (dmdCache.has(text)) return dmdCache.get(text);
+  dmdCtx.clearRect(0, 0, DMD_COLS, DMD_ROWS);
+  dmdCtx.font = 'bold 15px "IBM Plex Mono", monospace';
+  dmdCtx.textBaseline = 'middle';
+  dmdCtx.textAlign = 'center';
+  dmdCtx.fillStyle = '#fff';
+  dmdCtx.fillText(text, DMD_COLS / 2, DMD_ROWS / 2 + 1);
+  const img = dmdCtx.getImageData(0, 0, DMD_COLS, DMD_ROWS).data;
+  const grid = new Uint8Array(DMD_COLS * DMD_ROWS);
+  for (let i = 0; i < grid.length; i++) grid[i] = img[i * 4 + 3] > 110 ? 1 : 0;
+  if (dmdCache.size > 60) dmdCache.clear();
+  dmdCache.set(text, grid);
+  return grid;
 }
-function addScore(n) { score += n * mult; hud(); }
-function flash(text) { msgText = text; msgTime = 2.2; }
+const dmd = { queue: [], cur: null, t: 0, flashRate: 0 };
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => dmdCache.clear());
+function dmdMsg(text, dur, flash) {
+  dmd.queue.push({ text, dur: dur || 1.8, flash: !!flash });
+  if (dmd.queue.length > 5) dmd.queue.shift();
+}
+function dmdUpdate(dt) {
+  if (dmd.cur) {
+    dmd.t -= dt;
+    if (dmd.t <= 0) dmd.cur = null;
+  }
+  if (!dmd.cur && dmd.queue.length) {
+    dmd.cur = dmd.queue.shift();
+    dmd.t = dmd.cur.dur;
+  }
+}
+function dmdText() {
+  if (dmd.cur) {
+    if (dmd.cur.flash && Math.floor(gameTime * 6) % 2 === 0) return '';
+    return dmd.cur.text;
+  }
+  // idle: score, or set-select prompt while ball waits
+  const b = balls[0];
+  if (state === 'play' && balls.length === 1 && b && !b.live && b.x > 438) {
+    const s = SETS[setIdx];
+    return (Math.floor(gameTime * 0.5) % 2 === 0) ? ('SET: ' + s.title) : 'FLIP TO CHANGE SET';
+  }
+  return fmt(score);
+}
 
 /* ============================================================
-   QUIZ
+   GLOW SPRITES (cached radial gradients — cheap per-frame glow)
    ============================================================ */
-function pickQuestion(pool, poolKey) {
-  let avail = pool.map((q, i) => ({ q, id: poolKey + i })).filter(x => !usedQ.has(x.id));
-  if (!avail.length) { // recycle this pool
-    pool.forEach((q, i) => usedQ.delete(poolKey + i));
-    avail = pool.map((q, i) => ({ q, id: poolKey + i }));
+const glowCache = new Map();
+function glowSprite(color, r) {
+  const key = color + '_' + r;
+  if (glowCache.has(key)) return glowCache.get(key);
+  const c = document.createElement('canvas');
+  c.width = c.height = r * 4;
+  const g = c.getContext('2d');
+  const grad = g.createRadialGradient(r * 2, r * 2, r * 0.3, r * 2, r * 2, r * 2);
+  grad.addColorStop(0, color);
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, r * 4, r * 4);
+  glowCache.set(key, c);
+  return c;
+}
+function drawGlow(ctx, x, y, r, color, alpha) {
+  ctx.globalAlpha = alpha;
+  ctx.drawImage(glowSprite(color, r), x - r * 2, y - r * 2);
+  ctx.globalAlpha = 1;
+}
+
+/* ============================================================
+   TABLE SETUP / STATIC LAYER
+   ============================================================ */
+const canvas = $('pf');
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+canvas.width = W * DPR; canvas.height = (H + DMD_H) * DPR;
+const ctx = canvas.getContext('2d');
+
+function fit() {
+  const availH = window.innerHeight - 96;
+  const availW = window.innerWidth - 12;
+  const s = Math.min(availH / (H + DMD_H), availW / W, 1);
+  canvas.style.width = (W * s) + 'px';
+  canvas.style.height = ((H + DMD_H) * s) + 'px';
+}
+fit();
+window.addEventListener('resize', fit);
+
+function loadTable(key) {
+  tableKey = key;
+  TD = TABLES[key];
+  T = TD.build();
+  T.bumpers.forEach((b, i) => { b.hits = 0; b.cool = 0; b.flash = 0; b.tag = BUMPER_TAGS[i % 5]; b.color = BUMPER_COLORS[i % 5]; });
+  T.targets.forEach((t, i) => { t.r = 10; t.lit = false; t.flash = 0; t.ch = TARGET_LETTERS[i]; t.cool = 0; });
+  T.lanes.forEach(l => { l.lit = false; l.cool = 0; });
+  T.orbits.forEach(o => { o.cool = 0; o.flash = 0; });
+  scoop = Object.assign({}, T.scoop, { holdT: 0, holding: false, ejectQ: [], flash: 0 });
+  buildStatic();
+}
+
+function buildStatic() {
+  staticLayer = document.createElement('canvas');
+  staticLayer.width = W * DPR; staticLayer.height = (H + DMD_H) * DPR;
+  const g = staticLayer.getContext('2d');
+  g.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+  // DMD bezel
+  g.fillStyle = '#08060c';
+  g.fillRect(0, 0, W, DMD_H);
+  g.strokeStyle = 'rgba(217,164,65,0.5)';
+  g.lineWidth = 2;
+  g.strokeRect(3, 3, W - 6, DMD_H - 6);
+  // unlit dot field
+  g.fillStyle = 'rgba(255,182,72,0.07)';
+  for (let r = 0; r < DMD_ROWS; r++)
+    for (let c = 0; c < DMD_COLS; c++)
+      g.fillRect(c * DOT + 1, 6 + r * (DMD_H - 12) / DMD_ROWS, 2, 2);
+
+  g.translate(0, DMD_H);
+
+  // felt
+  const bg = g.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0, TD.felt[0]);
+  bg.addColorStop(0.55, TD.felt[1]);
+  bg.addColorStop(1, TD.felt[2]);
+  g.fillStyle = bg;
+  g.fillRect(0, 0, W, H);
+
+  // sunburst
+  g.save();
+  g.globalAlpha = 0.07;
+  g.strokeStyle = TD.accent;
+  g.lineWidth = 2;
+  const bu = T.deco.burst;
+  for (let i = 0; i < 12; i++) {
+    const a = Math.PI + (Math.PI * i / 11);
+    g.beginPath();
+    g.moveTo(bu.x, bu.y);
+    g.lineTo(bu.x + Math.cos(a) * 420, bu.y + Math.sin(a) * 420);
+    g.stroke();
+  }
+  g.restore();
+
+  // felt title
+  g.save();
+  g.globalAlpha = 0.15;
+  g.fillStyle = TD.accent;
+  g.font = '24px Limelight, serif';
+  g.textAlign = 'center';
+  g.fillText(T.deco.title, 225, T.deco.titleY);
+  g.restore();
+
+  // walls
+  g.strokeStyle = TD.line;
+  g.globalAlpha = 0.9;
+  g.lineWidth = 3;
+  g.lineCap = 'round';
+  g.shadowColor = TD.accent;
+  g.shadowBlur = 7;
+  g.beginPath();
+  T.walls.forEach(s => {
+    if (s.oneway) return;
+    g.moveTo(s.a.x, s.a.y);
+    g.lineTo(s.b.x, s.b.y);
+  });
+  g.stroke();
+  g.shadowBlur = 0;
+  // gate
+  const gate = T.walls.find(s => s.oneway);
+  g.strokeStyle = 'rgba(217,164,65,0.35)';
+  g.lineWidth = 1.5;
+  g.beginPath();
+  g.moveTo(gate.a.x, gate.a.y); g.lineTo(gate.b.x, gate.b.y);
+  g.stroke();
+  g.globalAlpha = 1;
+
+  // slingshot outlines
+  T.slings.forEach(s => {
+    g.beginPath();
+    g.moveTo(s.pts[0].x, s.pts[0].y);
+    g.lineTo(s.pts[1].x, s.pts[1].y);
+    g.lineTo(s.pts[2].x, s.pts[2].y);
+    g.closePath();
+    g.fillStyle = 'rgba(217,164,65,0.18)';
+    g.strokeStyle = 'rgba(217,164,65,0.7)';
+    g.lineWidth = 2;
+    g.fill(); g.stroke();
+  });
+
+  // posts
+  T.posts.forEach(p => {
+    g.beginPath();
+    g.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    g.fillStyle = '#d9a441';
+    g.fill();
+  });
+
+  // plunger lane tint
+  g.fillStyle = 'rgba(217,164,65,0.07)';
+  g.fillRect(440, 320, 26, 438);
+
+  g.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+/* ============================================================
+   HUD
+   ============================================================ */
+function hud() {
+  $('hMult').textContent = mult + 'x';
+  $('hBall').textContent = ballNum + '/3' + (extraBalls > 0 ? '+' + extraBalls : '');
+  $('hSets').textContent = Object.keys(setDone).length + '/5';
+  $('hHigh').textContent = fmt(high);
+}
+function addScore(n) { score += n * mult; }
+
+/* featured multiplier for the selected set */
+function feat(kind) {
+  const s = SETS[setIdx];
+  return s.feature === kind ? 2 : 1;
+}
+function challenge(kind, count) {
+  const s = SETS[setIdx];
+  if (s.feature !== kind || setDone[s.key] || soloLit) return;
+  setProgress[s.key] = (setProgress[s.key] || 0) + (count || 1);
+  if (setProgress[s.key] >= s.goal) {
+    soloLit = true;
+    sfx.lit();
+    dmdMsg('SOLO IS LIT!', 2.2, true);
+    dmdMsg('SHOOT THE SPOTLIGHT', 2);
+  } else if (setProgress[s.key] === Math.ceil(s.goal / 2)) {
+    dmdMsg(s.unit + ' ' + setProgress[s.key] + '/' + s.goal, 1.4);
+  }
+}
+
+/* ============================================================
+   QUIZ (Solo Challenge round of 3, or Encore single)
+   ============================================================ */
+function pickQuestion(cat) {
+  const pool = QBANK[cat];
+  let avail = pool.map((q, i) => ({ q, id: cat + i })).filter(x => !usedQ.has(x.id));
+  if (!avail.length) {
+    pool.forEach((q, i) => usedQ.delete(cat + i));
+    avail = pool.map((q, i) => ({ q, id: cat + i }));
   }
   const pick = avail[Math.floor(Math.random() * avail.length)];
   usedQ.add(pick.id);
   return pick.q;
 }
-function openQuiz(mode, bumper) {
+function anyCat() {
+  const cats = Object.keys(QBANK);
+  return cats[Math.floor(Math.random() * cats.length)];
+}
+function openSolo(setKey) {
+  const s = SETS.find(x => x.key === setKey);
+  quiz = { mode: 'solo', setKey, qs: [pickQuestion(setKey), pickQuestion(setKey), pickQuestion(setKey)], idx: 0, correct: 0 };
   state = 'quiz';
-  let q, tag;
-  if (mode === 'solo') {
-    const m = MUSICIANS[bumper.key];
-    q = pickQuestion(m.qs, bumper.key);
-    tag = 'Solo Challenge — ' + m.name;
-    $('quizTag').classList.remove('encore');
-  } else {
-    q = pickQuestion(GENERAL, 'gen');
-    tag = 'Encore — answer to save your ball!';
-    $('quizTag').classList.add('encore');
-  }
-  quizCtx = { mode, bumper, q };
-  $('quizTag').textContent = tag;
+  $('quizTag').classList.remove('encore');
+  $('quizTag').textContent = 'Solo Challenge — ' + s.era;
+  showQuestion();
+}
+function openEncore() {
+  quiz = { mode: 'encore', qs: [pickQuestion(anyCat())], idx: 0, correct: 0 };
+  state = 'quiz';
+  $('quizTag').classList.add('encore');
+  $('quizTag').textContent = 'Encore — answer to save your ball!';
+  showQuestion();
+}
+function showQuestion() {
+  const q = quiz.qs[quiz.idx];
+  $('quizProgress').textContent = quiz.mode === 'solo'
+    ? 'Question ' + (quiz.idx + 1) + ' of 3 — need 2 to bring the house down'
+    : 'One question. One ball. No pressure.';
   $('quizQ').textContent = q.q;
   const box = $('quizAnswers');
   box.innerHTML = '';
@@ -575,173 +989,247 @@ function openQuiz(mode, bumper) {
   $('quizOverlay').classList.add('show');
 }
 function answer(right, btn) {
-  const q = quizCtx.q;
-  const btns = [...$('quizAnswers').children];
-  btns.forEach(b => { b.disabled = true; if (b.textContent === q.a[q.c]) b.classList.add('right'); });
+  const q = quiz.qs[quiz.idx];
+  [...$('quizAnswers').children].forEach(b => {
+    b.disabled = true;
+    if (b.textContent === q.a[q.c]) b.classList.add('right');
+  });
   if (!right) btn.classList.add('wrong');
+  if (right) quiz.correct++;
   const v = $('quizVerdict');
   v.style.display = 'block';
   v.className = right ? 'good' : 'bad';
-  $('quizFact').innerHTML = '<b>' + (right ? 'That’s jazz.' : 'For the record:') + '</b> ' + q.f;
+  v.textContent = right ? ['Yes!', 'That’s jazz.', 'In the pocket!'][quiz.idx % 3] : 'Off key.';
+  $('quizFact').innerHTML = '<b>' + (right ? 'Encore fact:' : 'For the record:') + '</b> ' + q.f;
   $('quizFact').style.display = 'block';
+  const last = quiz.idx >= quiz.qs.length - 1;
+  $('quizGo').textContent = last ? 'Finish' : 'Next Question';
   $('quizGo').style.display = 'inline-block';
-  quizCtx.right = right;
-
-  if (quizCtx.mode === 'solo') {
-    if (right) {
-      v.textContent = 'Standing Ovation!';
-      solosWon++;
-      addScore(25000);
-      if (mult < 5) { mult++; flash('MULTIPLIER ' + mult + 'x'); }
-      sfx.correct();
-    } else {
-      v.textContent = 'You got booed off.';
-      mult = 1;
-      sfx.wrong();
-    }
-  } else { // encore
-    if (right) {
-      v.textContent = 'Encore! Ball saved.';
-      encoresWon++;
-      addScore(5000);
-      sfx.correct();
-    } else {
-      v.textContent = 'The house lights come up.';
-      sfx.wrong();
-    }
-  }
+  if (right) { addScore(150000); sfx.correct(); } else sfx.wrong();
   hud();
 }
 $('quizGo').addEventListener('click', () => {
-  $('quizOverlay').classList.remove('show');
-  if (quizCtx.mode === 'encore') {
-    if (quizCtx.right) { resetBallToLane(); state = 'play'; }
-    else nextBall();
-  } else {
-    state = 'play';
+  if (quiz.idx < quiz.qs.length - 1) {
+    quiz.idx++;
+    showQuestion();
+    return;
   }
-  quizCtx = null;
+  $('quizOverlay').classList.remove('show');
+  if (quiz.mode === 'solo') {
+    const s = SETS.find(x => x.key === quiz.setKey);
+    if (quiz.correct >= 2) {
+      setDone[s.key] = true;
+      addScore(500000);
+      if (mult < 5) mult++;
+      dmdMsg('SET COMPLETE!', 2.2, true);
+      dmdMsg('MULTIPLIER ' + mult + 'X', 1.8);
+      sfx.mball();
+      if (Object.keys(setDone).length === 5) {
+        addScore(2500000);
+        extraBalls++;
+        dmdMsg('JAZZ IMMORTAL! 2.5M', 2.5, true);
+        dmdMsg('EXTRA BALL', 2, true);
+        sfx.extra();
+      }
+    } else {
+      setProgress[s.key] = 0;
+      dmdMsg('TOUGH CROWD...', 2);
+      dmdMsg('OVATION RESET', 1.6);
+    }
+    soloLit = false;
+    scoopEject();
+    state = 'play';
+  } else { // encore
+    if (quiz.correct >= 1) {
+      encoresWon++;
+      addScore(50000);
+      dmdMsg('ENCORE! BALL SAVED', 2, true);
+      sfx.save();
+      serveBall(true);
+      state = 'play';
+    } else {
+      endBall();
+    }
+  }
+  quiz = null;
+  hud();
 });
 
 /* ============================================================
-   GAME FLOW
+   BALL / FLOW MANAGEMENT
    ============================================================ */
-function resetBallToLane() {
-  ball.x = 453; ball.y = 745; ball.vx = 0; ball.vy = 0;
-  ballLive = false; launchPower = 0;
+function newBallObj(x, y, vx, vy) {
+  return { x, y, vx: vx || 0, vy: vy || 0, r: BALL_R, live: false, autoT: 0 };
 }
-function startGame() {
-  score = 0; mult = 1; ballNum = 1; solosWon = 0; encoresWon = 0;
-  usedQ = new Set();
-  bumpers.forEach(b => { b.hits = 0; b.lit = false; });
-  sensors.forEach(s => s.lit = false);
-  encoreUsed = false;
-  resetBallToLane();
-  hud();
-  $('startOverlay').classList.remove('show');
-  $('overOverlay').classList.remove('show');
-  state = 'play';
-  flash('BALL 1 — PULL THE PLUNGER');
+function serveBall(auto) {
+  const b = newBallObj(453, 745);
+  if (auto) { b.autoT = 0.9; }
+  balls.push(b);
+  launchPower = 0;
 }
-function drained() {
-  sfx.drain();
-  if (!encoreUsed) {
-    encoreUsed = true;
-    openQuiz('encore');
-  } else {
-    nextBall();
+function scoopEject() {
+  scoop.ejectQ.push(1);
+}
+function startMultiball() {
+  multiball = true;
+  locks = 0; lockLit = false;
+  saveTimer = 15;
+  jackpotsThisMB = 0;
+  dmdMsg('AFTER HOURS MULTIBALL', 2.5, true);
+  dmdMsg('ORBITS = JACKPOT 350K', 2.2);
+  sfx.mball();
+  scoop.ejectQ.push(1, 1, 1);
+}
+let jackpotsThisMB = 0;
+function startFrenzy() {
+  frenzy = true;
+  frenzyTime = 45;
+  dmdMsg('BEBOP FRENZY!', 2.2, true);
+  dmdMsg('TARGETS 25K EACH', 2);
+  sfx.mball();
+  if (balls.length < 3) scoop.ejectQ.push(1);
+  T.targets.forEach(t => t.lit = false);
+}
+function drainBall(i) {
+  balls.splice(i, 1);
+  if (saveTimer > 0 && !tilted) {
+    dmdMsg('BALL SAVED', 1.6, true);
+    sfx.save();
+    serveBall(true);
+    return;
   }
+  if (balls.length > 0) {
+    if (balls.length === 1) {
+      if (multiball) { multiball = false; dmdMsg('MULTIBALL OVER', 1.6); }
+      if (frenzy) { frenzy = false; dmdMsg('FRENZY OVER', 1.6); }
+    }
+    return;
+  }
+  // last ball gone
+  multiball = false; frenzy = false;
+  sfx.drain();
+  if (!encoreUsed && !tilted) {
+    encoreUsed = true;
+    openEncore();
+    return;
+  }
+  endBall();
 }
-function nextBall() {
+function endBall() {
+  tilted = false; tiltWarn = 0;
+  if (extraBalls > 0) {
+    extraBalls--;
+    dmdMsg('EXTRA BALL — SAME SET', 2, true);
+    startBallServe();
+    return;
+  }
   ballNum++;
   if (ballNum > 3) { gameOver(); return; }
-  encoreUsed = false;
   mult = 1;
-  resetBallToLane();
-  hud();
+  dmdMsg('BALL ' + ballNum, 1.8);
+  startBallServe();
+}
+function startBallServe() {
+  encoreUsed = false;
+  skillDone = false;
+  balls = [];
+  serveBall(false);
+  saveTimer = 0;
   state = 'play';
-  flash('BALL ' + ballNum);
+  hud();
+}
+function startGame(key) {
+  loadTable(key);
+  score = 0; mult = 1; ballNum = 1; extraBalls = 0;
+  setIdx = 0; setProgress = {}; setDone = {};
+  soloLit = false; lockLit = false; locks = 0;
+  multiball = false; frenzy = false;
+  jackpots = 0; encoresWon = 0;
+  usedQ = new Set();
+  tiltWarn = 0; tilted = false;
+  high = getHigh(key);
+  dmd.queue = []; dmd.cur = null;
+  dmdMsg(TD.name.toUpperCase(), 2);
+  dmdMsg('PICK YOUR SET', 1.8);
+  $('menuOverlay').classList.remove('show');
+  $('overOverlay').classList.remove('show');
+  $('quizOverlay').classList.remove('show');
+  quiz = null;
+  startBallServe();
 }
 function gameOver() {
   state = 'over';
   const isBest = score > high;
   if (isBest) {
     high = score;
-    try { localStorage.setItem('jazzPinballHigh', String(high)); } catch (e) {}
+    try { localStorage.setItem(highKey(tableKey), String(high)); } catch (e) {}
   }
   $('finalScore').textContent = fmt(score);
   $('finalHigh').textContent = fmt(high);
-  $('finalSolos').textContent = solosWon;
+  $('finalSets').textContent = Object.keys(setDone).length + '/5';
+  $('finalJack').textContent = jackpots;
   $('finalEncores').textContent = encoresWon;
   $('newBest').style.display = isBest ? 'block' : 'none';
   hud();
+  buildMenu();
   $('overOverlay').classList.add('show');
 }
-$('startBtn').addEventListener('click', () => { audio(); startGame(); });
-$('againBtn').addEventListener('click', () => { audio(); startGame(); });
 
 /* ============================================================
    PHYSICS
    ============================================================ */
-function collideSeg(s) {
+function collideSeg(b, s) {
   const ax = s.a.x, ay = s.a.y;
   const abx = s.b.x - ax, aby = s.b.y - ay;
   const ab2 = abx * abx + aby * aby;
-  let t = ((ball.x - ax) * abx + (ball.y - ay) * aby) / ab2;
+  let t = ((b.x - ax) * abx + (b.y - ay) * aby) / ab2;
   t = Math.max(0, Math.min(1, t));
   const cx = ax + abx * t, cy = ay + aby * t;
-  let dx = ball.x - cx, dy = ball.y - cy;
+  let dx = b.x - cx, dy = b.y - cy;
   const d = Math.hypot(dx, dy);
-  if (d >= ball.r || d === 0) return false;
+  if (d >= b.r || d === 0) return false;
   if (s.oneway) {
-    // only act when the ball approaches from the front (playfield) side
-    const side = (ball.x - ax) * s.n.x + (ball.y - ay) * s.n.y;
+    const side = (b.x - ax) * s.n.x + (b.y - ay) * s.n.y;
     if (side < 0) return false;
-    dx = s.n.x * d; dy = s.n.y * d; // push out along the fixed normal
+    dx = s.n.x * d; dy = s.n.y * d;
   }
   const nx = dx / d, ny = dy / d;
-  ball.x += nx * (ball.r - d);
-  ball.y += ny * (ball.r - d);
-  const vn = ball.vx * nx + ball.vy * ny;
+  b.x += nx * (b.r - d);
+  b.y += ny * (b.r - d);
+  const vn = b.vx * nx + b.vy * ny;
   if (vn < 0) {
-    ball.vx -= (1 + s.e) * vn * nx;
-    ball.vy -= (1 + s.e) * vn * ny;
-    // mild tangential friction
-    ball.vx *= 0.995; ball.vy *= 0.995;
+    b.vx -= (1 + s.e) * vn * nx;
+    b.vy -= (1 + s.e) * vn * ny;
+    b.vx *= 0.995; b.vy *= 0.995;
   }
   return true;
 }
-function collideCircle(cx, cy, cr, e) {
-  const dx = ball.x - cx, dy = ball.y - cy;
-  const d = Math.hypot(dx, dy), min = ball.r + cr;
+function collideCircle(b, cx, cy, cr, e) {
+  const dx = b.x - cx, dy = b.y - cy;
+  const d = Math.hypot(dx, dy), min = b.r + cr;
   if (d >= min || d === 0) return false;
   const nx = dx / d, ny = dy / d;
-  ball.x += nx * (min - d);
-  ball.y += ny * (min - d);
-  const vn = ball.vx * nx + ball.vy * ny;
+  b.x += nx * (min - d);
+  b.y += ny * (min - d);
+  const vn = b.vx * nx + b.vy * ny;
   if (vn < 0) {
-    ball.vx -= (1 + e) * vn * nx;
-    ball.vy -= (1 + e) * vn * ny;
+    b.vx -= (1 + e) * vn * nx;
+    b.vy -= (1 + e) * vn * ny;
   }
   return true;
 }
-function collideFlipper(f) {
+function collideFlipper(b, f) {
   const dx = Math.cos(f.ang), dy = Math.sin(f.ang);
-  const tx = f.px + dx * f.len, ty = f.py + dy * f.len;
-  // closest point on flipper segment
-  const abx = tx - f.px, aby = ty - f.py;
-  let t = ((ball.x - f.px) * abx + (ball.y - f.py) * aby) / (f.len * f.len);
+  const abx = dx * f.len, aby = dy * f.len;
+  let t = ((b.x - f.px) * abx + (b.y - f.py) * aby) / (f.len * f.len);
   t = Math.max(0, Math.min(1, t));
   const cx = f.px + abx * t, cy = f.py + aby * t;
-  const ddx = ball.x - cx, ddy = ball.y - cy;
-  const d = Math.hypot(ddx, ddy), min = ball.r + f.r;
+  const ddx = b.x - cx, ddy = b.y - cy;
+  const d = Math.hypot(ddx, ddy), min = b.r + f.r;
   if (d >= min || d === 0) return;
   const nx = ddx / d, ny = ddy / d;
-  ball.x += nx * (min - d);
-  ball.y += ny * (min - d);
-  // contact point velocity from flipper rotation.
-  // While the flipper swings, enforce a minimum effective contact radius so a
-  // ball resting against the base (r ~ 0) still gets kicked free by a flip.
+  b.x += nx * (min - d);
+  b.y += ny * (min - d);
   let rx = cx - f.px, ry = cy - f.py;
   if (Math.abs(f.vel) > 1) {
     const rlen = Math.hypot(rx, ry);
@@ -749,353 +1237,483 @@ function collideFlipper(f) {
     else if (rlen < 28) { const s = 28 / rlen; rx *= s; ry *= s; }
   }
   const cvx = -f.vel * ry, cvy = f.vel * rx;
-  const rvx = ball.vx - cvx, rvy = ball.vy - cvy;
+  const rvx = b.vx - cvx, rvy = b.vy - cvy;
   const vn = rvx * nx + rvy * ny;
   if (vn < 0) {
     const e = 0.35;
-    ball.vx = rvx - (1 + e) * vn * nx + cvx;
-    ball.vy = rvy - (1 + e) * vn * ny + cvy;
+    b.vx = rvx - (1 + e) * vn * nx + cvx;
+    b.vy = rvy - (1 + e) * vn * ny + cvy;
+  }
+}
+function collideBalls() {
+  for (let i = 0; i < balls.length; i++) {
+    for (let j = i + 1; j < balls.length; j++) {
+      const a = balls[i], b = balls[j];
+      const dx = b.x - a.x, dy = b.y - a.y;
+      const d = Math.hypot(dx, dy), min = a.r + b.r;
+      if (d >= min || d === 0) continue;
+      const nx = dx / d, ny = dy / d;
+      const push = (min - d) / 2;
+      a.x -= nx * push; a.y -= ny * push;
+      b.x += nx * push; b.y += ny * push;
+      const va = a.vx * nx + a.vy * ny;
+      const vb = b.vx * nx + b.vy * ny;
+      if (va - vb > 0) {
+        const e = 0.9;
+        const dva = ((vb - va) * (1 + e)) / 2;
+        a.vx += dva * nx; a.vy += dva * ny;
+        b.vx -= dva * nx; b.vy -= dva * ny;
+      }
+    }
   }
 }
 function updateFlipper(f, dt) {
-  const target = f.pressed ? f.active : f.rest;
+  const target = (f.pressed && !tilted) ? f.active : f.rest;
   const old = f.ang;
   const dir = Math.sign(target - f.ang);
   if (dir !== 0) {
-    f.ang += dir * FLIP_SPD * dt;
+    f.ang += dir * 24 * dt;
     if ((dir > 0 && f.ang > target) || (dir < 0 && f.ang < target)) f.ang = target;
   }
   f.vel = (f.ang - old) / dt;
 }
 
 function step(dt) {
-  updateFlipper(flipL, dt);
-  updateFlipper(flipR, dt);
-
-  const inLane = ball.x > 438;
-
-  // plunger
-  if (!ballLive && inLane && ball.y > 700) {
-    if (launchHeld) launchPower = Math.min(1, launchPower + dt * 0.9);
-    else if (launchPower > 0.05) {
-      ball.vy = -(650 + launchPower * 1050);
-      launchPower = 0;
-      ballLive = true;
-      sfx.launch();
-    } else launchPower = 0;
-  }
-  if (ballLive && inLane && ball.y > 700 && Math.abs(ball.vy) < 8 && Math.abs(ball.vx) < 8) {
-    // ball fell back into the lane — allow re-launch
-    ballLive = false;
+  gameTime += dt;
+  T.flippers.forEach(f => updateFlipper(f, dt));
+  saveTimer = Math.max(0, saveTimer - dt);
+  nudgeCool = Math.max(0, nudgeCool - dt);
+  if (frenzy) {
+    frenzyTime -= dt;
+    if (frenzyTime <= 0) { frenzy = false; dmdMsg('FRENZY OVER', 1.6); }
   }
 
-  ball.vy += GRAV * dt;
-  const sp = Math.hypot(ball.vx, ball.vy);
-  if (sp > MAXV) { ball.vx *= MAXV / sp; ball.vy *= MAXV / sp; }
-  ball.x += ball.vx * dt;
-  ball.y += ball.vy * dt;
-
-  walls.forEach(collideSeg);
-
-  // slingshots
-  slings.forEach(s => {
-    s.back.forEach(collideSeg);
-    if (collideSeg(s.face) && s.cool <= 0) {
-      s.cool = 0.12; s.flash = 0.15;
-      const nx = s.face.n.x, ny = s.face.n.y;
-      // kick away from the face along whichever normal points at the ball
-      const mx = (s.face.a.x + s.face.b.x) / 2, my = (s.face.a.y + s.face.b.y) / 2;
-      const sgn = ((ball.x - mx) * nx + (ball.y - my) * ny) >= 0 ? 1 : -1;
-      ball.vx += sgn * nx * 380;
-      ball.vy += sgn * ny * 380;
-      addScore(250);
-      sfx.sling();
-      shake = 0.1;
+  // scoop hold / eject queue
+  if (scoop.holding) {
+    scoop.holdT -= dt;
+    if (scoop.holdT <= 0) {
+      scoop.holding = false;
+      resolveScoop();
     }
-    s.cool -= dt; s.flash -= dt;
-  });
+  } else if (scoop.ejectQ.length && scoop.ejectT <= 0) {
+    scoop.ejectQ.shift();
+    const a = (scoop.ejectA || -2.05) + (Math.random() - 0.5) * 0.2;
+    const b = newBallObj(scoop.x, scoop.y, Math.cos(a) * 470, Math.sin(a) * 470);
+    b.live = true;
+    balls.push(b);
+    scoop.ejectT = 0.6;
+    sfx.launch();
+  }
+  scoop.ejectT = Math.max(0, (scoop.ejectT || 0) - dt);
 
-  // posts
-  posts.forEach(p => collideCircle(p.x, p.y, p.r, 0.55));
+  for (let bi = balls.length - 1; bi >= 0; bi--) {
+    const b = balls[bi];
+    const inLane = b.x > 438;
 
-  // pop bumpers
-  bumpers.forEach(b => {
-    b.cool -= dt; b.flash -= dt;
-    if (collideCircle(b.x, b.y, b.r, 0.6) && b.cool <= 0) {
-      b.cool = 0.09; b.flash = 0.2; shake = 0.12;
-      // guarantee a strong outward kick
-      const dx = ball.x - b.x, dy = ball.y - b.y, d = Math.hypot(dx, dy) || 1;
-      const nx = dx / d, ny = dy / d;
-      const vn = ball.vx * nx + ball.vy * ny;
-      if (vn < 520) { ball.vx += nx * (520 - vn); ball.vy += ny * (520 - vn); }
-      if (b.lit) {
-        b.lit = false; b.hits = 0;
-        openQuiz('solo', b);
-      } else {
-        b.hits++;
-        addScore(500);
+    // auto-launch (ball save serves)
+    if (b.autoT > 0) {
+      b.autoT -= dt;
+      if (b.autoT <= 0 && inLane && !b.live) {
+        b.vy = -1650;
+        b.live = true;
+        launchTime = gameTime;
+        skillDone = false;
+        sfx.launch();
+      }
+    }
+
+    // plunger
+    if (!b.live && inLane && b.y > 700 && balls.length === 1) {
+      if (launchHeld) launchPower = Math.min(1, launchPower + dt * 0.9);
+      else if (launchPower > 0.05) {
+        b.vy = -(650 + launchPower * 1050);
+        launchPower = 0;
+        b.live = true;
+        launchTime = gameTime;
+        saveTimer = Math.max(saveTimer, 12);
+        sfx.launch();
+        dmdMsg(SETS[setIdx].title, 1.6);
+      } else launchPower = 0;
+    }
+    if (b.live && inLane && b.y > 700 && Math.abs(b.vy) < 8 && Math.abs(b.vx) < 8) b.live = false;
+
+    b.vy += GRAV * dt;
+    const sp = Math.hypot(b.vx, b.vy);
+    if (sp > MAXV) { b.vx *= MAXV / sp; b.vy *= MAXV / sp; }
+    b.x += b.vx * dt;
+    b.y += b.vy * dt;
+
+    T.walls.forEach(s => collideSeg(b, s));
+
+    // slingshots
+    T.slings.forEach(s => {
+      s.back.forEach(x => collideSeg(b, x));
+      if (collideSeg(b, s.face) && s.cool <= 0) {
+        s.cool = 0.12; s.flash = 0.15;
+        const mx = (s.face.a.x + s.face.b.x) / 2, my = (s.face.a.y + s.face.b.y) / 2;
+        const sgn = ((b.x - mx) * s.face.n.x + (b.y - my) * s.face.n.y) >= 0 ? 1 : -1;
+        b.vx += sgn * s.face.n.x * 380;
+        b.vy += sgn * s.face.n.y * 380;
+        addScore(250);
+        sfx.sling();
+        shake = 0.08;
+      }
+    });
+
+    // posts
+    T.posts.forEach(p => collideCircle(b, p.x, p.y, p.r, 0.55));
+
+    // bumpers
+    T.bumpers.forEach(bp => {
+      if (collideCircle(b, bp.x, bp.y, bp.r, 0.6) && bp.cool <= 0) {
+        bp.cool = 0.09; bp.flash = 0.2; shake = 0.1;
+        const dx = b.x - bp.x, dy = b.y - bp.y, d = Math.hypot(dx, dy) || 1;
+        const nx = dx / d, ny = dy / d;
+        const vn = b.vx * nx + b.vy * ny;
+        if (vn < 520) { b.vx += nx * (520 - vn); b.vy += ny * (520 - vn); }
+        addScore(1000 * feat('bumpers') * (multiball ? 3 : 1));
+        challenge('bumpers');
         sfx.bumper();
-        if (b.hits >= 3) {
-          b.lit = true;
-          sfx.lit();
-          flash(MUSICIANS[b.key].tag + ' IS LIT — HIT AGAIN FOR SOLO');
+      }
+    });
+
+    // targets (BEBOP roundels)
+    T.targets.forEach(tg => {
+      if (collideCircle(b, tg.x, tg.y, tg.r, 0.5) && tg.cool <= 0) {
+        tg.cool = 0.25; tg.flash = 0.2;
+        addScore((frenzy ? 25000 : 5000) * feat('targets'));
+        challenge('targets');
+        sfx.target();
+        if (!tg.lit && !frenzy) {
+          tg.lit = true;
+          if (T.targets.every(x => x.lit)) startFrenzy();
         }
       }
-    }
-  });
+    });
 
-  // JAZZ rollovers
-  sensors.forEach(s => {
-    s.cool -= dt;
-    const d = Math.hypot(ball.x - s.x, ball.y - s.y);
-    if (d < 17 && s.cool <= 0) {
-      s.cool = 1.0;
-      if (!s.lit) {
-        s.lit = true;
-        addScore(1000);
+    // lane rollovers
+    T.lanes.forEach(l => {
+      const d = Math.hypot(b.x - l.x, b.y - l.y);
+      if (d < 17 && l.cool <= 0) {
+        l.cool = 1.0;
+        addScore(2500 * feat('lanes'));
+        challenge('lanes');
         sfx.roll();
-        if (sensors.every(x => x.lit)) {
-          addScore(25000);
-          sfx.jackpot();
-          flash('J-A-Z-Z JACKPOT! +' + fmt(25000 * mult));
-          sensors.forEach(x => x.lit = false);
+        if (!skillDone && gameTime - launchTime < 3) {
+          skillDone = true;
+          addScore(100000);
+          dmdMsg('SKILLSHOT 100K', 1.8, true);
+          sfx.skill();
+        }
+        if (!l.lit) {
+          l.lit = true;
+          if (T.lanes.every(x => x.lit)) {
+            addScore(15000);
+            T.lanes.forEach(x => x.lit = false);
+            if (!lockLit) {
+              lockLit = true;
+              sfx.lit();
+              dmdMsg(locks >= 2 ? 'MULTIBALL IS LIT!' : 'LOCK IS LIT', 2, true);
+            }
+          }
         }
       }
+    });
+
+    // orbit sensors
+    T.orbits.forEach(o => {
+      const d = Math.hypot(b.x - o.x, b.y - o.y);
+      if (d < 22 && o.cool <= 0) {
+        o.cool = 1.2; o.flash = 0.4;
+        if (multiball) {
+          addScore(350000);
+          jackpots++; jackpotsThisMB++;
+          dmdMsg('JACKPOT! 350K', 1.6, true);
+          sfx.jackpot();
+        } else {
+          addScore(7500 * feat('orbits'));
+          sfx.orbit();
+        }
+        challenge('orbits');
+      }
+    });
+
+    // scoop capture
+    if (!scoop.holding && scoop.ejectT <= 0) {
+      const d = Math.hypot(b.x - scoop.x, b.y - scoop.y);
+      if (d < scoop.r) {
+        balls.splice(bi, 1);
+        scoop.holding = true;
+        scoop.holdT = 0.9;
+        scoop.flash = 0.5;
+        sfx.scoopIn();
+        addScore(25000 * feat('scoops'));
+        challenge('scoops');
+        continue;
+      }
     }
-  });
 
-  collideFlipper(flipL);
-  collideFlipper(flipR);
+    collideFlipper(b, T.flippers[0]);
+    collideFlipper(b, T.flippers[1]);
+    if (T.flippers[2]) collideFlipper(b, T.flippers[2]);
 
-  // drain
-  if (ball.y > H + 40) {
-    ballLive = false;
-    drained();
+    if (b.y > H + 40) {
+      drainBall(bi);
+      continue;
+    }
   }
+
+  collideBalls();
+
+  T.bumpers.forEach(bp => { bp.cool -= dt; bp.flash -= dt; });
+  T.targets.forEach(tg => { tg.cool -= dt; tg.flash -= dt; });
+  T.lanes.forEach(l => { l.cool -= dt; });
+  T.orbits.forEach(o => { o.cool -= dt; o.flash -= dt; });
+  T.slings.forEach(s => { s.cool -= dt; s.flash -= dt; });
+  scoop.flash -= dt;
 
   shake = Math.max(0, shake - dt * 2);
-  msgTime -= dt;
+  dmdUpdate(dt);
+}
+
+function resolveScoop() {
+  // priority: solo > multiball start > lock > kickout
+  if (soloLit) {
+    openSolo(SETS[setIdx].key);
+    return; // ball ejects after quiz
+  }
+  if (lockLit && locks >= 2) {
+    startMultiball();
+    return;
+  }
+  if (lockLit) {
+    locks++;
+    lockLit = false;
+    sfx.lock();
+    dmdMsg('BALL ' + locks + ' LOCKED', 2, true);
+    if (balls.length === 0) serveBall(false);
+    return;
+  }
+  dmdMsg('+' + fmt(25000 * mult), 1.2);
+  scoopEject();
+}
+
+/* nudge */
+function doNudge() {
+  if (state !== 'play' || tilted || nudgeCool > 0) return;
+  nudgeCool = 0.5;
+  balls.forEach(b => { b.vx += (Math.random() - 0.5) * 90; b.vy -= 70; });
+  shake = 0.18;
+  tiltWarn++;
+  sfx.nudge();
+  if (tiltWarn >= 3) {
+    tilted = true;
+    dmdMsg('TILT!', 2.5, true);
+    sfx.tilt();
+  } else if (tiltWarn === 2) {
+    dmdMsg('CAREFUL...', 1.2);
+  }
 }
 
 /* ============================================================
    RENDERING
    ============================================================ */
-const canvas = $('pf');
-const DPR = Math.min(window.devicePixelRatio || 1, 2);
-canvas.width = W * DPR; canvas.height = H * DPR;
-const ctx = canvas.getContext('2d');
-ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-
-function fit() {
-  const availH = window.innerHeight - 100;
-  const availW = window.innerWidth - 12;
-  const s = Math.min(availH / H, availW / W, 1);
-  canvas.style.width = (W * s) + 'px';
-  canvas.style.height = (H * s) + 'px';
-}
-fit();
-window.addEventListener('resize', fit);
-
-function drawCapsule(x1, y1, x2, y2, r, fill) {
+function drawCapsule(g, x1, y1, x2, y2, r, fill) {
   const a = Math.atan2(y2 - y1, x2 - x1);
-  ctx.beginPath();
-  ctx.arc(x1, y1, r, a + Math.PI / 2, a - Math.PI / 2);
-  ctx.arc(x2, y2, r, a - Math.PI / 2, a + Math.PI / 2);
-  ctx.closePath();
-  ctx.fillStyle = fill;
-  ctx.fill();
+  g.beginPath();
+  g.arc(x1, y1, r, a + Math.PI / 2, a - Math.PI / 2);
+  g.arc(x2, y2, r, a - Math.PI / 2, a + Math.PI / 2);
+  g.closePath();
+  g.fillStyle = fill;
+  g.fill();
 }
 
 function draw() {
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  ctx.clearRect(0, 0, W, H + DMD_H);
+  if (!T) return;
+  ctx.drawImage(staticLayer, 0, 0, W, H + DMD_H);
+
+  // ---- DMD dots ----
+  const grid = rasterize(dmdText());
+  ctx.fillStyle = '#ffb648';
+  const rowH = (DMD_H - 12) / DMD_ROWS;
+  for (let r = 0; r < DMD_ROWS; r++) {
+    for (let c = 0; c < DMD_COLS; c++) {
+      if (grid[r * DMD_COLS + c]) ctx.fillRect(c * DOT + 0.5, 6 + r * rowH, 3, 3);
+    }
+  }
+  // save timer pips on DMD edge
+  if (saveTimer > 0 && state === 'play') {
+    ctx.fillStyle = '#4ade80';
+    const w = Math.min(1, saveTimer / 12) * 60;
+    ctx.fillRect(8, DMD_H - 8, w, 3);
+  }
+
   ctx.save();
+  ctx.translate(0, DMD_H);
   if (shake > 0) ctx.translate((Math.random() - 0.5) * shake * 14, (Math.random() - 0.5) * shake * 14);
 
-  // felt
-  const bg = ctx.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, '#161129');
-  bg.addColorStop(0.55, '#100c1f');
-  bg.addColorStop(1, '#0a0814');
-  ctx.fillStyle = bg;
-  ctx.fillRect(-10, -10, W + 20, H + 20);
+  const now = gameTime;
 
-  // art-deco sunburst behind bumpers
-  ctx.save();
-  ctx.globalAlpha = 0.08;
-  ctx.strokeStyle = '#d9a441';
-  ctx.lineWidth = 2;
-  for (let i = 0; i < 12; i++) {
-    const a = Math.PI + (Math.PI * i / 11);
-    ctx.beginPath();
-    ctx.moveTo(240, 470);
-    ctx.lineTo(240 + Math.cos(a) * 400, 470 + Math.sin(a) * 400);
-    ctx.stroke();
-  }
-  ctx.restore();
-
-  // title on felt
-  ctx.save();
-  ctx.globalAlpha = 0.16;
-  ctx.fillStyle = '#d9a441';
-  ctx.font = '26px Limelight, serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('JAZZ LEGENDS', 225, 560);
-  ctx.restore();
-
-  // walls
-  ctx.strokeStyle = 'rgba(217, 164, 65, 0.85)';
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
-  ctx.shadowColor = 'rgba(242, 193, 78, 0.5)';
-  ctx.shadowBlur = 8;
-  ctx.beginPath();
-  walls.forEach(s => {
-    if (s.oneway) return;
-    ctx.moveTo(s.a.x, s.a.y);
-    ctx.lineTo(s.b.x, s.b.y);
-  });
-  ctx.stroke();
-  // gate drawn thinner
-  ctx.strokeStyle = 'rgba(217, 164, 65, 0.35)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(gate.a.x, gate.a.y); ctx.lineTo(gate.b.x, gate.b.y);
-  ctx.stroke();
-  ctx.shadowBlur = 0;
-
-  // slingshots
-  slings.forEach(s => {
-    ctx.beginPath();
-    ctx.moveTo(s.pts[0].x, s.pts[0].y);
-    ctx.lineTo(s.pts[1].x, s.pts[1].y);
-    ctx.lineTo(s.pts[2].x, s.pts[2].y);
-    ctx.closePath();
-    ctx.fillStyle = s.flash > 0 ? 'rgba(242,193,78,0.85)' : 'rgba(217,164,65,0.25)';
-    ctx.strokeStyle = 'rgba(217,164,65,0.8)';
-    ctx.lineWidth = 2;
-    ctx.fill(); ctx.stroke();
-  });
-
-  // posts
-  posts.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = '#d9a441';
-    ctx.fill();
-  });
-
-  // JAZZ letters
-  ctx.font = '600 15px "IBM Plex Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  sensors.forEach(s => {
-    ctx.beginPath();
-    ctx.arc(s.x, s.y, 13, 0, Math.PI * 2);
-    ctx.fillStyle = s.lit ? 'rgba(242,193,78,0.95)' : 'rgba(217,164,65,0.12)';
-    ctx.strokeStyle = 'rgba(217,164,65,0.7)';
-    ctx.lineWidth = 1.5;
-    if (s.lit) { ctx.shadowColor = 'rgba(242,193,78,0.9)'; ctx.shadowBlur = 14; }
-    ctx.fill();
-    ctx.shadowBlur = 0;
-    ctx.stroke();
-    ctx.fillStyle = s.lit ? '#0a0810' : 'rgba(243,234,213,0.75)';
-    ctx.fillText(s.ch, s.x, s.y + 1);
-  });
-
-  // bumpers
-  const now = performance.now() / 1000;
-  bumpers.forEach(b => {
-    const m = MUSICIANS[b.key];
-    const pulse = b.lit ? (0.65 + 0.35 * Math.sin(now * 6)) : 0;
-    if (b.lit || b.flash > 0) {
-      ctx.shadowColor = m.color;
-      ctx.shadowBlur = b.flash > 0 ? 30 : 16 + pulse * 12;
-    }
-    const g = ctx.createRadialGradient(b.x - 7, b.y - 9, 3, b.x, b.y, b.r);
-    if (b.flash > 0) {
-      g.addColorStop(0, '#ffffff'); g.addColorStop(1, m.color);
-    } else if (b.lit) {
-      g.addColorStop(0, m.color); g.addColorStop(1, '#241d38');
-    } else {
-      g.addColorStop(0, 'rgba(243,234,213,0.16)'); g.addColorStop(1, '#1a1530');
-    }
-    ctx.beginPath();
-    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-    ctx.fillStyle = g;
-    ctx.fill();
-    ctx.shadowBlur = 0;
-    ctx.strokeStyle = m.color;
-    ctx.lineWidth = b.lit ? 3 : 2;
-    ctx.stroke();
-    // name
-    ctx.font = '600 10px "IBM Plex Mono", monospace';
-    ctx.fillStyle = b.flash > 0 ? '#0a0810' : (b.lit ? '#0a0810' : 'rgba(243,234,213,0.85)');
-    ctx.fillText(m.tag, b.x, b.y - 1);
-    // hit pips
-    for (let i = 0; i < 3; i++) {
+  // sling flashes
+  T.slings.forEach(s => {
+    if (s.flash > 0) {
       ctx.beginPath();
-      ctx.arc(b.x - 10 + i * 10, b.y + 11, 2.6, 0, Math.PI * 2);
-      ctx.fillStyle = (b.lit || i < b.hits) ? m.color : 'rgba(243,234,213,0.25)';
+      ctx.moveTo(s.pts[0].x, s.pts[0].y);
+      ctx.lineTo(s.pts[1].x, s.pts[1].y);
+      ctx.lineTo(s.pts[2].x, s.pts[2].y);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(242,193,78,0.85)';
       ctx.fill();
     }
   });
 
+  // lanes
+  ctx.font = '600 14px "IBM Plex Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  T.lanes.forEach(l => {
+    if (l.lit) drawGlow(ctx, l.x, l.y, 20, '#f2c14e', 0.55);
+    ctx.beginPath();
+    ctx.arc(l.x, l.y, 12, 0, Math.PI * 2);
+    ctx.fillStyle = l.lit ? 'rgba(242,193,78,0.95)' : 'rgba(217,164,65,0.12)';
+    ctx.strokeStyle = 'rgba(217,164,65,0.7)';
+    ctx.lineWidth = 1.5;
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = l.lit ? '#0a0810' : 'rgba(243,234,213,0.75)';
+    ctx.fillText(l.ch, l.x, l.y + 1);
+  });
+
+  // orbit sensor arrows
+  T.orbits.forEach(o => {
+    const lit = multiball || o.flash > 0;
+    if (lit) drawGlow(ctx, o.x, o.y, 18, TD.accent, 0.6);
+    ctx.fillStyle = lit ? TD.accent : 'rgba(243,234,213,0.28)';
+    ctx.beginPath();
+    ctx.moveTo(o.x, o.y - 9);
+    ctx.lineTo(o.x + 7, o.y + 5);
+    ctx.lineTo(o.x - 7, o.y + 5);
+    ctx.closePath();
+    ctx.fill();
+  });
+
+  // bumpers
+  T.bumpers.forEach((b, i) => {
+    const featured = SETS[setIdx].feature === 'bumpers';
+    if (b.flash > 0) drawGlow(ctx, b.x, b.y, b.r + 14, b.color, 0.8);
+    else if (featured) drawGlow(ctx, b.x, b.y, b.r + 8, b.color, 0.25 + 0.15 * Math.sin(now * 4));
+    const g = ctx.createRadialGradient(b.x - 7, b.y - 9, 3, b.x, b.y, b.r);
+    if (b.flash > 0) { g.addColorStop(0, '#ffffff'); g.addColorStop(1, b.color); }
+    else { g.addColorStop(0, 'rgba(243,234,213,0.18)'); g.addColorStop(1, '#1a1530'); }
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = g;
+    ctx.fill();
+    ctx.strokeStyle = b.color;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.font = '600 9px "IBM Plex Mono", monospace';
+    ctx.fillStyle = b.flash > 0 ? '#0a0810' : 'rgba(243,234,213,0.85)';
+    ctx.fillText(b.tag, b.x, b.y + 1);
+  });
+
+  // targets
+  T.targets.forEach(tg => {
+    const featured = SETS[setIdx].feature === 'targets';
+    if (tg.lit || tg.flash > 0) drawGlow(ctx, tg.x, tg.y, 16, '#38bdf8', 0.6);
+    else if (featured) drawGlow(ctx, tg.x, tg.y, 13, '#38bdf8', 0.2 + 0.12 * Math.sin(now * 4));
+    ctx.beginPath();
+    ctx.arc(tg.x, tg.y, tg.r, 0, Math.PI * 2);
+    ctx.fillStyle = tg.flash > 0 ? '#ffffff' : (tg.lit ? 'rgba(56,189,248,0.9)' : 'rgba(56,189,248,0.14)');
+    ctx.strokeStyle = 'rgba(56,189,248,0.8)';
+    ctx.lineWidth = 1.5;
+    ctx.fill(); ctx.stroke();
+    ctx.font = '600 11px "IBM Plex Mono", monospace';
+    ctx.fillStyle = (tg.lit || tg.flash > 0) ? '#0a0810' : 'rgba(243,234,213,0.7)';
+    ctx.fillText(tg.ch, tg.x, tg.y + 1);
+  });
+
+  // scoop
+  {
+    const lit = soloLit || lockLit;
+    const pulse = 0.5 + 0.5 * Math.sin(now * 6);
+    if (lit) drawGlow(ctx, scoop.x, scoop.y, 26, soloLit ? '#f2c14e' : '#4ade80', 0.4 + 0.4 * pulse);
+    ctx.beginPath();
+    ctx.arc(scoop.x, scoop.y, scoop.r, 0, Math.PI * 2);
+    const sg = ctx.createRadialGradient(scoop.x, scoop.y, 2, scoop.x, scoop.y, scoop.r);
+    sg.addColorStop(0, '#000');
+    sg.addColorStop(1, '#241d38');
+    ctx.fillStyle = sg;
+    ctx.fill();
+    ctx.strokeStyle = lit ? (soloLit ? '#f2c14e' : '#4ade80') : 'rgba(217,164,65,0.6)';
+    ctx.lineWidth = lit ? 3 : 2;
+    ctx.stroke();
+    if (soloLit) {
+      ctx.font = '600 8px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#f2c14e';
+      ctx.fillText('SOLO', scoop.x, scoop.y - scoop.r - 8);
+    } else if (lockLit) {
+      ctx.font = '600 8px "IBM Plex Mono", monospace';
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText(locks >= 2 ? 'MBALL' : 'LOCK', scoop.x, scoop.y - scoop.r - 8);
+    }
+  }
+
+  // lock indicator pips near scoop
+  for (let i = 0; i < 2; i++) {
+    ctx.beginPath();
+    ctx.arc(scoop.x - 8 + i * 16, scoop.y + scoop.r + 10, 3.4, 0, Math.PI * 2);
+    ctx.fillStyle = i < locks ? '#4ade80' : 'rgba(243,234,213,0.25)';
+    ctx.fill();
+  }
+
   // flippers
-  [flipL, flipR].forEach(f => {
+  T.flippers.forEach(f => {
     const tx = f.px + Math.cos(f.ang) * f.len;
     const ty = f.py + Math.sin(f.ang) * f.len;
-    ctx.shadowColor = 'rgba(242,193,78,0.6)';
-    ctx.shadowBlur = 10;
-    drawCapsule(f.px, f.py, tx, ty, f.r, '#e8b64e');
-    ctx.shadowBlur = 0;
+    drawGlow(ctx, (f.px + tx) / 2, (f.py + ty) / 2, f.len * 0.55, '#f2c14e', 0.14);
+    drawCapsule(ctx, f.px, f.py, tx, ty, f.r, tilted ? '#7a6a45' : '#e8b64e');
     ctx.beginPath();
     ctx.arc(f.px, f.py, 4, 0, Math.PI * 2);
     ctx.fillStyle = '#0a0810';
     ctx.fill();
   });
 
-  // plunger lane decoration + power bar
-  ctx.fillStyle = 'rgba(217,164,65,0.08)';
-  ctx.fillRect(440, 320, 26, 438);
-  if (!ballLive && ball.x > 438) {
+  // plunger power
+  const b0 = balls[0];
+  if (balls.length === 1 && b0 && !b0.live && b0.x > 438) {
     const ph = 120 * launchPower;
     ctx.fillStyle = 'rgba(217,164,65,0.25)';
     ctx.fillRect(444, 630, 6, 124);
     ctx.fillStyle = launchPower > 0.8 ? '#e05252' : '#f2c14e';
     ctx.fillRect(444, 754 - ph, 6, ph);
-    // pull hint
-    ctx.save();
-    ctx.font = '600 9px "IBM Plex Mono", monospace';
-    ctx.fillStyle = 'rgba(243,234,213,0.6)';
-    ctx.translate(462, 690);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText(launchHeld ? 'CHARGING…' : 'HOLD SPACE', 0, 0);
-    ctx.restore();
   }
 
-  // ball
-  const bg2 = ctx.createRadialGradient(ball.x - 3, ball.y - 3, 1, ball.x, ball.y, ball.r);
-  bg2.addColorStop(0, '#ffffff');
-  bg2.addColorStop(0.4, '#cdd3e0');
-  bg2.addColorStop(1, '#6a7186');
-  ctx.shadowColor = 'rgba(205,211,224,0.7)';
-  ctx.shadowBlur = 10;
-  ctx.beginPath();
-  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
-  ctx.fillStyle = bg2;
-  ctx.fill();
-  ctx.shadowBlur = 0;
+  // balls
+  balls.forEach(b => {
+    ctx.beginPath();
+    ctx.ellipse(b.x + 3, b.y + 5, b.r * 0.9, b.r * 0.55, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fill();
+    drawGlow(ctx, b.x, b.y, b.r + 4, '#cdd3e0', 0.25);
+    const bg2 = ctx.createRadialGradient(b.x - 3, b.y - 3, 1, b.x, b.y, b.r);
+    bg2.addColorStop(0, '#ffffff');
+    bg2.addColorStop(0.4, '#cdd3e0');
+    bg2.addColorStop(1, '#6a7186');
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = bg2;
+    ctx.fill();
+  });
 
-  // floating message
-  if (msgTime > 0) {
-    ctx.save();
-    ctx.globalAlpha = Math.min(1, msgTime);
-    ctx.font = '600 15px "IBM Plex Mono", monospace';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#f2c14e';
-    ctx.shadowColor = 'rgba(242,193,78,0.8)';
-    ctx.shadowBlur = 12;
-    ctx.fillText(msgText, 225, 620);
-    ctx.restore();
+  // held-in-scoop shimmer
+  if (scoop.holding) drawGlow(ctx, scoop.x, scoop.y, 12, '#ffffff', 0.5 + 0.3 * Math.sin(now * 12));
+
+  // tilt veil
+  if (tilted) {
+    ctx.fillStyle = 'rgba(224,82,82,0.08)';
+    ctx.fillRect(0, 0, W, H);
   }
 
   ctx.restore();
@@ -1104,45 +1722,82 @@ function draw() {
 /* ============================================================
    MAIN LOOP
    ============================================================ */
-let last = 0;
-function loop(t) {
-  requestAnimationFrame(loop);
+let last = 0, lastTick = 0;
+function tick(t) {
   const dt = Math.min((t - last) / 1000, 0.033);
-  last = t;
+  last = t; lastTick = performance.now();
   if (state === 'play') {
     const steps = Math.max(1, Math.ceil(dt / 0.004));
     const h = dt / steps;
     for (let i = 0; i < steps; i++) {
       step(h);
-      if (state !== 'play') break; // quiz opened mid-step
+      if (state !== 'play') break;
     }
+    hud();
   }
   draw();
 }
+function loop(t) {
+  requestAnimationFrame(loop);
+  tick(t);
+}
 requestAnimationFrame(loop);
+// keep physics alive when rAF is throttled (hidden/occluded tab)
+setInterval(() => {
+  if (performance.now() - lastTick > 80) tick(performance.now());
+}, 33);
 
 /* ============================================================
    INPUT
    ============================================================ */
 const LEFT_KEYS = ['ArrowLeft', 'z', 'Z', 'a', 'A'];
 const RIGHT_KEYS = ['ArrowRight', '/', 'l', 'L'];
+function setSelectActive() {
+  const b = balls[0];
+  return state === 'play' && balls.length === 1 && b && !b.live && b.x > 438;
+}
+function cycleSet(dir) {
+  setIdx = (setIdx + dir + SETS.length) % SETS.length;
+  soloLit = false;
+  const s = SETS[setIdx];
+  dmdMsg(s.title, 1.4);
+  sfx.tick();
+  // re-check: if returning to a set whose ovation is already complete
+  if (!setDone[s.key] && (setProgress[s.key] || 0) >= s.goal) soloLit = true;
+}
+function flipDown(side) {
+  T.flippers.forEach(f => { if (f.side === side) f.pressed = true; });
+  if (state === 'play') sfx.flip();
+}
+function flipUp(side) {
+  T.flippers.forEach(f => { if (f.side === side) f.pressed = false; });
+}
 document.addEventListener('keydown', e => {
   if (e.repeat) return;
-  if (LEFT_KEYS.includes(e.key)) { flipL.pressed = true; if (state === 'play') sfx.flip(); e.preventDefault(); }
-  else if (RIGHT_KEYS.includes(e.key)) { flipR.pressed = true; if (state === 'play') sfx.flip(); e.preventDefault(); }
-  else if (e.key === ' ' || e.key === 'ArrowDown') { launchHeld = true; audio(); e.preventDefault(); }
-  else if (e.key === 'Enter') {
-    if ($('startOverlay').classList.contains('show') || $('overOverlay').classList.contains('show')) startGame();
-    else if ($('quizOverlay').classList.contains('show') && $('quizGo').style.display !== 'none') $('quizGo').click();
+  if (LEFT_KEYS.includes(e.key)) {
+    if (T) { if (setSelectActive()) cycleSet(-1); flipDown('L'); }
+    e.preventDefault();
+  } else if (RIGHT_KEYS.includes(e.key)) {
+    if (T) { if (setSelectActive()) cycleSet(1); flipDown('R'); }
+    e.preventDefault();
+  } else if (e.key === ' ' || e.key === 'ArrowDown') {
+    launchHeld = true; audio(); e.preventDefault();
+  } else if (e.key === 'x' || e.key === 'X') {
+    doNudge();
+  } else if (e.key === 'p' || e.key === 'P' || e.key === 'Escape') {
+    togglePause();
+  } else if (e.key === 'Enter') {
+    if ($('quizOverlay').classList.contains('show') && $('quizGo').style.display !== 'none') $('quizGo').click();
+    else if ($('overOverlay').classList.contains('show')) startGame(tableKey);
   }
 });
 document.addEventListener('keyup', e => {
-  if (LEFT_KEYS.includes(e.key)) flipL.pressed = false;
-  else if (RIGHT_KEYS.includes(e.key)) flipR.pressed = false;
+  if (LEFT_KEYS.includes(e.key)) { if (T) flipUp('L'); }
+  else if (RIGHT_KEYS.includes(e.key)) { if (T) flipUp('R'); }
   else if (e.key === ' ' || e.key === 'ArrowDown') launchHeld = false;
 });
 
-// touch: left/right halves of canvas flip
+// touch
 const touches = new Map();
 canvas.addEventListener('touchstart', e => {
   audio();
@@ -1150,36 +1805,111 @@ canvas.addEventListener('touchstart', e => {
     const r = canvas.getBoundingClientRect();
     const side = (t.clientX - r.left) < r.width / 2 ? 'L' : 'R';
     touches.set(t.identifier, side);
-    if (side === 'L') flipL.pressed = true; else flipR.pressed = true;
+    if (T) { if (setSelectActive()) cycleSet(side === 'L' ? -1 : 1); flipDown(side); }
   }
-  if (state === 'play') sfx.flip();
   e.preventDefault();
 }, { passive: false });
 function touchEnd(e) {
   for (const t of e.changedTouches) {
     const side = touches.get(t.identifier);
     touches.delete(t.identifier);
-    if (side === 'L') flipL.pressed = false;
-    if (side === 'R') flipR.pressed = false;
+    if (T && side) flipUp(side);
   }
 }
 canvas.addEventListener('touchend', touchEnd);
 canvas.addEventListener('touchcancel', touchEnd);
 
-// launch button (touch devices)
-const launchBtn = $('launchBtn');
+const launchBtn = $('launchBtn'), nudgeBtn = $('nudgeBtn');
 if ('ontouchstart' in window) {
   setInterval(() => {
-    launchBtn.style.display = (state === 'play' && !ballLive && ball.x > 438) ? 'block' : 'none';
+    const b = balls[0];
+    const show = state === 'play' && balls.length === 1 && b && !b.live && b.x > 438;
+    launchBtn.style.display = show ? 'block' : 'none';
+    nudgeBtn.style.display = (state === 'play' && !show) ? 'block' : 'none';
   }, 200);
   launchBtn.addEventListener('touchstart', e => { audio(); launchHeld = true; e.preventDefault(); }, { passive: false });
   launchBtn.addEventListener('touchend', e => { launchHeld = false; e.preventDefault(); }, { passive: false });
+  nudgeBtn.addEventListener('touchstart', e => { doNudge(); e.preventDefault(); }, { passive: false });
 }
+
+/* ============================================================
+   MENUS / PAUSE
+   ============================================================ */
+function buildMenu() {
+  const box = $('tableCards');
+  box.innerHTML = '';
+  Object.keys(TABLES).forEach(k => {
+    const td = TABLES[k];
+    const el = document.createElement('button');
+    el.className = 'tcard';
+    el.style.setProperty('--tc', td.accent);
+    el.innerHTML = '<span class="bar"></span><span><span class="tname">' + td.name + '</span>' +
+      '<div class="tdesc">' + td.sub + '</div></span>' +
+      '<span class="tbest">Best<b>' + fmt(getHigh(k)) + '</b></span>';
+    el.addEventListener('click', () => { audio(); startGame(k); });
+    box.appendChild(el);
+  });
+}
+buildMenu();
+
+function togglePause() {
+  if (state === 'play') {
+    state = 'pause';
+    $('pauseOverlay').classList.add('show');
+  } else if (state === 'pause') {
+    state = 'play';
+    $('pauseOverlay').classList.remove('show');
+  }
+}
+$('pauseBtn').addEventListener('click', togglePause);
+$('resumeBtn').addEventListener('click', togglePause);
+$('quitBtn').addEventListener('click', () => {
+  state = 'menu';
+  $('pauseOverlay').classList.remove('show');
+  buildMenu();
+  $('menuOverlay').classList.add('show');
+});
+$('againBtn').addEventListener('click', () => { audio(); startGame(tableKey); });
+$('menuBtn').addEventListener('click', () => {
+  $('overOverlay').classList.remove('show');
+  state = 'menu';
+  buildMenu();
+  $('menuOverlay').classList.add('show');
+});
 
 hud();
 
-// debug handle (harmless in prod)
-window.__game = { ball, get state() { return state; }, bumpers, startGame };
+// debug handle
+window.__game = {
+  get balls() { return balls; },
+  get state() { return state; },
+  get T() { return T; },
+  get scoop() { return scoop; },
+  get setIdx() { return setIdx; },
+  set setIdx(v) { setIdx = v; },
+  get soloLit() { return soloLit; },
+  set soloLit(v) { soloLit = v; },
+  get lockLit() { return lockLit; },
+  set lockLit(v) { lockLit = v; },
+  get locks() { return locks; },
+  set locks(v) { locks = v; },
+  get multiball() { return multiball; },
+  get frenzy() { return frenzy; },
+  get score() { return score; },
+  get setProgress() { return setProgress; },
+  get setDone() { return setDone; },
+  get score2() { return score; },
+  startGame, doNudge,
+  challenge,
+  advance(sec) { // synchronous sim advance for testing (immune to rAF throttling)
+    const n = Math.floor(sec / 0.004);
+    for (let i = 0; i < n; i++) {
+      if (state !== 'play') break;
+      step(0.004);
+    }
+    hud();
+  }
+};
 })();
 </script>
 
