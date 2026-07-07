@@ -570,7 +570,9 @@ const TABLES = {
           { x: 240, y: 230, r: 25 }, { x: 185, y: 295, r: 25 }, { x: 295, y: 295, r: 25 }, { x: 240, y: 360, r: 25 }
         ],
         targets: [
-          { x: 128, y: 470 }, { x: 170, y: 500 }, { x: 215, y: 516 }, { x: 260, y: 516 }, { x: 305, y: 498 }
+          // keep the first target clear of the left loop wall (x=105) — a ball
+          // can wedge if it can touch wall and target at the same time
+          { x: 142, y: 478 }, { x: 178, y: 504 }, { x: 220, y: 516 }, { x: 262, y: 514 }, { x: 305, y: 498 }
         ],
         scoop: { x: 140, y: 225, r: 13, ejectA: -1.05 },
         deco: { burst: { x: 240, y: 480 }, title: 'COTTON CLUB', titleY: 575 }
@@ -1462,6 +1464,18 @@ function step(dt) {
     collideFlipper(b, T.flippers[0]);
     collideFlipper(b, T.flippers[1]);
     if (T.flippers[2]) collideFlipper(b, T.flippers[2]);
+
+    // anti-stuck watchdog: a live ball wedged anywhere outside the plunger
+    // lane gets a gentle pop after 2.5s of near-zero motion
+    if (b.live && b.x < 438 && Math.hypot(b.vx, b.vy) < 12) {
+      b.stillT = (b.stillT || 0) + dt;
+      if (b.stillT > 2.5) {
+        b.stillT = 0;
+        b.vx += (Math.random() - 0.5) * 120;
+        b.vy -= 140;
+        shake = 0.1;
+      }
+    } else b.stillT = 0;
 
     if (b.y > H + 40) {
       drainBall(bi);
