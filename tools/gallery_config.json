@@ -1,0 +1,12 @@
+{
+  "exclude": [
+    "ozolmada_httpss.mj.runH20GHIUJ5mg_httpss.mj.runiQPpEzHMUD4_ht_7068fb22-9c31-4634-857f-6307de73bf40_1.png",
+    "ozolmada_an_elderly_watchmaker_squinting_through_a_loupe_at_a_t_381b085a-838e-462d-8110-c159159d79f9.png",
+    "ozolmada_Full-bleed_mid-century_Paris_couture_fashion_illustrat_312620ca-ea0a-4528-8601-164979abde4a.png"
+  ],
+  "crops": {
+    "a-handsome-man-in-his-sixties-working-at-a-desktop-pc": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.115},
+    "norman-rockwell-oil-painting-illustration-1950s-magazi": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.03},
+    "a-grandmother-catching-a-kid-sneaking-cookies-from-a": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.075}
+  }
+}

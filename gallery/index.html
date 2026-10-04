@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Adam Lozo</title>
+<meta name="description" content="A gallery of illustrations and images by Adam Lozo.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05060a;
+  --ink: #0b0d14;
+  --line: rgba(148, 163, 200, 0.14);
+  --text: #e8eaf2;
+  --dim: #8a91a8;
+  --faint: #565d73;
+  --glow-1: #6d5df6;
+  --glow-2: #22d3ee;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --display: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+html:has(dialog[open]) { overflow: hidden; }
+
+body {
+  font-family: var(--display);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- background layers ---------- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgba(109, 93, 246, 0.13), transparent 60%),
+    radial-gradient(50rem 36rem at -10% 30%, rgba(34, 211, 238, 0.08), transparent 60%),
+    radial-gradient(46rem 40rem at 60% 110%, rgba(255, 122, 26, 0.06), transparent 60%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* ---------- frame / HUD ---------- */
+.frame {
+  position: relative;
+  z-index: 2;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.back {
+  color: var(--dim);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  background: rgba(11, 13, 20, 0.6);
+  backdrop-filter: blur(6px);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.back:hover, .back:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+/* ---------- hero ---------- */
+.hero { padding: clamp(3rem, 9vh, 6rem) 0 clamp(2rem, 6vh, 3.5rem); }
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  color: var(--glow-2);
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+.kicker::before { content: '// '; color: var(--faint); }
+
+h1 {
+  font-size: clamp(2.8rem, 9vw, 5.6rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  background: linear-gradient(100deg, #f2f4fb 20%, #a7b0d8 45%, #6d5df6 62%, #22d3ee 80%, #f2f4fb 95%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 9s linear infinite;
+}
+
+@keyframes sheen {
+  0% { background-position: 0% 0; }
+  100% { background-position: 220% 0; }
+}
+
+.sub {
+  margin-top: 1.4rem;
+  max-width: 34rem;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ---------- grid ---------- */
+.grid {
+  columns: 440px;
+  column-gap: 1.6rem;
+  padding-top: 1.8rem;
+}
+
+.card {
+  break-inside: avoid;
+  margin-bottom: 2.2rem;
+}
+
+.shot {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--ink);
+  cursor: zoom-in;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shot:hover, .shot:focus-visible {
+  border-color: color-mix(in srgb, var(--glow-2) 60%, transparent);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.18);
+  outline: none;
+}
+
+.shot:hover img, .shot:focus-visible img { transform: scale(1.015); }
+
+.c-title {
+  margin-top: 0.95rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.c-style {
+  margin-top: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.c-desc {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.status {
+  padding: 3rem 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
+/* ---------- lightbox ---------- */
+.lb {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+}
+
+.lb::backdrop {
+  background: rgba(5, 6, 10, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.lb-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  padding: 3.6rem 4.4rem 1.4rem;
+}
+
+.lb-img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 13rem);
+  max-height: calc(100dvh - 13rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.lb-cap {
+  max-width: 44rem;
+  text-align: center;
+}
+
+.lb-title { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.02em; }
+.lb-cap .c-style { margin-top: 0.3rem; }
+.lb-cap .c-desc { margin-top: 0.45rem; font-size: 0.92rem; }
+
+.lb-meta {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.lb-meta a {
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+}
+
+.lb-meta a:hover, .lb-meta a:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+.lb-btn {
+  position: fixed;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-family: var(--mono);
+  font-size: 1.1rem;
+  color: var(--dim);
+  background: rgba(11, 13, 20, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.lb-btn:hover, .lb-btn:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+.lb-close { top: 1rem; right: 1rem; }
+.lb-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+
+/* ---------- footer ---------- */
+.footer {
+  padding: 2rem 0 2.6rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+.footer a {
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer a:hover { color: var(--glow-2); border-color: var(--glow-2); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 640px) {
+  .grid { columns: 1; }
+  .lb-inner { padding: 3.8rem 0.75rem 1rem; }
+  .lb-img { max-height: calc(100vh - 15rem); max-height: calc(100dvh - 15rem); }
+  .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; }
+  .lb-cap { padding: 0 2.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1 { animation: none; }
+  .shot img { transition: none; }
+  .shot:hover img, .shot:focus-visible img { transform: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="frame">
+
+  <header class="hud">
+    <a class="back" href="/">&larr; adam.lozo</a>
+    <span>Gallery</span>
+  </header>
+
+  <section class="hero">
+    <p class="kicker">Image index</p>
+    <h1>Gallery</h1>
+    <p class="sub">All images made with Midjourney.</p>
+  </section>
+
+  <div class="section-head">
+    <span>Shuffled on each visit</span>
+    <span id="count"></span>
+  </div>
+
+  <main id="grid" class="grid" aria-live="polite">
+    <noscript><p class="status">This gallery needs JavaScript to load.</p></noscript>
+  </main>
+
+  <footer class="footer">
+    <a href="/">&larr; Back to index</a>
+    <a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a>
+  </footer>
+
+</div>
+
+<dialog id="lb" class="lb" aria-label="Image viewer">
+  <div class="lb-inner">
+    <img class="lb-img" id="lb-img" alt="">
+    <div class="lb-cap">
+      <h2 class="lb-title" id="lb-title"></h2>
+      <p class="c-style" id="lb-style"></p>
+      <p class="c-desc" id="lb-desc"></p>
+      <div class="lb-meta">
+        <span id="lb-pos"></span>
+        <a id="lb-full" href="#" target="_blank" rel="noopener">Open full size</a>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
+  <button type="button" class="lb-btn lb-prev" id="lb-prev" aria-label="Previous image">&larr;</button>
+  <button type="button" class="lb-btn lb-next" id="lb-next" aria-label="Next image">&rarr;</button>
+</dialog>
+
+<script>
+(function () {
+  var grid = document.getElementById('grid');
+  var count = document.getElementById('count');
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbTitle = document.getElementById('lb-title');
+  var lbStyle = document.getElementById('lb-style');
+  var lbDesc = document.getElementById('lb-desc');
+  var lbPos = document.getElementById('lb-pos');
+  var lbFull = document.getElementById('lb-full');
+
+  var items = [];
+  var current = -1;
+  var lastTrigger = null;
+  var loadToken = 0;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text) n.textContent = text;
+    return n;
+  }
+
+  function showError() {
+    grid.textContent = '';
+    grid.appendChild(el('p', 'status', 'The gallery could not be loaded. Please try again later.'));
+    count.textContent = '';
+  }
+
+  function render() {
+    var frag = document.createDocumentFragment();
+    items.forEach(function (it, i) {
+      var card = el('article', 'card');
+      var btn = el('button', 'shot');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Open ' + it.title);
+      var img = document.createElement('img');
+      img.src = it.display;
+      img.width = it.width;
+      img.height = it.height;
+      img.alt = it.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      btn.appendChild(img);
+      btn.addEventListener('click', function () { open(i, btn); });
+      card.appendChild(btn);
+      card.appendChild(el('h2', 'c-title', it.title));
+      if (it.style) card.appendChild(el('p', 'c-style', it.style));
+      if (it.description) card.appendChild(el('p', 'c-desc', it.description));
+      frag.appendChild(card);
+    });
+    grid.textContent = '';
+    grid.appendChild(frag);
+    count.textContent = items.length + ' images';
+  }
+
+  function show(i) {
+    var n = items.length;
+    current = (i + n) % n;
+    var it = items[current];
+    var token = ++loadToken;
+
+    // Show the cached display image at once, then swap in the full-size JPEG.
+    lbImg.src = it.display;
+    lbImg.alt = it.alt || '';
+    var full = new Image();
+    full.onload = function () { if (token === loadToken) lbImg.src = it.full; };
+    full.src = it.full;
+
+    lbTitle.textContent = it.title;
+    lbStyle.textContent = it.style || '';
+    lbStyle.hidden = !it.style;
+    lbDesc.textContent = it.description || '';
+    lbPos.textContent = (current + 1) + ' / ' + n;
+    lbFull.href = it.full;
+  }
+
+  function open(i, trigger) {
+    show(i);
+    lastTrigger = trigger;
+    if (!lb.open) lb.showModal();
+  }
+
+  document.getElementById('lb-close').addEventListener('click', function () { lb.close(); });
+  document.getElementById('lb-prev').addEventListener('click', function () { show(current - 1); });
+  document.getElementById('lb-next').addEventListener('click', function () { show(current + 1); });
+
+  // A click on the backdrop (outside the image, caption, and buttons) closes the lightbox.
+  lb.addEventListener('click', function (e) {
+    if (e.target === lb || e.target.classList.contains('lb-inner')) lb.close();
+  });
+
+  lb.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+  });
+
+  lb.addEventListener('close', function () {
+    loadToken++;
+    lbImg.removeAttribute('src');
+    if (lastTrigger) lastTrigger.focus();
+  });
+
+  // Swipe left and right on touch screens.
+  var sx = 0, sy = 0, tracking = false;
+  lb.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) { tracking = false; return; }
+    tracking = true;
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  lb.addEventListener('touchend', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  fetch('/gallery/gallery.json')
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      if (!Array.isArray(data) || !data.length) throw new Error('empty');
+      items = shuffle(data.slice());
+      render();
+    })
+    .catch(showError);
+})();
+</script>
+
+</body>
+</html>

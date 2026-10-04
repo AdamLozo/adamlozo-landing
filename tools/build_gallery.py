@@ -1,14 +1,24 @@
 """Build gallery images and maintain gallery/gallery.json.
 
 Usage:
-    python tools/build_gallery.py ["<source folder>"]
+    python tools/build_gallery.py ["<source folder>"] [--force <id>]
+
+Reads:
+    tools/gallery_config.json           ("exclude": source file names to drop,
+                                         "crops": {id: {left, top, right, bottom}} as fractions to remove)
 
 Writes:
     gallery/images/display/<slug>.webp  (long edge 1600 px, quality 82)
     gallery/images/full/<slug>.jpg      (long edge max 3000 px, quality 90, progressive)
     gallery/gallery.json                (caption text in existing entries is never changed)
+
+An excluded source loses its gallery.json entry and its outputs. This is the only case
+where the script deletes an entry. An image is rebuilt when its source is newer than its
+outputs, when its crop in the config differs from the "crop" stored in its entry, or
+when --force names its id.
 """
 
+import argparse
 import io
 import json
 import re
@@ -28,7 +38,9 @@ GALLERY = REPO / "gallery"
 DISPLAY_DIR = GALLERY / "images" / "display"
 FULL_DIR = GALLERY / "images" / "full"
 JSON_PATH = GALLERY / "gallery.json"
+CONFIG_PATH = REPO / "tools" / "gallery_config.json"
 
+SIDES = ("left", "top", "right", "bottom")
 TEXT_FIELDS = ("title", "style", "description", "alt")
 
 # Trailing Midjourney ID: _<uuid> with an optional _<index>.
@@ -96,6 +108,37 @@ def fit(img, edge):
     return img.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
 
 
+def load_config():
+    if not CONFIG_PATH.exists():
+        return set(), {}
+    cfg = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    return set(cfg.get("exclude", [])), cfg.get("crops", {})
+
+
+def norm_crop(crop):
+    """Return the crop as {side: fraction} for all four sides, or None if it removes nothing."""
+    if not crop:
+        return None
+    out = {s: round(float(crop.get(s, 0.0)), 4) for s in SIDES}
+    for s, v in out.items():
+        if not 0 <= v < 0.5:
+            sys.exit(f"Crop value out of range: {s}={v}")
+    return out if any(out.values()) else None
+
+
+def apply_crop(img, crop):
+    if not crop:
+        return img
+    w, h = img.size
+    box = (
+        round(w * crop["left"]),
+        round(h * crop["top"]),
+        w - round(w * crop["right"]),
+        h - round(h * crop["bottom"]),
+    )
+    return img.crop(box)
+
+
 def is_current(src, outputs):
     mtime = src.stat().st_mtime
     return all(p.exists() and p.stat().st_mtime > mtime for p in outputs)
@@ -110,19 +153,41 @@ def mb(n):
 
 
 def main():
-    source = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(DEFAULT_SOURCE)
+    parser = argparse.ArgumentParser(description="Build gallery images and gallery.json.")
+    parser.add_argument("source", nargs="?", default=DEFAULT_SOURCE, help="source image folder")
+    parser.add_argument("--force", metavar="ID", help="rebuild the image with this id")
+    args = parser.parse_args()
+
+    source = Path(args.source)
     if not source.is_dir():
         sys.exit(f"Source folder not found: {source}")
 
     DISPLAY_DIR.mkdir(parents=True, exist_ok=True)
     FULL_DIR.mkdir(parents=True, exist_ok=True)
 
+    excluded_names, crops = load_config()
+
     entries = json.loads(JSON_PATH.read_text(encoding="utf-8")) if JSON_PATH.exists() else []
+
+    # Drop excluded images: the entry and its outputs.
+    removed = []
+    for e in [e for e in entries if e["source_name"] in excluded_names]:
+        for p in (DISPLAY_DIR / f"{e['id']}.webp", FULL_DIR / f"{e['id']}.jpg"):
+            p.unlink(missing_ok=True)
+        entries.remove(e)
+        removed.append(e["id"])
+
     by_source = {e["source_name"]: e for e in entries}
     used = {e["id"] for e in entries}
+    if args.force and args.force not in used:
+        sys.exit(f"--force: no entry with id {args.force}")
 
     files = sorted(
-        (p for p in source.iterdir() if p.is_file() and p.suffix.lower() in EXTENSIONS),
+        (
+            p
+            for p in source.iterdir()
+            if p.is_file() and p.suffix.lower() in EXTENSIONS and p.name not in excluded_names
+        ),
         key=lambda p: p.name.lower(),
     )
     ignored = sorted(
@@ -135,8 +200,15 @@ def main():
         slug = entry["id"] if entry else unique_slug(make_slug(src.stem), used)
         display = DISPLAY_DIR / f"{slug}.webp"
         full = FULL_DIR / f"{slug}.jpg"
+        crop = norm_crop(crops.get(slug))
+        stored_crop = entry.get("crop") if entry else None
 
-        if is_current(src, (display, full)):
+        if (
+            is_current(src, (display, full))
+            and crop == stored_crop
+            and slug != args.force
+            and not (entry is None and crop)
+        ):
             skipped.append(src.name)
             if entry is None:  # Outputs exist but the entry is gone: rebuild the entry.
                 with Image.open(display) as d:
@@ -144,6 +216,7 @@ def main():
         else:
             with Image.open(src) as img:
                 img = to_srgb(ImageOps.exif_transpose(img))
+                img = apply_crop(img, crop)
                 d = fit(img, DISPLAY_EDGE)
                 d.save(display, "WEBP", quality=82, method=6)
                 f = fit(img, FULL_EDGE)
@@ -161,6 +234,8 @@ def main():
                 **{k: "" for k in TEXT_FIELDS},
                 "source_name": src.name,
             }
+            if crop:
+                entry["crop"] = crop
             entries.append(entry)
             by_source[src.name] = entry
             new.append(slug)
@@ -168,6 +243,10 @@ def main():
             # Refresh only the generated fields. Never touch caption text.
             if src.name in built:
                 entry["width"], entry["height"] = dw, dh
+                if crop:
+                    entry["crop"] = crop
+                else:
+                    entry.pop("crop", None)
 
     present = {p.name for p in files}
     missing = [e["source_name"] for e in entries if e["source_name"] not in present]
@@ -179,6 +258,9 @@ def main():
     print(f"New entries:     {len(new)}")
     print(f"Built:           {len(built)}")
     print(f"Skipped (current): {len(skipped)}")
+    print(f"Excluded:        {len(excluded_names)} in config, {len(removed)} entries removed now")
+    for slug in removed:
+        print(f"  - {slug}")
     print(f"Ignored files:   {len(ignored)}" + (f" ({', '.join(ignored)})" if ignored else ""))
     print(f"Missing sources: {len(missing)}")
     for name in missing:

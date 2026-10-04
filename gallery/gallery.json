@@ -40,24 +40,36 @@
     "display": "/gallery/images/display/a-grandmother-catching-a-kid-sneaking-cookies-from-a.webp",
     "full": "/gallery/images/full/a-grandmother-catching-a-kid-sneaking-cookies-from-a.jpg",
     "width": 1232,
-    "height": 928,
+    "height": 858,
     "title": "The Quiet Confession",
     "style": "",
     "description": "An old man, a wary young girl, and a woman in white gather close in a hushed, uncertain moment, painted in soft mid-century tones.",
     "alt": "Painted illustration of an elderly man, a worried young girl, and a young woman with red hair standing close together.",
-    "source_name": "ozolmada_a_grandmother_catching_a_kid_sneaking_cookies_from_a_249ac29b-a952-4f63-a049-ab2b56bc0219_0.png"
+    "source_name": "ozolmada_a_grandmother_catching_a_kid_sneaking_cookies_from_a_249ac29b-a952-4f63-a049-ab2b56bc0219_0.png",
+    "crop": {
+      "left": 0.0,
+      "top": 0.0,
+      "right": 0.0,
+      "bottom": 0.075
+    }
   },
   {
     "id": "a-handsome-man-in-his-sixties-working-at-a-desktop-pc",
     "display": "/gallery/images/display/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.webp",
     "full": "/gallery/images/full/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.jpg",
-    "width": 1280,
+    "width": 1446,
     "height": 1600,
     "title": "Late Night at the Keyboard",
     "style": "After Norman Rockwell",
     "description": "Lit only by his screen, a gray-haired man in a loosened red tie types into the night, coffee cooling beside him and a cat asleep on the desk.",
     "alt": "Painted illustration of an older man with glasses and a pencil in his mouth typing at a computer at night, with a cat asleep beside him.",
-    "source_name": "ozolmada_a_handsome_man_in_his_sixties_working_at_a_desktop_PC__0a0316fb-7ae6-4805-a921-56c9dc52a9cf.png"
+    "source_name": "ozolmada_a_handsome_man_in_his_sixties_working_at_a_desktop_PC__0a0316fb-7ae6-4805-a921-56c9dc52a9cf.png",
+    "crop": {
+      "left": 0.0,
+      "top": 0.0,
+      "right": 0.0,
+      "bottom": 0.115
+    }
   },
   {
     "id": "a-young-man-of-eighteen-stands-frozen-at-the-darkest-b",
@@ -94,18 +106,6 @@
     "description": "A man in a dark coat and bowler hat pauses where a golden woodland path divides, autumn birches blazing on every side.",
     "alt": "Impressionist painting of a man in a black coat and hat standing at a fork in a path through yellow autumn trees.",
     "source_name": "ozolmada_American_Impressionist_oil_painting_in_the_style_of_Wi_afaf9702-76f6-4df5-ba8f-b89c6d3de5a6.png"
-  },
-  {
-    "id": "an-elderly-watchmaker-squinting-through-a-loupe-at-a-t",
-    "display": "/gallery/images/display/an-elderly-watchmaker-squinting-through-a-loupe-at-a-t.webp",
-    "full": "/gallery/images/full/an-elderly-watchmaker-squinting-through-a-loupe-at-a-t.jpg",
-    "width": 1323,
-    "height": 1600,
-    "title": "The Watchmaker's Daydream",
-    "style": "After Norman Rockwell",
-    "description": "Squinting through his loupe, a white-bearded watchmaker bends over his gears while a mischievous boy tumbles through a sepia memory behind him.",
-    "alt": "Illustration of an old bearded watchmaker using a loupe at his workbench, with a faded image of a running boy behind him.",
-    "source_name": "ozolmada_an_elderly_watchmaker_squinting_through_a_loupe_at_a_t_381b085a-838e-462d-8110-c159159d79f9.png"
   },
   {
     "id": "antique-storybook-illustration-pen-and-ink-with-soft-w",
@@ -348,18 +348,6 @@
     "source_name": "ozolmada_Fine-art_still_life_photograph_in_Dutch_Golden_Age_chi_62432ae2-bde7-4bbc-b94a-25c0bb1e3b03.png"
   },
   {
-    "id": "full-bleed-mid-century-paris-couture-fashion-illustrat",
-    "display": "/gallery/images/display/full-bleed-mid-century-paris-couture-fashion-illustrat.webp",
-    "full": "/gallery/images/full/full-bleed-mid-century-paris-couture-fashion-illustrat.jpg",
-    "width": 1067,
-    "height": 1600,
-    "title": "Little Black Dress",
-    "style": "After René Gruau",
-    "description": "Quick ink-blue strokes sketch a poised woman in a strapless gown, pearls, and long gloves, with a single flash of red at her hands.",
-    "alt": "Fashion illustration of a woman with short dark hair in a strapless black dress, a pearl necklace, and long gloves on a navy background.",
-    "source_name": "ozolmada_Full-bleed_mid-century_Paris_couture_fashion_illustrat_312620ca-ea0a-4528-8601-164979abde4a.png"
-  },
-  {
     "id": "full-bleed-mid-century-paris-couture-fashion-illustrat-2",
     "display": "/gallery/images/display/full-bleed-mid-century-paris-couture-fashion-illustrat-2.webp",
     "full": "/gallery/images/full/full-bleed-mid-century-paris-couture-fashion-illustrat-2.jpg",
@@ -430,18 +418,6 @@
     "description": "A bride with long auburn curls, cat-eye glasses, and a tiny skull clip smiles softly, holding dusky roses while a porcelain pup keeps watch.",
     "alt": "Stylized 3D portrait of a smiling woman with long wavy hair and glasses in a lace dress holding pink roses, with a white dog figure beside her.",
     "source_name": "ozolmada_httpss.mj.runBRbtNbpogI0_Stylized_3D_gothic_doll_portr_06d5e5f8-3106-48fa-b5d6-6de966d0839f.png"
-  },
-  {
-    "id": "image",
-    "display": "/gallery/images/display/image.webp",
-    "full": "/gallery/images/full/image.jpg",
-    "width": 1232,
-    "height": 928,
-    "title": "Big News on the Party Line",
-    "style": "",
-    "description": "An entire household crowds around a beaming woman on the telephone, every face straining to hear the gossip except for one bored boy at the table.",
-    "alt": "Illustration of a family pressed together listening in as a smiling woman in glasses talks on an old telephone, while a boy rests his head on his hand.",
-    "source_name": "ozolmada_httpss.mj.runH20GHIUJ5mg_httpss.mj.runiQPpEzHMUD4_ht_7068fb22-9c31-4634-857f-6307de73bf40_1.png"
   },
   {
     "id": "artistic-portrait-of-a-hand",
@@ -543,13 +519,19 @@
     "id": "norman-rockwell-oil-painting-illustration-1950s-magazi",
     "display": "/gallery/images/display/norman-rockwell-oil-painting-illustration-1950s-magazi.webp",
     "full": "/gallery/images/full/norman-rockwell-oil-painting-illustration-1950s-magazi.jpg",
-    "width": 1280,
+    "width": 1320,
     "height": 1600,
     "title": "Two Pennies' Worth",
     "style": "After Norman Rockwell",
     "description": "A kindly ice cream man leans from his truck to hand a strawberry cone to a hopeful boy, while a sunny small-town street bustles behind them.",
     "alt": "Illustration of an older man in a white cap leaning out of an ice cream truck to hand a cone to a young boy in a striped shirt.",
-    "source_name": "ozolmada_Norman_Rockwell_oil_painting_illustration_1950s_magazi_a782e007-749e-4134-ac9e-83f59bbb1af1.png"
+    "source_name": "ozolmada_Norman_Rockwell_oil_painting_illustration_1950s_magazi_a782e007-749e-4134-ac9e-83f59bbb1af1.png",
+    "crop": {
+      "left": 0.0,
+      "top": 0.0,
+      "right": 0.0,
+      "bottom": 0.03
+    }
   },
   {
     "id": "ornate-pastel-goth-fantasy-illustration-maximalist-col",
