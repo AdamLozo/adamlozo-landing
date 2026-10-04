@@ -6,8 +6,8 @@ The gallery page is `gallery/index.html`. It loads `gallery/gallery.json` and sh
 
 | File | Purpose |
 |---|---|
-| `C:\Users\adam\OneDrive\Pictures\Website Images` | Source folder for the images. |
-| `Midjourney-Prompt-Index.md` (in the source folder) | Prompts for the source images. |
+| `C:\Claude\Projects\Gallery\Images` | Source folder for the images. |
+| `C:\Claude\Projects\Gallery\Midjourney-Prompt-Index.md` | Prompts for the source images, and the "Not mine" list. |
 | `tools/build_gallery.py` | Makes the web images and updates `gallery/gallery.json`. |
 | `tools/gallery_config.json` | Crops and exclusions. |
 | `gallery/gallery.json` | One entry for each image, with the captions. |
@@ -32,8 +32,8 @@ The script makes the web images for new sources only. It adds a new entry with e
 ### 3. Write the captions
 
 1. Make a 512 px preview of each new image in `%TEMP%`. Do not view the full-size images.
-2. Before you write captions, list each new image with its file name and a short description. Ask Adam to confirm that he made each image. Exclude each image that he did not make.
-3. Match each new image to its prompt in `Midjourney-Prompt-Index.md`.
+2. Every image in the source folder is Adam's work, except file names in the 'Not mine' list in `Midjourney-Prompt-Index.md`. Exclude those images.
+3. Match each new image to its prompt in `Midjourney-Prompt-Index.md`. If Adam wrote a title next to a prompt in the index, use that title exactly.
 4. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
    - `title`: 2 to 5 words.
    - `style`: `After <Artist Name>` only when the prompt names an artist. Otherwise, use an empty string.
@@ -88,5 +88,5 @@ python tools/build_gallery.py --force <id>
 ### 6. Commit and push
 
 1. Commit the changes on `main`: `gallery/`, `tools/gallery_config.json`, and any changed docs.
-2. Push to `main`. Render deploys the site in approximately 3 minutes.
+2. Push to `main`. Render deploys the site in approximately 30 seconds to 3 minutes.
 3. Open `https://adamlozo.com/gallery/` and make sure that the new images show.

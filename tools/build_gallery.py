@@ -27,7 +27,7 @@ from pathlib import Path
 
 from PIL import Image, ImageCms, ImageOps
 
-DEFAULT_SOURCE = r"C:\Users\adam\OneDrive\Pictures\Website Images"
+DEFAULT_SOURCE = r"C:\Claude\Projects\Gallery\Images"
 EXTENSIONS = {".jpg", ".jpeg", ".png", ".tif", ".tiff", ".webp"}
 DISPLAY_EDGE = 1600
 FULL_EDGE = 3000
