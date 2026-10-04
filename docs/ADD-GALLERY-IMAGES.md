@@ -9,8 +9,10 @@ The gallery page is `gallery/index.html`. It loads `gallery/gallery.json` and sh
 | `C:\Claude\Projects\Gallery\Images` | Source folder for the images. |
 | `C:\Claude\Projects\Gallery\Midjourney-Prompt-Index.md` | Prompts for the source images, and the "Not mine" list. |
 | `tools/build_gallery.py` | Makes the web images and updates `gallery/gallery.json`. |
-| `tools/gallery_config.json` | Crops and exclusions. |
+| `tools/gallery_config.json` | Exclusions, retouch boxes, and crops. |
+| `C:\Claude\Projects\Gallery\Retouched` | Retouched copies of source images, with the same file names. The build script uses them instead of the sources. |
 | `gallery/gallery.json` | One entry for each image, with the captions. |
+| `gallery/version.txt` | Short hash of `gallery.json`. The build script writes it. The page uses it to load the newest `gallery.json` after a deploy. |
 | `gallery/images/display/<id>.webp` | Grid image. Long edge 1600 px. |
 | `gallery/images/full/<id>.jpg` | Lightbox image. Long edge max 3000 px. |
 
@@ -44,27 +46,48 @@ The script makes the web images for new sources only. It adds a new entry with e
    - Do not use the words "AI" or "Midjourney" in a caption.
 5. Delete the previews.
 
-### 4. Remove fake signatures, logos, and mastheads
+### 4. Signatures, logos, and mastheads
 
-1. Examine each new preview for a fake signature, a logo, or magazine masthead text. Examine the corners and the edges closely.
-2. To remove a mark, add a crop for the image `id` to `tools/gallery_config.json`. The values are fractions of the source image to remove from each side:
+Examine each new preview for marks. Examine the corners and the edges closely. Obey these rules:
+
+- If an image shows a real artist signature, remove it with `retouch` boxes. Do not crop. If the retouch leaves a visible trace, exclude the image.
+- If an image shows a real logo or real masthead, exclude it.
+- Keep images with scribbles or generic fake lettering. Do not crop or retouch them.
+
+To retouch a signature, use Photoshop first. It matches the texture better than `cv2.inpaint`:
+
+1. Open the source image in Photoshop. Select a rectangle that covers each signature. Run Generative Remove.
+2. Export a PNG with the same file name to `C:\Claude\Projects\Gallery\Retouched`. Close the document without saving. Do not change the source file.
+3. Run the build script. If a file with the same name is in `Retouched`, the script uses it instead of the source and stores `"retouched": true` in the entry.
+4. Check the result with the same pass rules as below.
+
+If Photoshop is not available, use `retouch` boxes:
+
+1. Add `retouch` boxes for the image `id` to `tools/gallery_config.json`. Each box is a rectangle in fractions of the source image. `left` and `top` are the start. `right` and `bottom` are the end. An entry can have more than one box:
 
    ```json
-   "crops": {
-     "<id>": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.06}
+   "retouch": {
+     "<id>": [{"left": 0.06, "top": 0.90, "right": 0.21, "bottom": 0.94}]
    }
    ```
 
-   - Use the smallest crop that removes the mark fully.
-   - Crop one or two sides only.
-3. If a crop must remove more than 15% of the width or height, or cuts into the main subject, exclude the image. Add its source file name to `exclude`:
+   - Use the smallest boxes that cover each signature fully.
+   - The script expands each box by a few pixels and fills it with `cv2.inpaint` (Telea). The source file does not change.
+2. Run the build script again. It rebuilds each image whose `retouch` boxes changed.
+3. Make a 512 px preview of the image and a 512 px close crop of each retouched area.
+4. The retouch passes only if all of these are true:
+   - No letter or part of a letter is visible.
+   - The filled area matches the texture and color around it, with no visible smear or blur patch.
+   - The retouch does not touch a person, face, or hand.
+5. If the retouch does not pass after 2 attempts, exclude the image.
 
-   ```json
-   "exclude": ["<source file name>"]
-   ```
+To exclude an image, add its source file name to `exclude`. The build script removes its entry and its web images:
 
-4. Run the build script again. It rebuilds each image whose crop changed. It removes the entry and the web images of each excluded source.
-5. Make a new 512 px preview of each cropped image. Make sure that no mark is visible.
+```json
+"exclude": ["<source file name>"]
+```
+
+The script also supports `crops`, but use a crop only if Adam asks for one.
 
 To rebuild one image, use this command:
 

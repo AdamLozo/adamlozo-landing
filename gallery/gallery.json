@@ -12,24 +12,6 @@
     "source_name": "noir_saxophonist_100KB.jpg"
   },
   {
-    "id": "a-handsome-man-in-his-sixties-working-at-a-desktop-pc",
-    "display": "/gallery/images/display/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.webp",
-    "full": "/gallery/images/full/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.jpg",
-    "width": 1446,
-    "height": 1600,
-    "title": "Late Night at the Keyboard",
-    "style": "After Norman Rockwell",
-    "description": "Lit only by his screen, a gray-haired man in a loosened red tie types into the night, coffee cooling beside him and a cat asleep on the desk.",
-    "alt": "Painted illustration of an older man with glasses and a pencil in his mouth typing at a computer at night, with a cat asleep beside him.",
-    "source_name": "ozolmada_a_handsome_man_in_his_sixties_working_at_a_desktop_PC__0a0316fb-7ae6-4805-a921-56c9dc52a9cf.png",
-    "crop": {
-      "left": 0.0,
-      "top": 0.0,
-      "right": 0.0,
-      "bottom": 0.115
-    }
-  },
-  {
     "id": "a-young-man-of-eighteen-stands-frozen-at-the-darkest-b",
     "display": "/gallery/images/display/a-young-man-of-eighteen-stands-frozen-at-the-darkest-b.webp",
     "full": "/gallery/images/full/a-young-man-of-eighteen-stands-frozen-at-the-darkest-b.jpg",
@@ -450,24 +432,6 @@
     "source_name": "ozolmada_Mixed-media_folk_art_painting_on_collaged_vintage_book_d622661e-f211-413b-9ad9-3806f09e853c.png"
   },
   {
-    "id": "norman-rockwell-oil-painting-illustration-1950s-magazi",
-    "display": "/gallery/images/display/norman-rockwell-oil-painting-illustration-1950s-magazi.webp",
-    "full": "/gallery/images/full/norman-rockwell-oil-painting-illustration-1950s-magazi.jpg",
-    "width": 1320,
-    "height": 1600,
-    "title": "Two Pennies' Worth",
-    "style": "After Norman Rockwell",
-    "description": "A kindly ice cream man leans from his truck to hand a strawberry cone to a hopeful boy, while a sunny small-town street bustles behind them.",
-    "alt": "Illustration of an older man in a white cap leaning out of an ice cream truck to hand a cone to a young boy in a striped shirt.",
-    "source_name": "ozolmada_Norman_Rockwell_oil_painting_illustration_1950s_magazi_a782e007-749e-4134-ac9e-83f59bbb1af1.png",
-    "crop": {
-      "left": 0.0,
-      "top": 0.0,
-      "right": 0.0,
-      "bottom": 0.03
-    }
-  },
-  {
     "id": "ornate-surreal-digital-illustration-doll-like-harlequi",
     "display": "/gallery/images/display/ornate-surreal-digital-illustration-doll-like-harlequi.webp",
     "full": "/gallery/images/full/ornate-surreal-digital-illustration-doll-like-harlequi.jpg",
@@ -711,19 +675,13 @@
     "id": "a-long-ribbon-of-small-white-dots-pouring-from-the-bir",
     "display": "/gallery/images/display/a-long-ribbon-of-small-white-dots-pouring-from-the-bir.webp",
     "full": "/gallery/images/full/a-long-ribbon-of-small-white-dots-pouring-from-the-bir.jpg",
-    "width": 1269,
+    "width": 1205,
     "height": 1600,
-    "title": "Blackbird over the Cottage",
+    "title": "Immortal Bird",
     "style": "",
-    "description": "A blackbird crosses the moon and trails a ribbon of white dots over patterned hills, where a small white cottage sends up a thin line of smoke.",
+    "description": "A black bird flies from a small white moon, and a ribbon of white dots pours from its beak like music. The bird is both the nightingale and the musician.",
     "alt": "Stylized painting of a black bird flying past a full moon above red and grey patterned hills and a small white cottage with a red door.",
-    "source_name": "ozolmada_a_long_ribbon_of_small_white_dots_pouring_from_the_bir_146eab2f-ee29-4f3c-ad0b-474614d47fc4.png",
-    "crop": {
-      "left": 0.0,
-      "top": 0.0,
-      "right": 0.0,
-      "bottom": 0.05
-    }
+    "source_name": "ozolmada_a_long_ribbon_of_small_white_dots_pouring_from_the_bir_146eab2f-ee29-4f3c-ad0b-474614d47fc4.png"
   },
   {
     "id": "a-small-grey-dodo-bird-standing-in-dry-grass-round-bod",
@@ -731,9 +689,9 @@
     "full": "/gallery/images/full/a-small-grey-dodo-bird-standing-in-dry-grass-round-bod.jpg",
     "width": 1280,
     "height": 1600,
-    "title": "The Fish Behind the Curtain",
+    "title": "The Flying Piranha",
     "style": "",
-    "description": "Under a full moon, a toothy red fish swims out between the blue curtains of a small stage while a grey dodo watches from the grass.",
+    "description": "A red piranha with sharp teeth floats inside a tall box of blue curtains under a full moon. At the lower right, a small grey dodo watches the fish.",
     "alt": "Painting of a red fish with sharp teeth coming out of blue curtains on a box-shaped stage at night, with a small grey dodo standing nearby.",
     "source_name": "ozolmada_a_small_grey_dodo_bird_standing_in_dry_grass_round_bod_c0363c8c-d40d-4826-8481-b6ec52363688.png"
   },
@@ -743,9 +701,9 @@
     "full": "/gallery/images/full/a-thin-wet-rust-orange-fox-head-bent-down-licking-a-wo.jpg",
     "width": 1600,
     "height": 1600,
-    "title": "Fox at the Garden Door",
+    "title": "Summer Has Gone",
     "style": "",
-    "description": "Beside an open wooden door, a rust-orange fox bends to lick its paw between a cabbage and a beet, under a sky of pale moons and small birds.",
+    "description": "Through an open door, a flooded autumn field lies under round grey clouds, and small birds fly out of them. In front, a thin fox licks a wounded paw beside large purple turnips.",
     "alt": "Collage-style painting of an orange fox licking its paw beside an open door, with a cabbage, a beet, a grey sea, and round pale shapes in the sky.",
     "source_name": "ozolmada_a_thin_wet_rust-orange_fox_head_bent_down_licking_a_wo_d3a65ea7-7bb6-4a74-a86c-a14b19f04ba7.png"
   },
@@ -755,9 +713,9 @@
     "full": "/gallery/images/full/dark-sand-with-fine-silver-speckle-seal-tex.jpg",
     "width": 1132,
     "height": 1600,
-    "title": "The Creature on the Steps",
+    "title": "The First Fish with Feet",
     "style": "",
-    "description": "A scaly teal creature creeps down dark steps through tall pale grass, with a gold moon hanging over a quiet sea behind it.",
+    "description": "A primitive fish with four legs crawls up a stone stairway out of the sea. A pale moon hangs over teal water, and silver pampas grass frames the scene.",
     "alt": "Illustration of a large teal lizard-like creature crawling down striped steps among tall pale grasses under a gold moon by the sea.",
     "source_name": "ozolmada_dark_sand_with_fine_silver_speckle_--no_stamp_seal_tex_00e3fb38-080a-4ae2-aa88-3ad6724b7f4d.png"
   },
@@ -767,11 +725,12 @@
     "full": "/gallery/images/full/gouache-and-felt-tip-marker-painting-on-paper-loose-sc.jpg",
     "width": 1132,
     "height": 1600,
-    "title": "Uninvited Breakfast Guests",
+    "title": "The Ants Enter",
     "style": "",
-    "description": "A long trail of ants winds down a blue wall and spreads across a set breakfast table, while a window opens onto a golden wheat field.",
+    "description": "A trail of black ants comes down a blue kitchen wall in a long S-curve and crosses the table. Through the open window, a golden field with red poppies stretches toward blue hills.",
     "alt": "Painting of a blue room where a winding line of black ants comes down the wall onto a breakfast table with plates, cups, and a yellow lamp.",
-    "source_name": "ozolmada_Gouache_and_felt-tip_marker_painting_on_paper_loose_sc_dd4e83f7-5a14-4648-b694-99e63b6abf11.png"
+    "source_name": "ozolmada_Gouache_and_felt-tip_marker_painting_on_paper_loose_sc_dd4e83f7-5a14-4648-b694-99e63b6abf11.png",
+    "retouched": true
   },
   {
     "id": "japanese-inspired-stencil-and-airbrush-painting-layere",
@@ -790,17 +749,63 @@
     "display": "/gallery/images/display/loose-watercolour-sketch-on-rough-white-paper-transpar.webp",
     "full": "/gallery/images/full/loose-watercolour-sketch-on-rough-white-paper-transpar.jpg",
     "width": 1600,
-    "height": 1115,
-    "title": "Lotus at the Lake",
+    "height": 1205,
+    "title": "Married to the Mud",
     "style": "",
-    "description": "A white lotus and a pink lotus rise above broad blue-green leaves at the edge of a still lake, as a gold disc glows over misty blue mountains.",
+    "description": "A sacred lotus rises from dark mud at the edge of a mountain lake under a hazy golden moon. A white bloom and a pink bloom stand among wide blue-green leaves.",
     "alt": "Soft watercolour of a white lotus and a pink lotus with large round leaves beside a lake, with blue mountains and a glowing gold disc behind.",
     "source_name": "ozolmada_Loose_watercolour_sketch_on_rough_white_paper_transpar_ec956967-c8cd-436c-a4d2-026537784850.png",
-    "crop": {
-      "left": 0.0,
-      "top": 0.04,
-      "right": 0.0,
-      "bottom": 0.035
-    }
+    "retouched": true
+  },
+  {
+    "id": "hand-coloured-monotype-print-with-drypoint-etching-scr",
+    "display": "/gallery/images/display/hand-coloured-monotype-print-with-drypoint-etching-scr.webp",
+    "full": "/gallery/images/full/hand-coloured-monotype-print-with-drypoint-etching-scr.jpg",
+    "width": 1600,
+    "height": 1600,
+    "title": "Here to Stay",
+    "style": "",
+    "description": "A spotted lanternfly spreads its wings like an emblem on a hot pink ground. Spiral circles drift around it, and the insect looks calm and permanent.",
+    "alt": "Hand-coloured print of a large insect seen from above, with pale blue black-spotted wings and orange underwings, on a pink background with spiral circles and fine scratched lines.",
+    "source_name": "ozolmada_Hand-coloured_monotype_print_with_drypoint_etching_scr_70db4d6d-376b-4be2-959e-938eb16fa600.png"
+  },
+  {
+    "id": "a-handsome-man-in-his-sixties-working-at-a-desktop-pc",
+    "display": "/gallery/images/display/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.webp",
+    "full": "/gallery/images/full/a-handsome-man-in-his-sixties-working-at-a-desktop-pc.jpg",
+    "width": 1280,
+    "height": 1600,
+    "title": "Late Night at the Keyboard",
+    "style": "After Norman Rockwell",
+    "description": "Lit only by his screen, a gray-haired man in a loosened red tie types into the night, coffee cooling beside him and a cat asleep on the desk.",
+    "alt": "Painted illustration of an older man with glasses and a pencil in his mouth typing at a computer at night, with a cat asleep beside him.",
+    "source_name": "ozolmada_a_handsome_man_in_his_sixties_working_at_a_desktop_PC__0a0316fb-7ae6-4805-a921-56c9dc52a9cf.png",
+    "retouched": true
+  },
+  {
+    "id": "full-bleed-mid-century-paris-couture-fashion-illustrat",
+    "display": "/gallery/images/display/full-bleed-mid-century-paris-couture-fashion-illustrat.webp",
+    "full": "/gallery/images/full/full-bleed-mid-century-paris-couture-fashion-illustrat.jpg",
+    "width": 1067,
+    "height": 1600,
+    "title": "Little Black Dress",
+    "style": "After René Gruau",
+    "description": "Quick ink-blue strokes sketch a poised woman in a strapless gown, pearls, and long gloves, with a single flash of red at her hands.",
+    "alt": "Fashion illustration of a woman with short dark hair in a strapless black dress, a pearl necklace, and long gloves on a navy background.",
+    "source_name": "ozolmada_Full-bleed_mid-century_Paris_couture_fashion_illustrat_312620ca-ea0a-4528-8601-164979abde4a.png",
+    "retouched": true
+  },
+  {
+    "id": "norman-rockwell-oil-painting-illustration-1950s-magazi",
+    "display": "/gallery/images/display/norman-rockwell-oil-painting-illustration-1950s-magazi.webp",
+    "full": "/gallery/images/full/norman-rockwell-oil-painting-illustration-1950s-magazi.jpg",
+    "width": 1280,
+    "height": 1600,
+    "title": "Two Pennies' Worth",
+    "style": "After Norman Rockwell",
+    "description": "A kindly ice cream man leans from his truck to hand a strawberry cone to a hopeful boy, while a sunny small-town street bustles behind them.",
+    "alt": "Illustration of an older man in a white cap leaning out of an ice cream truck to hand a cone to a young boy in a striped shirt.",
+    "source_name": "ozolmada_Norman_Rockwell_oil_painting_illustration_1950s_magazi_a782e007-749e-4134-ac9e-83f59bbb1af1.png",
+    "retouched": true
   }
 ]
