@@ -7,7 +7,7 @@ The gallery page is `gallery/index.html`. It loads `gallery/gallery.json` and sh
 | File | Purpose |
 |---|---|
 | `C:\Claude\Projects\Gallery\Images` | Source folder for the images. |
-| `C:\Claude\Projects\Gallery\Midjourney-Prompt-Index.md` | Prompts for the source images, and the "Not mine" list. |
+| `C:\Claude\Projects\Gallery\Midjourney-Prompt-Index.md` | Prompts, titles, and descriptions for the source images. Some images have no entry. |
 | `tools/build_gallery.py` | Makes the web images and updates `gallery/gallery.json`. |
 | `tools/gallery_config.json` | Exclusions, retouch boxes, and crops. |
 | `C:\Claude\Projects\Gallery\Retouched` | Retouched copies of source images, with the same file names. The build script uses them instead of the sources. |
@@ -21,7 +21,7 @@ The gallery page is `gallery/index.html`. It loads `gallery/gallery.json` and sh
 ### 1. Add the source images
 
 1. Put the new images in the source folder.
-2. Add their prompts to `Midjourney-Prompt-Index.md`.
+2. Add their prompts to `Midjourney-Prompt-Index.md` when they are available. Some images have no prompt in the index. This is normal.
 
 ### 2. Run the build script
 
@@ -34,8 +34,9 @@ The script makes the web images for new sources only. It adds a new entry with e
 ### 3. Write the captions
 
 1. Make a 512 px preview of each new image in `%TEMP%`. Do not view the full-size images.
-2. Every image in the source folder is Adam's work, except file names in the 'Not mine' list in `Midjourney-Prompt-Index.md`. Exclude those images.
+2. Every new image in the source folder is Adam's work. A prompt can use an artist's style, but no artist made the image. Do not look for a "Not mine" list. The images that are already in `exclude` stay excluded.
 3. Match each new image to its prompt in `Midjourney-Prompt-Index.md`. If Adam wrote a title next to a prompt in the index, use that title exactly.
+   - If an image has no match in the index, write the captions from the image. Use an empty `style`. Mark the image `NO MATCH` in the report. This is normal. Do not ask Adam to add the prompt.
 4. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
    - `title`: 2 to 5 words.
    - `style`: `After <Artist Name>` only when the prompt names an artist. Otherwise, use an empty string.
@@ -56,8 +57,11 @@ Examine each new preview for marks. Examine the corners and the edges closely. O
 
 To retouch a signature, use Photoshop first. It matches the texture better than `cv2.inpaint`:
 
-1. Open the source image in Photoshop. Select a rectangle that covers each signature. Run Generative Remove.
+1. Open the source image in Photoshop. Select a rectangle that covers one signature. Run Generative Remove.
 2. Export a PNG with the same file name to `C:\Claude\Projects\Gallery\Retouched`. Close the document without saving. Do not change the source file.
+   - Run only one Generative Remove in each pass. A second remove in the same document can lock up Photoshop.
+   - If an image has more than one mark, open the copy in `Retouched` for the next mark. Then do steps 1 and 2 again.
+   - If a remove times out, ping Photoshop until it responds. Close the document without saving, and start the pass again.
 3. Run the build script. If a file with the same name is in `Retouched`, the script uses it instead of the source and stores `"retouched": true` in the entry.
 4. Check the result with the same pass rules as below.
 
