@@ -32,8 +32,9 @@ The script makes the web images for new sources only. It adds a new entry with e
 ### 3. Write the captions
 
 1. Make a 512 px preview of each new image in `%TEMP%`. Do not view the full-size images.
-2. Match each new image to its prompt in `Midjourney-Prompt-Index.md`.
-3. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
+2. Before you write captions, list each new image with its file name and a short description. Ask Adam to confirm that he made each image. Exclude each image that he did not make.
+3. Match each new image to its prompt in `Midjourney-Prompt-Index.md`.
+4. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
    - `title`: 2 to 5 words.
    - `style`: `After <Artist Name>` only when the prompt names an artist. Otherwise, use an empty string.
    - `description`: 1 to 2 sentences, 35 words maximum.
@@ -41,7 +42,7 @@ The script makes the web images for new sources only. It adds a new entry with e
    - Do not copy prompt text into a caption.
    - Do not invent facts.
    - Do not use the words "AI" or "Midjourney" in a caption.
-4. Delete the previews.
+5. Delete the previews.
 
 ### 4. Remove fake signatures, logos, and mastheads
 

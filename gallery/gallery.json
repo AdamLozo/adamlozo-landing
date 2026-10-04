@@ -1,29 +1,5 @@
 [
   {
-    "id": "wide-angle-full-body-long-shot-of-a-misfit-hairy",
-    "display": "/gallery/images/display/wide-angle-full-body-long-shot-of-a-misfit-hairy.webp",
-    "full": "/gallery/images/full/wide-angle-full-body-long-shot-of-a-misfit-hairy.jpg",
-    "width": 1197,
-    "height": 1600,
-    "title": "The Fuzzy Misfit",
-    "style": "",
-    "description": "A shaggy, rainbow-furred creature with sleepy eyes and a sly grin strikes a pose against glowing party lights. Part puppet, part daydream, all charm.",
-    "alt": "A fluffy multicolored creature with a green face, heavy-lidded eyes, and two antennae stands with its arms spread against a blurred, colorful background.",
-    "source_name": "helgekerler_Wide_angle_full_body_long_shot_of_a_misfit_hairy__e2284448-3554-4418-ab10-7d677119702e_0.png"
-  },
-  {
-    "id": "a-comical-winter-scene-with-cartoon-snowman-kids-bo",
-    "display": "/gallery/images/display/a-comical-winter-scene-with-cartoon-snowman-kids-bo.webp",
-    "full": "/gallery/images/full/a-comical-winter-scene-with-cartoon-snowman-kids-bo.jpg",
-    "width": 1278,
-    "height": 1600,
-    "title": "Snowman in a Knit Cap",
-    "style": "",
-    "description": "Wide-eyed and grinning, a fuzzy snowman bundled in a striped scarf and blue knit hat greets the falling snow with pure delight.",
-    "alt": "A smiling cartoon snowman with a carrot nose, a blue knit hat, and a striped scarf stands in falling snow.",
-    "source_name": "minitales_a_comical_winter_scene_with_cartoon_snowman_kids_bo_13333bdf-6323-427b-bcd7-f313740d4690_0.png"
-  },
-  {
     "id": "noir-saxophonist-100kb",
     "display": "/gallery/images/display/noir-saxophonist-100kb.webp",
     "full": "/gallery/images/full/noir-saxophonist-100kb.jpg",
@@ -34,24 +10,6 @@
     "description": "A saxophonist plays with his eyes closed in a smoky bar, light slicing through the blinds while a lone patron listens from the shadows.",
     "alt": "Black-and-white image of a man in a suit playing saxophone in a dim bar while a man in a hat sits at the counter.",
     "source_name": "noir_saxophonist_100KB.jpg"
-  },
-  {
-    "id": "a-grandmother-catching-a-kid-sneaking-cookies-from-a",
-    "display": "/gallery/images/display/a-grandmother-catching-a-kid-sneaking-cookies-from-a.webp",
-    "full": "/gallery/images/full/a-grandmother-catching-a-kid-sneaking-cookies-from-a.jpg",
-    "width": 1232,
-    "height": 858,
-    "title": "The Quiet Confession",
-    "style": "",
-    "description": "An old man, a wary young girl, and a woman in white gather close in a hushed, uncertain moment, painted in soft mid-century tones.",
-    "alt": "Painted illustration of an elderly man, a worried young girl, and a young woman with red hair standing close together.",
-    "source_name": "ozolmada_a_grandmother_catching_a_kid_sneaking_cookies_from_a_249ac29b-a952-4f63-a049-ab2b56bc0219_0.png",
-    "crop": {
-      "left": 0.0,
-      "top": 0.0,
-      "right": 0.0,
-      "bottom": 0.075
-    }
   },
   {
     "id": "a-handsome-man-in-his-sixties-working-at-a-desktop-pc",
@@ -89,7 +47,7 @@
     "full": "/gallery/images/full/abstract-expressive-ink-and-watercolor-drawing-in-the.jpg",
     "width": 1205,
     "height": 1600,
-    "title": "Mother and Daughter",
+    "title": "Lovers",
     "style": "After Salvador Dalí",
     "description": "Two slender figures lean forehead to forehead, one washed in cobalt and one in saffron, their restless ink lines tangling where they meet.",
     "alt": "Ink and watercolor drawing of two thin figures, one blue and one orange, touching foreheads.",
@@ -204,18 +162,6 @@
     "source_name": "ozolmada_Candid_cinematic_film_still_photorealistic_a_small_liv_1deeaf93-cdd2-4516-9c2c-d83e58b82b87.png"
   },
   {
-    "id": "cinematic-architectural-watercolor-and-ink-illustratio",
-    "display": "/gallery/images/display/cinematic-architectural-watercolor-and-ink-illustratio.webp",
-    "full": "/gallery/images/full/cinematic-architectural-watercolor-and-ink-illustratio.jpg",
-    "width": 1600,
-    "height": 1280,
-    "title": "City of Domes",
-    "style": "",
-    "description": "Sunlit terracotta façades, palm trees, and great white domes crowd a sparkling harbor, captured in crisp ink and luminous watercolor.",
-    "alt": "Watercolor illustration of a harbor city with domed churches, an arched bridge, palm trees, and boats on blue water.",
-    "source_name": "ozolmada_Cinematic_architectural_watercolor_and_ink_illustratio_8d470636-4975-4291-a439-3e7e9c33fc1e.png"
-  },
-  {
     "id": "cinematic-film-still-1980s-kodachrome-look-a-small-ope",
     "display": "/gallery/images/display/cinematic-film-still-1980s-kodachrome-look-a-small-ope.webp",
     "full": "/gallery/images/full/cinematic-film-still-1980s-kodachrome-look-a-small-ope.jpg",
@@ -322,18 +268,6 @@
     "description": "An elderly couple leans together on a hanging swing, eyes closed in contentment, while a small orange bird keeps them company.",
     "alt": "Painting of an old man with round glasses and an old woman with white hair sitting close together on a swing, with an orange bird beside them.",
     "source_name": "ozolmada_Dreamlike_gouache_and_oil_pastel_painting_in_the_style_d81d36e0-9cea-471e-8210-a8c6ad1a9912.png"
-  },
-  {
-    "id": "ethereal-fairytale-fine-art-photograph-of-a-young-woma",
-    "display": "/gallery/images/display/ethereal-fairytale-fine-art-photograph-of-a-young-woma.webp",
-    "full": "/gallery/images/full/ethereal-fairytale-fine-art-photograph-of-a-young-woma.jpg",
-    "width": 1600,
-    "height": 1280,
-    "title": "The Stag's Blessing",
-    "style": "",
-    "description": "Backlit by soft forest haze, a young woman in white lace tilts her face toward a great antlered stag in a moment of quiet trust.",
-    "alt": "A young woman with long curly hair in a white lace dress touches a deer with large antlers in a sunlit forest.",
-    "source_name": "ozolmada_Ethereal_fairytale_fine_art_photograph_of_a_young_woma_18bcc818-ac38-49d7-a33f-64678885d246.png"
   },
   {
     "id": "fine-art-still-life-photograph-in-dutch-golden-age-chi",
@@ -532,18 +466,6 @@
       "right": 0.0,
       "bottom": 0.03
     }
-  },
-  {
-    "id": "ornate-pastel-goth-fantasy-illustration-maximalist-col",
-    "display": "/gallery/images/display/ornate-pastel-goth-fantasy-illustration-maximalist-col.webp",
-    "full": "/gallery/images/full/ornate-pastel-goth-fantasy-illustration-maximalist-col.jpg",
-    "width": 1600,
-    "height": 1280,
-    "title": "Queen of the Pink Castle",
-    "style": "",
-    "description": "Ribbons, hearts, and spires in candy pink and black frame a pale, doll-faced queen and her jester-like double in a lavish pastel-goth fantasy.",
-    "alt": "Ornate illustration of a pale woman with white hair and a crown, with a small doll figure in a pink and black dress and pink gothic spires around them.",
-    "source_name": "ozolmada_Ornate_pastel_goth_fantasy_illustration_maximalist_col_e93234f0-e93e-4de4-b09c-f3feb720f803.png"
   },
   {
     "id": "ornate-surreal-digital-illustration-doll-like-harlequi",

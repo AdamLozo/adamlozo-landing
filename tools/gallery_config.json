@@ -2,11 +2,16 @@
   "exclude": [
     "ozolmada_httpss.mj.runH20GHIUJ5mg_httpss.mj.runiQPpEzHMUD4_ht_7068fb22-9c31-4634-857f-6307de73bf40_1.png",
     "ozolmada_an_elderly_watchmaker_squinting_through_a_loupe_at_a_t_381b085a-838e-462d-8110-c159159d79f9.png",
-    "ozolmada_Full-bleed_mid-century_Paris_couture_fashion_illustrat_312620ca-ea0a-4528-8601-164979abde4a.png"
+    "ozolmada_Full-bleed_mid-century_Paris_couture_fashion_illustrat_312620ca-ea0a-4528-8601-164979abde4a.png",
+    "ozolmada_Cinematic_architectural_watercolor_and_ink_illustratio_8d470636-4975-4291-a439-3e7e9c33fc1e.png",
+    "ozolmada_Ethereal_fairytale_fine_art_photograph_of_a_young_woma_18bcc818-ac38-49d7-a33f-64678885d246.png",
+    "minitales_a_comical_winter_scene_with_cartoon_snowman_kids_bo_13333bdf-6323-427b-bcd7-f313740d4690_0.png",
+    "ozolmada_Ornate_pastel_goth_fantasy_illustration_maximalist_col_e93234f0-e93e-4de4-b09c-f3feb720f803.png",
+    "ozolmada_a_grandmother_catching_a_kid_sneaking_cookies_from_a_249ac29b-a952-4f63-a049-ab2b56bc0219_0.png",
+    "helgekerler_Wide_angle_full_body_long_shot_of_a_misfit_hairy__e2284448-3554-4418-ab10-7d677119702e_0.png"
   ],
   "crops": {
     "a-handsome-man-in-his-sixties-working-at-a-desktop-pc": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.115},
-    "norman-rockwell-oil-painting-illustration-1950s-magazi": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.03},
-    "a-grandmother-catching-a-kid-sneaking-cookies-from-a": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.075}
+    "norman-rockwell-oil-painting-illustration-1950s-magazi": {"left": 0.0, "top": 0.0, "right": 0.0, "bottom": 0.03}
   }
 }
