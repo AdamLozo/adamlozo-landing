@@ -377,7 +377,7 @@ h1 {
     <h1>Adam<br>Lozo</h1>
     <p class="sub">I build <em>platforms</em>, <em>games</em>, <em>dashboards</em>, and the occasional <em>ghost story</em> — designed, engineered, and shipped end to end.</p>
     <div class="meta-row">
-      <span class="chip">11 projects live</span>
+      <span class="chip"><span data-project-count>12</span> projects live</span>
       <span class="chip">Boston, MA</span>
       <span class="chip">Full stack + AI</span>
     </div>
@@ -385,7 +385,7 @@ h1 {
 
   <div class="section-head">
     <span>Selected work</span>
-    <span>001 — 011</span>
+    <span>001 — <span data-project-last>012</span></span>
   </div>
 
   <main class="projects">
@@ -648,6 +648,15 @@ h1 {
     requestAnimationFrame(frame);
   }
 })();
+</script>
+
+<script>
+function updateProjectCounter() {
+  var n = document.querySelectorAll('a.project').length;
+  document.querySelectorAll('[data-project-count]').forEach(function (el) { el.textContent = n; });
+  document.querySelectorAll('[data-project-last]').forEach(function (el) { el.textContent = String(n).padStart(3, '0'); });
+}
+updateProjectCounter();
 </script>
 
 </body>
