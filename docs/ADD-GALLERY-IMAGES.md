@@ -16,6 +16,16 @@ The gallery page is `gallery/index.html`. It loads `gallery/gallery.json` and sh
 | `gallery/images/display/<id>.webp` | Grid image. Long edge 1600 px. |
 | `gallery/images/full/<id>.jpg` | Lightbox image. Long edge max 3000 px. |
 
+## Prompt index rules
+
+- Midjourney-Prompt-Index.md is cumulative. It holds one entry for each image in the gallery, old and new.
+- Never replace the index file. Only add new entries to the end, or change one entry.
+- The index holds image entries only. Never put a Claude Code prompt in the index file.
+- Before you change the index, copy it to C:\Claude\Projects\Gallery\backups\ with the date in the file name.
+- After you change the index, count the entries. The count must not be less than before. If it is less, stop and restore the backup.
+- Some gallery images have no prompt, so the index can have fewer entries than gallery.json has images. This is normal.
+- At the start of a batch, count the entries and the "## " sections in the index. If the index does not have the sections of the earlier batches, stop and report. Do not continue.
+
 ## Procedure
 
 ### 1. Add the source images
@@ -33,8 +43,8 @@ The script makes the web images for new sources only. It adds a new entry with e
 
 ### 3. Write the captions
 
-1. Make a 512 px preview of each new image in `%TEMP%`. Do not view the full-size images.
-2. Every new image in the source folder is Adam's work. A prompt can use an artist's style, but no artist made the image. Do not look for a "Not mine" list. The images that are already in `exclude` stay excluded.
+1. Make a 512 px preview of each new image in `%TEMP%`.
+2. Every new image in the source folder is Adam's work. A prompt can use an artist's style, but no artist made the image. The images that are already in `exclude` stay excluded.
 3. Match each new image to its prompt in `Midjourney-Prompt-Index.md`. If Adam wrote a title next to a prompt in the index, use that title exactly.
    - If an image has no match in the index, write the captions from the image. Use an empty `style`. Mark the image `NO MATCH` in the report. This is normal. Do not ask Adam to add the prompt.
 4. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
@@ -49,7 +59,7 @@ The script makes the web images for new sources only. It adds a new entry with e
 
 ### 4. Signatures, logos, and mastheads
 
-Examine each new preview for marks. Examine the corners and the edges closely. Obey these rules:
+Examine each new image for marks at full resolution. Use crops of the corners, the edges, and the clothing. Obey these rules:
 
 - If an image shows a real artist signature, remove it with `retouch` boxes. Do not crop. If the retouch leaves a visible trace, exclude the image.
 - If an image shows a real logo or real masthead, exclude it.
