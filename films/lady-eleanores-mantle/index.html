@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lady Eleanore's Mantle — Adam Lozo</title>
+<meta name="description" content="A 21-minute AI film after Nathaniel Hawthorne's &quot;Legends of the Province House&quot; (1838).">
+<meta property="og:title" content="Lady Eleanore's Mantle">
+<meta property="og:description" content="A 21-minute AI film after Nathaniel Hawthorne's &quot;Legends of the Province House&quot; (1838).">
+<meta property="og:type" content="video.other">
+<meta property="og:url" content="https://adamlozo.com/films/lady-eleanores-mantle/">
+<meta property="og:image" content="https://i.ytimg.com/vi/sk1RsAPlbY0/maxresdefault.jpg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #05060a;
+  --ink: #0b0d14;
+  --line: rgba(148, 163, 200, 0.14);
+  --text: #e8eaf2;
+  --dim: #8a91a8;
+  --faint: #565d73;
+  --glow-1: #6d5df6;
+  --glow-2: #22d3ee;
+  --accent: #c8a45c;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --display: 'Space Grotesk', -apple-system, 'Segoe UI', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--display);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- background layers ---------- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgba(200, 164, 92, 0.10), transparent 60%),
+    radial-gradient(50rem 36rem at -10% 30%, rgba(109, 93, 246, 0.08), transparent 60%),
+    radial-gradient(46rem 40rem at 60% 110%, rgba(34, 211, 238, 0.05), transparent 60%);
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* ---------- frame / HUD ---------- */
+.frame {
+  position: relative;
+  z-index: 2;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  text-transform: uppercase;
+}
+
+.back {
+  color: var(--dim);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.42rem 0.9rem;
+  background: rgba(11, 13, 20, 0.6);
+  backdrop-filter: blur(6px);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.back:hover, .back:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+/* ---------- hero ---------- */
+.hero { padding: clamp(3rem, 9vh, 6rem) 0 clamp(2rem, 5vh, 3rem); }
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+
+.kicker::before { content: '// '; color: var(--faint); }
+
+h1 {
+  font-size: clamp(2.3rem, 7vw, 4.6rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  background: linear-gradient(100deg, #f2f4fb 20%, #e3cf9f 45%, #c8a45c 62%, #a7b0d8 80%, #f2f4fb 95%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 9s linear infinite;
+}
+
+@keyframes sheen {
+  0% { background-position: 0% 0; }
+  100% { background-position: 220% 0; }
+}
+
+.sub {
+  margin-top: 1.4rem;
+  max-width: 40rem;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--dim);
+}
+
+/* ---------- film ---------- */
+.film { padding-bottom: 1rem; }
+
+.player {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--ink);
+  box-shadow: 0 0 60px rgba(200, 164, 92, 0.08);
+}
+
+.player iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2656 / 1600;
+  border: 0;
+}
+
+.watch {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.watch:hover, .watch:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+
+.about {
+  margin-top: 2.4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  max-width: 40rem;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--dim);
+}
+
+/* ---------- footer ---------- */
+.footer {
+  padding: 3.5rem 0 2.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+.footer a {
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer a:hover { color: var(--glow-2); border-color: var(--glow-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  h1 { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="frame">
+
+  <header class="hud">
+    <a class="back" href="/">&larr; adam.lozo</a>
+    <span>Film</span>
+  </header>
+
+  <section class="hero">
+    <p class="kicker">Film</p>
+    <h1>Lady Eleanore's Mantle</h1>
+    <p class="sub">A 21-minute AI film after Nathaniel Hawthorne's "Legends of the Province House" (1838).</p>
+  </section>
+
+  <main class="film">
+    <div class="player">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/sk1RsAPlbY0"
+        title="Lady Eleanore's Mantle"
+        loading="lazy"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <a class="watch" href="https://youtu.be/sk1RsAPlbY0">Watch on YouTube</a>
+
+    <p class="about">In 1721, Lady Eleanore Rochcliffe arrives at the Province House in Boston, wrapped in a gold-embroidered mantle. Her pride is matched only by the beauty of the mantle, and by what it carries. Every image and voice was made with AI tools on one home PC, and directed, cut and finished by hand.</p>
+  </main>
+
+  <footer class="footer">
+    <a href="/">&larr; Back to index</a>
+    <a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
