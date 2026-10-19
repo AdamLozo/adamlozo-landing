@@ -49,8 +49,8 @@ The script makes the web images for new sources only. It adds a new entry with e
    - If an image has no match in the index, write the captions from the image. Use an empty `style`. Mark the image `NO MATCH` in the report. This is normal. Do not ask Adam to add the prompt.
 4. Fill in the four text fields in `gallery/gallery.json`. Obey these rules:
    - `title`: 2 to 5 words.
-   - `style`: `After <Artist Name>` only when the prompt names an artist. Otherwise, use an empty string.
-   - `description`: 1 to 2 sentences, 35 words maximum.
+   - `style`: `After <Artist Name>` or `In the spirit of <Artist Name>`, only when the prompt names an artist. Otherwise, use an empty string.
+   - `description`: 1 to 2 sentences, 35 words maximum. When Adam approves longer text in the batch file, use that text as written.
    - `alt`: a plain description of what the image shows.
    - Do not copy prompt text into a caption.
    - Do not invent facts.
@@ -61,7 +61,7 @@ The script makes the web images for new sources only. It adds a new entry with e
 
 Examine each new image for marks at full resolution. Use crops of the corners, the edges, and the clothing. Obey these rules:
 
-- If an image shows a real artist signature, remove it with `retouch` boxes. Do not crop. If the retouch leaves a visible trace, exclude the image.
+- If an image shows a real artist signature, remove it with `retouch` boxes. Do not crop. If the retouch leaves a visible trace, stop and report. Do not exclude the image.
 - If an image shows a real logo or real masthead, exclude it.
 - Keep images with scribbles or generic fake lettering. Do not crop or retouch them.
 
@@ -93,7 +93,7 @@ If Photoshop is not available, use `retouch` boxes:
    - No letter or part of a letter is visible.
    - The filled area matches the texture and color around it, with no visible smear or blur patch.
    - The retouch does not touch a person, face, or hand.
-5. If the retouch does not pass after 2 attempts, exclude the image.
+5. If the retouch does not pass after 2 attempts, stop and report. Do not exclude the image.
 
 To exclude an image, add its source file name to `exclude`. The build script removes its entry and its web images:
 

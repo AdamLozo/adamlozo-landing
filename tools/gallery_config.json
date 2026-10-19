@@ -12,6 +12,8 @@
     "ozolmada_Macro_product_photograph_of_a_highly_detailed_brick-bu_531d6385-ae92-400b-82c0-3df50c888b61.png",
     "ozolmada_Macro_product_photograph_of_a_highly_detailed_brick-bu_531d6385-ae92-400b-82c0-3df50c888b61_x4.png"
   ],
-  "crops": {},
+  "crops": {
+    "mj-002": {"left": 0.0087, "top": 0.0065}
+  },
   "retouch": {}
 }
