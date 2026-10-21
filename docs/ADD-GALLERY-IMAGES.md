@@ -63,7 +63,8 @@ Examine each new image for marks at full resolution. Use crops of the corners, t
 
 - If an image shows a real artist signature, remove it with `retouch` boxes. Do not crop. If the retouch leaves a visible trace, stop and report. Do not exclude the image.
 - If an image shows a real logo or real masthead, exclude it.
-- Keep images with scribbles or generic fake lettering. Do not crop or retouch them.
+- Keep images with generic fake lettering. Do not crop or retouch them.
+- Retouch Midjourney signature scribbles with Photoshop Generative Remove, on a copy in C:\Claude\Projects\Gallery\Retouched. Do not change the source file. If Photoshop is not available, use the retouch-box fallback in this document. If a trace stays after 2 attempts, stop and report.
 
 To retouch a signature, use Photoshop first. It matches the texture better than `cv2.inpaint`:
 
