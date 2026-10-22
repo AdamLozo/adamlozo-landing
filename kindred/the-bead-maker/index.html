@@ -414,29 +414,210 @@ h1 {
   gap: 2rem 1.6rem;
 }
 
-.person-card { display: block; color: inherit; text-decoration: none; outline: none; }
-.person-card .shot { cursor: pointer; }
-.person-card:hover .shot, .person-card:focus-visible .shot {
-  border-color: color-mix(in srgb, var(--glow-2) 60%, transparent);
-  box-shadow: 0 0 22px rgba(34, 211, 238, 0.18);
+.person-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.8rem 0.8rem 1rem;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(11, 13, 20, 0.55);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
+.person-card .shot { cursor: pointer; }
+.person-card:hover, .person-card:focus-visible {
+  border-color: color-mix(in srgb, var(--glow-2) 60%, transparent);
+  box-shadow: 0 0 26px rgba(34, 211, 238, 0.16);
+  background: rgba(16, 20, 32, 0.75);
+}
+.person-card:focus-visible { outline: 2px solid var(--glow-2); outline-offset: 3px; }
 .person-card:hover .shot img, .person-card:focus-visible .shot img { transform: scale(1.015); }
+.person-card .c-desc { margin-bottom: 0.9rem; }
 
-.c-link {
-  display: inline-block;
-  margin-top: 0.75rem;
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.35rem;
+  margin-top: auto;
+}
+
+.thumb {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--ink);
+}
+
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.c-button {
+  align-self: flex-start;
+  margin-top: 0.95rem;
+  padding: 0.55rem 1rem;
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--glow-2) 45%, transparent);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.06);
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.person-card:hover .c-button, .person-card:focus-visible .c-button {
+  color: var(--bg);
+  border-color: var(--glow-2);
+  background: var(--glow-2);
+}
+
+.seen-in a:hover, .seen-in a:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+/* ---------- navigation ---------- */
+.lead {
+  margin-top: 1.6rem;
+  max-width: 34rem;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.jump { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.2rem; }
+
+.jump a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.jump a {
   color: var(--dim);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  background: rgba(11, 13, 20, 0.6);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.jump a::after { content: ' ↓'; }
+
+#the-story, #the-people { scroll-margin-top: 1rem; }
+
+.people-intro {
+  max-width: 1120px;
+  margin: 1.6rem auto 0;
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--dim);
+}
+
+.people-intro + .people { padding-top: 1.6rem; }
+
+.meet { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-top: 0.9rem; }
+
+.meet a, .trail a {
+  color: var(--dim);
+  text-decoration: none;
   border-bottom: 1px solid var(--line);
   padding-bottom: 2px;
   transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.person-card:hover .c-link, .person-card:focus-visible .c-link,
-.seen-in a:hover, .seen-in a:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+.meet a {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.jump a:hover, .jump a:focus-visible,
+.meet a:hover, .meet a:focus-visible,
+.trail a:hover, .trail a:focus-visible,
+.footer a:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+.jump a:focus-visible, .meet a:focus-visible, .trail a:focus-visible, .footer a:focus-visible,
+.back:focus-visible, .seen-in a:focus-visible {
+  outline: 2px solid var(--glow-2);
+  outline-offset: 3px;
+}
+
+.trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 0.3rem 0.55rem;
+  min-width: 0;
+}
+
+.trail [aria-current] { color: var(--text); }
+.trail-sep { color: var(--faint); }
+
+/* ---------- previous / next person ---------- */
+.person-nav {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 0 clamp(3rem, 8vh, 5rem);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.person-nav[hidden] { display: none; }
+
+.pn-link {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+  padding: 0.7rem;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(11, 13, 20, 0.55);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pn-next { flex-direction: row-reverse; text-align: right; }
+
+.pn-link img {
+  flex: none;
+  width: 4.2rem;
+  height: 4.2rem;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+}
+
+.pn-text { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
+
+.pn-label {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.pn-name { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+
+.pn-link:hover, .pn-link:focus-visible {
+  border-color: color-mix(in srgb, var(--glow-2) 60%, transparent);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.16);
+}
+.pn-link:hover .pn-name, .pn-link:focus-visible .pn-name { color: var(--glow-2); }
+.pn-link:focus-visible { outline: 2px solid var(--glow-2); outline-offset: 3px; }
 
 /* ---------- person page ---------- */
 .seen-in {
@@ -474,6 +655,13 @@ h1 {
   .lb-img { max-height: calc(100vh - 15rem); max-height: calc(100dvh - 15rem); }
   .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; }
   .lb-cap { padding: 0 0.5rem; }
+  .hud { flex-wrap: wrap; }
+  .trail { justify-content: flex-start; }
+  .person-nav { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .thumbs { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -492,8 +680,14 @@ h1 {
 <div class="frame">
 
   <header class="hud">
-    <a class="back" href="/kindred/">&larr; Back to Kindred</a>
-    <span>The People</span>
+    <a class="back" href="/kindred/#the-people">&larr; All the people</a>
+    <nav class="trail" aria-label="Breadcrumb">
+      <a href="/kindred/">Kindred</a>
+      <span class="trail-sep" aria-hidden="true">›</span>
+      <a href="/kindred/#the-people">The People</a>
+      <span class="trail-sep" aria-hidden="true">›</span>
+      <span aria-current="page">The Bead-Maker</span>
+    </nav>
   </header>
 
   <section class="hero">
@@ -517,8 +711,13 @@ h1 {
     <ul id="seen-list"></ul>
   </section>
 
+  <nav class="person-nav" id="person-nav" aria-label="More people" hidden>
+    <a class="pn-link pn-prev" id="pn-prev" href="#"></a>
+    <a class="pn-link pn-next" id="pn-next" href="#"></a>
+  </nav>
+
   <footer class="footer">
-    <a href="/kindred/">&larr; Back to Kindred</a>
+    <a href="/kindred/#the-people">&larr; All the people</a>
     <a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a>
   </footer>
 
@@ -629,6 +828,48 @@ h1 {
     if (seen.children.length) document.getElementById('seen-in').hidden = false;
   }
 
+  // Same order as the cards on /kindred/: groups in series order, then people.json order.
+  function peopleInOrder(people, series) {
+    var groups = [];
+    series.images.forEach(function (e) { if (groups.indexOf(e.group) < 0) groups.push(e.group); });
+    var ordered = [];
+    groups.forEach(function (g) {
+      people.forEach(function (p) { if (p.group === g) ordered.push(p); });
+    });
+    return ordered;
+  }
+
+  function fillLink(a, p, label, prev) {
+    a.href = '/kindred/' + p.slug + '/';
+    a.setAttribute('aria-label', label + ': ' + p.name);
+    var face = p.facets && p.facets[0];
+    if (face) {
+      var img = document.createElement('img');
+      img.src = face.display;
+      img.width = face.width;
+      img.height = face.height;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      a.appendChild(img);
+    }
+    var text = el('span', 'pn-text');
+    text.appendChild(el('span', 'pn-label', label));
+    text.appendChild(el('span', 'pn-name', prev ? '← ' + p.name : p.name + ' →'));
+    a.appendChild(text);
+  }
+
+  // Previous and next person. The list wraps around at both ends.
+  function renderNav(people, series) {
+    var ordered = peopleInOrder(people, series);
+    var i = ordered.indexOf(person);
+    var n = ordered.length;
+    if (i < 0 || n < 2) return;
+    fillLink(document.getElementById('pn-prev'), ordered[(i - 1 + n) % n], 'Previous person', true);
+    fillLink(document.getElementById('pn-next'), ordered[(i + 1) % n], 'Next person', false);
+    document.getElementById('person-nav').hidden = false;
+  }
+
   function show(i) {
     var n = items.length;
     current = (i + n) % n;
@@ -692,7 +933,8 @@ h1 {
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
-  // Facet order comes from people.json. Never shuffle. no-cache revalidates after each deploy.
+  // Facet order comes from people.json. Never shuffle. The build scripts stamp ?v=<content hash>
+  // on each data URL, so the edge cache never serves an old file after a deploy.
   function getJson(url) {
     return fetch(url, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -701,8 +943,8 @@ h1 {
   }
 
   Promise.all([
-    getJson('/gallery/series/ancestors/people.json'),
-    getJson('/gallery/series/ancestors/series.json')
+    getJson('/gallery/series/ancestors/people.json?v=b527cb79'),
+    getJson('/gallery/series/ancestors/series.json?v=bfe58a49')
   ])
     .then(function (res) {
       var people = (res[0] && res[0].people) || [];
@@ -710,6 +952,7 @@ h1 {
       if (!person || !Array.isArray(person.facets) || !person.facets.length) throw new Error('not found');
       items = person.facets.slice();
       render(res[1]);
+      renderNav(people, res[1]);
     })
     .catch(showError);
 })();

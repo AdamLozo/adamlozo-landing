@@ -21,8 +21,14 @@
 <div class="frame">
 
   <header class="hud">
-    <a class="back" href="/{{PAGE}}/">&larr; Back to Kindred</a>
-    <span>The People</span>
+    <a class="back" href="/{{PAGE}}/#the-people">&larr; All the people</a>
+    <nav class="trail" aria-label="Breadcrumb">
+      <a href="/{{PAGE}}/">Kindred</a>
+      <span class="trail-sep" aria-hidden="true">›</span>
+      <a href="/{{PAGE}}/#the-people">The People</a>
+      <span class="trail-sep" aria-hidden="true">›</span>
+      <span aria-current="page">{{NAME}}</span>
+    </nav>
   </header>
 
   <section class="hero">
@@ -46,8 +52,13 @@
     <ul id="seen-list"></ul>
   </section>
 
+  <nav class="person-nav" id="person-nav" aria-label="More people" hidden>
+    <a class="pn-link pn-prev" id="pn-prev" href="#"></a>
+    <a class="pn-link pn-next" id="pn-next" href="#"></a>
+  </nav>
+
   <footer class="footer">
-    <a href="/{{PAGE}}/">&larr; Back to Kindred</a>
+    <a href="/{{PAGE}}/#the-people">&larr; All the people</a>
     <a href="mailto:adam@adamlozo.com">adam@adamlozo.com</a>
   </footer>
 
@@ -158,6 +169,48 @@
     if (seen.children.length) document.getElementById('seen-in').hidden = false;
   }
 
+  // Same order as the cards on /{{PAGE}}/: groups in series order, then people.json order.
+  function peopleInOrder(people, series) {
+    var groups = [];
+    series.images.forEach(function (e) { if (groups.indexOf(e.group) < 0) groups.push(e.group); });
+    var ordered = [];
+    groups.forEach(function (g) {
+      people.forEach(function (p) { if (p.group === g) ordered.push(p); });
+    });
+    return ordered;
+  }
+
+  function fillLink(a, p, label, prev) {
+    a.href = '/{{PAGE}}/' + p.slug + '/';
+    a.setAttribute('aria-label', label + ': ' + p.name);
+    var face = p.facets && p.facets[0];
+    if (face) {
+      var img = document.createElement('img');
+      img.src = face.display;
+      img.width = face.width;
+      img.height = face.height;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      a.appendChild(img);
+    }
+    var text = el('span', 'pn-text');
+    text.appendChild(el('span', 'pn-label', label));
+    text.appendChild(el('span', 'pn-name', prev ? '← ' + p.name : p.name + ' →'));
+    a.appendChild(text);
+  }
+
+  // Previous and next person. The list wraps around at both ends.
+  function renderNav(people, series) {
+    var ordered = peopleInOrder(people, series);
+    var i = ordered.indexOf(person);
+    var n = ordered.length;
+    if (i < 0 || n < 2) return;
+    fillLink(document.getElementById('pn-prev'), ordered[(i - 1 + n) % n], 'Previous person', true);
+    fillLink(document.getElementById('pn-next'), ordered[(i + 1) % n], 'Next person', false);
+    document.getElementById('person-nav').hidden = false;
+  }
+
   function show(i) {
     var n = items.length;
     current = (i + n) % n;
@@ -221,7 +274,8 @@
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
 
-  // Facet order comes from people.json. Never shuffle. no-cache revalidates after each deploy.
+  // Facet order comes from people.json. Never shuffle. The build scripts stamp ?v=<content hash>
+  // on each data URL, so the edge cache never serves an old file after a deploy.
   function getJson(url) {
     return fetch(url, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -239,6 +293,7 @@
       if (!person || !Array.isArray(person.facets) || !person.facets.length) throw new Error('not found');
       items = person.facets.slice();
       render(res[1]);
+      renderNav(people, res[1]);
     })
     .catch(showError);
 })();

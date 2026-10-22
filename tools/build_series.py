@@ -1,7 +1,7 @@
 """Build web images for a gallery series. Never reads or writes gallery/gallery.json.
 
 Usage:
-    py tools/build_series.py <series slug> "<source folder>" [--force]
+    py tools/build_series.py <series slug> "<source folder>" [--page-dir kindred] [--force]
 
 Example:
     py tools/build_series.py ancestors "C:\\Claude\\Projects\\Gallery\\Series\\Ancestors\\images"
@@ -16,17 +16,52 @@ No crop and no retouch. The id is the lower-case source file stem.
 If gallery/series/<slug>/series.json exists, the script refreshes only the generated fields
 ("display", "full", "width", "height") of each entry whose "source_name" matches a source file.
 It never changes caption text and never adds or removes entries.
+
+After it writes series.json, it stamps a short content hash of series.json and people.json into
+every page that loads them (<page dir>/index.html and <page dir>/*/index.html), as
+series.json?v=<hash> and people.json?v=<hash>. A new hash is a new edge-cache key, so a page
+never gets an old data file from the cache after a deploy.
 """
 
 import argparse
+import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
 from PIL import Image, ImageOps
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from build_gallery import DISPLAY_EDGE, EXTENSIONS, FULL_EDGE, GALLERY, fit, is_current, to_srgb  # noqa: E402
+from build_gallery import DISPLAY_EDGE, EXTENSIONS, FULL_EDGE, GALLERY, REPO, fit, is_current, to_srgb  # noqa: E402
+
+DATA_FILES = ("series.json", "people.json")
+
+
+def data_version(path):
+    """Short content hash of one data file, used as its ?v= query. CRLF counts as LF, so a
+    checkout with core.autocrlf gives the same hash as the committed file."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()[:8]
+
+
+def stamp_versions(slug, page_dir):
+    """Write the current ?v=<hash> of each data file into every page that loads it."""
+    base = GALLERY / "series" / slug
+    versions = {n: data_version(base / n) for n in DATA_FILES if (base / n).exists()}
+    root = REPO / page_dir
+    pages = [root / "index.html"] + sorted(root.glob("*/index.html"))
+    for page in pages:
+        if not page.is_file():
+            continue
+        text = page.read_text(encoding="utf-8")
+        new = text
+        for name, v in versions.items():
+            url = re.escape(f"/gallery/series/{slug}/{name}")
+            new = re.sub(rf"({url})(?:\?v=[0-9a-f]*)?(?=['\"])", rf"\g<1>?v={v}", new)
+        if new != text:
+            page.write_text(new, encoding="utf-8", newline="\n")
+            print(f"stamped  /{page.relative_to(REPO).as_posix()}")
+    print("versions: " + ", ".join(f"{n}?v={v}" for n, v in versions.items()))
 
 
 def build_image(src, display_dir, full_dir, web, force=False):
@@ -60,6 +95,7 @@ def main():
     parser = argparse.ArgumentParser(description="Build web images for a gallery series.")
     parser.add_argument("slug", help="series slug, for example ancestors")
     parser.add_argument("source", help="source image folder")
+    parser.add_argument("--page-dir", default="kindred", help="site folder of the series page")
     parser.add_argument("--force", action="store_true", help="rebuild all images")
     args = parser.parse_args()
 
@@ -94,8 +130,9 @@ def main():
             if i:
                 e.update({k: i[k] for k in ("display", "full", "width", "height")})
                 updated += 1
-        json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        json_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
         print(f"series.json: {updated} of {len(data.get('images', []))} entries refreshed")
+        stamp_versions(args.slug, args.page_dir)
     print(f"Images: {len(files)}")
 
 

@@ -27,6 +27,10 @@ Writes:
 
 The person page copies the <style> block of <page dir>/index.html, so both pages share one set of
 styles. Run this script again for each person after a style change on <page dir>/index.html.
+
+Last, it stamps a short content hash of people.json and series.json into <page dir>/index.html and
+every person page, as people.json?v=<hash> (see stamp_versions in build_series.py). The person
+pages build their previous and next links from people.json, so a new person needs no page rebuild.
 """
 
 import argparse
@@ -38,7 +42,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_gallery import GALLERY, REPO  # noqa: E402
-from build_series import build_image  # noqa: E402
+from build_series import build_image, stamp_versions  # noqa: E402
 
 FACETS = ["Portrait", "Responsibility", "Challenge", "Joy", "Bond", "Legacy"]
 TEMPLATE = Path(__file__).resolve().parent / "templates" / "person.html"
@@ -191,6 +195,7 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8", newline="\n")
     print(f"page: /{args.page_dir}/{slug}/")
+    stamp_versions(args.slug, args.page_dir)
 
 
 if __name__ == "__main__":
