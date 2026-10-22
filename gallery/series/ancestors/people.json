@@ -451,6 +451,96 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-fire-carrier",
+      "name": "The Fire-Carrier",
+      "group": "Ice Age Europe",
+      "summary": "The young woman who keeps the band's fire alive.",
+      "intro": "She carries the band's fire. Through snow, rain, and long journeys, she keeps the embers alive in a small bark container, because without fire the band cannot survive the winter. Her grandmother taught her, and one day she will teach someone else.",
+      "seen_in": [
+        "09"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At dawn she kneels in the snow, opens her bark container, and blows softly on the embers that she carried through the night. They glow, and she breathes again.",
+          "description_2": "Some foraging peoples studied in recent times, such as the Andaman Islanders, did not make fire at all. They carried glowing embers from camp to camp and guarded them carefully, because a lost fire was hard to replace.",
+          "alt": "Oil painting of a young Ice Age woman in a hooded fur parka kneeling in the snow at dawn, blowing on glowing embers inside a small birch-bark container held in her hands, with mammoth-bone shelters in the distance.",
+          "prompt_id": "ANC-90",
+          "source_name": "Ancestors-P6-FireCarrier-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "Every night, while the band sleeps, she stays awake and feeds the hearth with mammoth bones. No one sees her work. Everyone wakes up warm.",
+          "description_2": "At Ice Age mammoth-bone camps on the plains of Ukraine and Russia, the hearths are full of burnt bone. Where trees were rare, bone rich in grease was one of the main fuels.",
+          "alt": "Oil painting of the young woman feeding a mammoth bone into a fire inside a shelter built of mammoth bones and hides at night, while the band sleeps under furs beside the hearth and smoke rises to a hole in the roof.",
+          "prompt_id": "ANC-91",
+          "source_name": "Ancestors-P6-FireCarrier-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-02-responsibility.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "A cold rain has killed the embers that she carried for days. Under a dripping rock, with the whole band watching, she strikes flint against pyrite again and again, until one spark catches.",
+          "description_2": "Flint tools from Neanderthal sites in France, about 50,000 years old, carry wear marks from being struck against pyrite to make sparks. Much later, the Iceman found in the Alps carried dried tinder fungus in his pouch.",
+          "alt": "Oil painting of the young woman kneeling under a rock overhang in the rain, striking flint against pyrite to send sparks into a nest of dry grass, beside her soaked ember container, while the band huddles behind her under wet furs.",
+          "prompt_id": "ANC-92",
+          "source_name": "Ancestors-P6-FireCarrier-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "On a clear winter night, she sits by her small fire and watches the sparks rise, up and up, until they seem to join the lights that flow across the sky.",
+          "description_2": "Ice Age people watched the sky closely. A carved bone plate from Abri Blanchard in France, about 30,000 years old, carries rows of small marks that some researchers read as a record of the phases of the moon.",
+          "alt": "Oil painting of the young woman sitting by a small fire in the snow at night, smiling up at sparks that spiral toward green and violet northern lights, with mammoth-bone shelters behind her.",
+          "prompt_id": "ANC-93",
+          "source_name": "Ancestors-P6-FireCarrier-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-04-joy.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "After a long, cold day of carrying the fire, she sits down by the hearth, worn out. Her grandmother, who taught her to carry fire, wraps her in her own cloak.",
+          "description_2": "Among the Hadza of Tanzania, grandmothers gather food for their grandchildren, and children with a living grandmother are better fed. Anthropologists call this the grandmother effect, and many think it helped shape the long human life span.",
+          "alt": "Oil painting of the young woman sitting by a fire with her eyes closed, holding her ember container, while her white-haired grandmother wraps a fur cloak around her shoulders inside a mammoth-bone shelter.",
+          "prompt_id": "ANC-94",
+          "source_name": "Ancestors-P6-FireCarrier-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-05-bond.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "At the new camp, she opens her bark container and lights a torch for every family from her embers. A line of small flames spreads out across the dark valley.",
+          "description_2": "Among many foraging peoples, each family keeps its own hearth, and a camp is a circle of fires. Fire passes freely from one hearth to the next, so one fire can light a whole camp.",
+          "alt": "Oil painting of the young woman lighting a boy's torch from her own at dusk in a snowy river valley, holding her ember container, while families wait with torches and a line of small flames moves away across the plain.",
+          "prompt_id": "ANC-95",
+          "source_name": "Ancestors-P6-FireCarrier-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/fire-carrier/images/display/ancestors-p6-firecarrier-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/fire-carrier/images/full/ancestors-p6-firecarrier-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
