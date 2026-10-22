@@ -181,6 +181,96 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-bead-maker",
+      "name": "The Bead-Maker",
+      "group": "Africa",
+      "summary": "The woman whose gifts keep the peace.",
+      "intro": "She makes the band's beads, and every string she makes is a gift. Her necklaces bind friends together, welcome strangers, and carry her band's name to places far away. She is the band's peacemaker, and she does it with her hands.",
+      "seen_in": [
+        "03"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At sunset she walks the tideline with her pouch at her waist. She picks up each small shell, holds it up to the light, and turns it in her fingers. Only the best are good enough to become beads.",
+          "description_2": "The shell beads from Blombos Cave in South Africa, about 75,000 years old, were made from one kind of small sea snail. The makers chose shells of a similar size and pierced each one in the same place.",
+          "alt": "Oil painting of an African woman with her curly hair in a high bun and strings of white and red shell beads, standing at the edge of the sea at sunset, holding a small shell up to the light, with a leather pouch at her waist.",
+          "prompt_id": "ANC-59",
+          "source_name": "Ancestors-P3-BeadMaker-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "In the shelter, she pierces shell after shell with her bone awl and colours some of them red with ochre. Her bag fills with necklaces. They are not only beautiful: they are the gifts that keep her band at peace with its neighbours.",
+          "description_2": "At Blombos Cave, people mixed ground red ochre in abalone shells about 100,000 years ago, the oldest known paint workshop in the world. Some of the shell beads from the same cave carry traces of ochre.",
+          "alt": "Oil painting of the woman sitting cross-legged in a rock shelter, piercing a tiny shell with a bone awl, with raw shells, a lump of red ochre, a grinding stone, red-stained shells, and finished necklaces spilling from a bag in front of her.",
+          "prompt_id": "ANC-60",
+          "source_name": "Ancestors-P3-BeadMaker-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "At the river crossing, her band meets strangers. No one moves. Then she walks out alone onto the stones and holds out her finest necklace. On the far bank, an old woman takes the first step toward her.",
+          "description_2": "At Olorgesailie in Kenya, people about 300,000 years ago used black obsidian brought from 25 to 95 kilometres away. Exchange across such distances needed peaceful meetings between groups who did not live together.",
+          "alt": "Oil painting of the woman standing alone on stepping stones in a river, holding out a necklace toward a group of strangers with white clay lines on their skin, while an older stranger steps toward her and her own band waits on the other bank.",
+          "prompt_id": "ANC-62",
+          "source_name": "Ancestors-P3-BeadMaker-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "At a gathering on the beach, the drum starts, and she pulls the man she loves into the circle. They spin by the fire, laughing, her beads swinging out in the firelight. He wears a string of them too.",
+          "description_2": "Rock paintings in southern Africa, made by San artists over thousands of years, show people dancing in circles while others clap. Among San communities today, the dance around a night fire is still a central event of community life.",
+          "alt": "Oil painting of the woman and a man laughing and spinning hand in hand by a fire on a beach at night, her bead necklaces swinging, while others clap, a man beats a log drum, an older woman sways, and two children dance.",
+          "prompt_id": "ANC-63",
+          "source_name": "Ancestors-P3-BeadMaker-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-04-joy.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "Once a year the bands gather by the river, and she finds her older sister, who married into another band. They trade necklaces, then hold each other's faces, foreheads together, and cry.",
+          "description_2": "At Enkapune Ya Muto in Kenya, people made beads from ostrich eggshell about 50,000 years ago, among the oldest of their kind. Among the Ju/'hoan of the Kalahari, gifts of such beads still tie families together across distant bands.",
+          "alt": "Oil painting of the woman and her older sister, who has white clay lines on her face, holding each other's faces with foreheads touching and tears of joy, both wearing new necklaces, at a large gathering by a river with fires and shelters.",
+          "prompt_id": "ANC-64",
+          "source_name": "Ancestors-P3-BeadMaker-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-05-bond.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "At dawn, a young woman leaves to join a distant band. The Bead-Maker folds her finest necklace into the young woman's hands. Her beads will travel to places she will never see.",
+          "description_2": "At Taforalt Cave in Morocco, archaeologists found shell beads about 82,000 years old, more than 40 kilometres from the sea where the shells were collected. Beads travelled farther than the people who made them.",
+          "alt": "Oil painting of the woman placing a long shell-bead necklace into the hands of a tearful young woman with a bundle on her back, at dawn beside a sandstone overhang with a fire, while three travellers wait on a path leading inland.",
+          "prompt_id": "ANC-67",
+          "source_name": "Ancestors-P3-BeadMaker-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/bead-maker/images/display/ancestors-p3-beadmaker-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/bead-maker/images/full/ancestors-p3-beadmaker-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
