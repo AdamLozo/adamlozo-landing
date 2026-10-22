@@ -271,6 +271,96 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-flute-player",
+      "name": "The Flute Player",
+      "group": "Ice Age Europe",
+      "summary": "The father who makes the band's music.",
+      "intro": "He is the band's musician. He carves flutes from the wing bones of birds, and he plays for every moment that matters: the long winter nights, the dead, the newly born, and the joy of spring. His wife is the Painter. Between them, the band's caves are full of pictures and song.",
+      "seen_in": [
+        "02"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At dusk he climbs alone to the ridge above the frozen valley and plays. No one asked him to. He plays because the valley is quiet and the sky is wide, and his breath steams in the cold with every note.",
+          "description_2": "In Hohle Fels Cave in Germany, archaeologists found a flute made from the wing bone of a griffon vulture, about 40,000 years old. It has five finger holes and a V-shaped notch for the mouth. It is one of the oldest known musical instruments in the world.",
+          "alt": "Oil painting of an Ice Age man in a fur parka standing on a snowy ridge at dusk, playing a pale bone flute with his eyes closed, his breath steaming, above a frozen river valley under a deep blue sky with a rose-coloured horizon.",
+          "prompt_id": "ANC-70",
+          "source_name": "Ancestors-P4-FlutePlayer-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "At the mouth of the cave, he cuts the last hole in a new flute made from a swan's wing bone and blows the first note. He listens like a judge. Beside him, a boy stares as if a bone has just learned to sing.",
+          "description_2": "At Geissenklösterle Cave in Germany, a flute made from a swan's wing bone is about 42,000 years old. Another flute from the same cave was carved from mammoth ivory, a far harder task that needed great skill.",
+          "alt": "Oil painting of the man sitting on a fur at a snowy cave mouth, testing a new bone flute while an amazed boy in a fur parka watches, with a swan wing, a feather, flint tools, bone shavings, and an older flute on the hide in front of them.",
+          "prompt_id": "ANC-71",
+          "source_name": "Ancestors-P4-FlutePlayer-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "On a grey winter morning, the band buries a friend. He stands at the grave with tears on his face and plays the slowest song he knows, while the others lay their gifts on the covered body.",
+          "description_2": "At Sungir in Russia, about 34,000 years ago, people buried a man and two children with thousands of ivory beads and carved ivory animals, including a small horse. The care in these burials shows how deeply they mourned their dead.",
+          "alt": "Oil painting of the man playing a bone flute with his eyes closed beside a shallow grave in the snow, where a covered body lies with a string of ivory beads and a carved ivory horse, while a woman kneels and the band and two children stand in grief.",
+          "prompt_id": "ANC-74",
+          "source_name": "Ancestors-P4-FlutePlayer-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "Deep in the cave, he plays one note, and the whole chamber sings it back. The band stops still with their lamps raised. The children laugh. He has found the place where the stone itself makes music.",
+          "description_2": "In French caves such as Arcy-sur-Cure, researcher Iégor Reznikoff found that many painted dots and figures sit at the places where the cave resonates most strongly. The first artists may have chosen their walls by listening.",
+          "alt": "Oil painting of the man playing a bone flute in a high cave chamber with stalactites, red dots, and a painted mammoth on the walls, surrounded by members of his band holding small stone lamps and two laughing children, all looking up in wonder.",
+          "prompt_id": "ANC-75",
+          "source_name": "Ancestors-P4-FlutePlayer-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-04-joy.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "Late at night, his wife paints a horse on the cave wall by the light of one small lamp. He sits behind her and plays softly, and he does not look at his flute. He watches her.",
+          "description_2": "In Hohle Fels Cave, the vulture-bone flute was found close to one of the oldest carved human figures in the world, the Venus of Hohle Fels. Music and art were made by the same people, in the same places.",
+          "alt": "Oil painting of a woman with dark braids drawing a horse in charcoal on a cave wall covered with older animal paintings, while the man sits behind her playing a bone flute, with a stone lamp, charcoal sticks, and a shell of red ochre on a rock between them.",
+          "prompt_id": "ANC-77",
+          "source_name": "Ancestors-P4-FlutePlayer-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-05-bond.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "By the fire, he gives the children small flutes that he carved for them. Not one note is in tune. He laughs louder than anyone and keeps the beat, because this is how every musician begins.",
+          "description_2": "The flutes from the caves of southern Germany span several thousand years and were made from different bones and from ivory. The skill of making and playing them passed from one generation to the next.",
+          "alt": "Oil painting of the man laughing as he leads five children in fur parkas who blow small bone flutes by a fire in a cave, while adults behind them smile and one covers her ears, with painted horses and a mammoth on the wall.",
+          "prompt_id": "ANC-78",
+          "source_name": "Ancestors-P4-FlutePlayer-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/flute-player/images/display/ancestors-p4-fluteplayer-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/flute-player/images/full/ancestors-p4-fluteplayer-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
