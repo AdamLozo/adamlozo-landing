@@ -385,6 +385,88 @@ h1 {
 .lb-inner { overflow-y: auto; justify-content: safe center; }
 .lb-cap .c-evidence { margin-top: 0.45rem; font-size: 0.82rem; }
 
+.plate { scroll-margin-top: 1.5rem; }
+.section-head h2 { font: inherit; }
+
+/* ---------- people ---------- */
+.people {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.4rem 0 clamp(3rem, 8vh, 5rem);
+}
+
+.people-group + .people-group { margin-top: 2.8rem; }
+
+.group-head {
+  margin-bottom: 1.2rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--glow-2);
+}
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 2rem 1.6rem;
+}
+
+.person-card { display: block; color: inherit; text-decoration: none; outline: none; }
+.person-card .shot { cursor: pointer; }
+.person-card:hover .shot, .person-card:focus-visible .shot {
+  border-color: color-mix(in srgb, var(--glow-2) 60%, transparent);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.18);
+}
+.person-card:hover .shot img, .person-card:focus-visible .shot img { transform: scale(1.015); }
+
+.c-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.person-card:hover .c-link, .person-card:focus-visible .c-link,
+.seen-in a:hover, .seen-in a:focus-visible { color: var(--glow-2); border-color: var(--glow-2); outline: none; }
+
+/* ---------- person page ---------- */
+.seen-in {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 0 clamp(3rem, 8vh, 5rem);
+}
+
+.seen-in h2 {
+  margin-bottom: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.seen-in ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.8rem 1.6rem; }
+
+.seen-in a {
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.seen-in .c-num { margin-right: 0.25rem; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 640px) {
   .lb-inner { padding: 3.8rem 0.75rem 4.4rem; }
@@ -428,6 +510,14 @@ h1 {
   <main id="series" class="series" aria-live="polite">
     <noscript><p class="status">This page needs JavaScript to load.</p></noscript>
   </main>
+
+  <section aria-labelledby="people-title">
+    <div class="section-head">
+      <h2 id="people-title">The People</h2>
+      <span id="people-count"></span>
+    </div>
+    <div id="people" class="people" aria-live="polite"></div>
+  </section>
 
   <footer class="footer">
     <a href="/">&larr; Back to home</a>
@@ -480,6 +570,67 @@ h1 {
     return n;
   }
 
+  // Anchor of one series image, for example #01-the-hearth. Person pages link to these.
+  function anchor(it) {
+    return (it.number + '-' + it.title).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  function renderPeople(data, people) {
+    var box = document.getElementById('people');
+    // Groups follow their order in the series. Only groups with people get a heading.
+    var groups = [];
+    data.images.forEach(function (it) { if (groups.indexOf(it.group) < 0) groups.push(it.group); });
+    var frag = document.createDocumentFragment();
+    groups.forEach(function (g) {
+      var members = people.filter(function (p) { return p.group === g; });
+      if (!members.length) return;
+      var sec = el('section', 'people-group');
+      sec.appendChild(el('h3', 'group-head', g));
+      var grid = el('div', 'people-grid');
+      members.forEach(function (p) {
+        var face = p.facets[0];
+        var a = el('a', 'person-card');
+        a.href = '/kindred/' + p.slug + '/';
+        var shot = el('span', 'shot');
+        var img = document.createElement('img');
+        img.src = face.display;
+        img.width = face.width;
+        img.height = face.height;
+        img.alt = face.alt || '';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        shot.appendChild(img);
+        a.appendChild(shot);
+        a.appendChild(el('h4', 'c-title', p.name));
+        a.appendChild(el('p', 'c-desc', p.summary));
+        a.appendChild(el('span', 'c-link', 'Six facets →'));
+        grid.appendChild(a);
+      });
+      sec.appendChild(grid);
+      frag.appendChild(sec);
+    });
+    box.textContent = '';
+    box.appendChild(frag);
+    document.getElementById('people-count').textContent = people.length + (people.length === 1 ? ' person' : ' people');
+  }
+
+  function loadPeople(data) {
+    fetch('/gallery/series/ancestors/people.json', { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (pd) {
+        if (!pd || !Array.isArray(pd.people)) throw new Error('empty');
+        renderPeople(data, pd.people);
+      })
+      .catch(function () {
+        var box = document.getElementById('people');
+        box.textContent = '';
+        box.appendChild(el('p', 'status', 'The people could not be loaded. Please try again later.'));
+      });
+  }
+
   function showError() {
     list.textContent = '';
     list.appendChild(el('p', 'status', 'The series could not be loaded. Please try again later.'));
@@ -493,6 +644,7 @@ h1 {
     var frag = document.createDocumentFragment();
     items.forEach(function (it, i) {
       var plate = el('article', 'plate');
+      plate.id = anchor(it);
       var btn = el('button', 'shot');
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Open ' + it.number + ' ' + it.title);
@@ -592,6 +744,16 @@ h1 {
       if (!data || !Array.isArray(data.images) || !data.images.length) throw new Error('empty');
       items = data.images.slice();
       render(data);
+      // The plates load after the page, so scroll to a #01-the-hearth style anchor by hand.
+      var target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) {
+        // Jump, not smooth scroll: a smooth scroll can stop before it ends while the page still loads.
+        var root = document.documentElement;
+        root.style.scrollBehavior = 'auto';
+        target.scrollIntoView();
+        root.style.scrollBehavior = '';
+      }
+      loadPeople(data);
     })
     .catch(showError);
 })();

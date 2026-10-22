@@ -29,6 +29,33 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_gallery import DISPLAY_EDGE, EXTENSIONS, FULL_EDGE, GALLERY, fit, is_current, to_srgb  # noqa: E402
 
 
+def build_image(src, display_dir, full_dir, web, force=False):
+    """Write the display WebP and full JPEG for one source image. Return (state, info)."""
+    sid = src.stem.lower()
+    display = display_dir / f"{sid}.webp"
+    full = full_dir / f"{sid}.jpg"
+    if not force and is_current(src, (display, full)):
+        state = "current"
+    else:
+        with Image.open(src) as img:
+            img = to_srgb(ImageOps.exif_transpose(img))
+            fit(img, DISPLAY_EDGE).save(display, "WEBP", quality=82, method=6)
+            fit(img, FULL_EDGE).save(full, "JPEG", quality=90, progressive=True, optimize=True)
+        state = "built"
+    with Image.open(display) as d, Image.open(full) as f:
+        info = {
+            "display": f"{web}/display/{sid}.webp",
+            "full": f"{web}/full/{sid}.jpg",
+            "width": d.width,
+            "height": d.height,
+            "full_size": f.size,
+        }
+    dw, dh = info["width"], info["height"]
+    fw, fh = info["full_size"]
+    print(f"{state:8} {src.name}  display {dw}x{dh}  full {fw}x{fh}")
+    return state, info
+
+
 def main():
     parser = argparse.ArgumentParser(description="Build web images for a gallery series.")
     parser.add_argument("slug", help="series slug, for example ancestors")
@@ -56,28 +83,7 @@ def main():
 
     info = {}
     for src in files:
-        sid = src.stem.lower()
-        display = display_dir / f"{sid}.webp"
-        full = full_dir / f"{sid}.jpg"
-        if not args.force and is_current(src, (display, full)):
-            state = "current"
-        else:
-            with Image.open(src) as img:
-                img = to_srgb(ImageOps.exif_transpose(img))
-                fit(img, DISPLAY_EDGE).save(display, "WEBP", quality=82, method=6)
-                fit(img, FULL_EDGE).save(full, "JPEG", quality=90, progressive=True, optimize=True)
-            state = "built"
-        with Image.open(display) as d, Image.open(full) as f:
-            info[src.name] = {
-                "display": f"{web}/display/{sid}.webp",
-                "full": f"{web}/full/{sid}.jpg",
-                "width": d.width,
-                "height": d.height,
-                "full_size": f.size,
-            }
-        dw, dh = info[src.name]["width"], info[src.name]["height"]
-        fw, fh = info[src.name]["full_size"]
-        print(f"{state:8} {src.name}  display {dw}x{dh}  full {fw}x{fh}")
+        _, info[src.name] = build_image(src, display_dir, full_dir, web, args.force)
 
     json_path = base / "series.json"
     if json_path.exists():

@@ -1,0 +1,95 @@
+{
+  "people": [
+    {
+      "slug": "the-storyteller",
+      "name": "The Storyteller",
+      "group": "Africa",
+      "summary": "The elder who holds the band's memory.",
+      "intro": "He is the oldest man in the band and its memory. He knows every story, every safe path, and every good tide. He cannot walk far now, but the band still turns to him, and he still has things to give.",
+      "seen_in": [
+        "01",
+        "05"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At first light he walks to the edge of the cliff and stands alone above the sea. He comes here every morning. He says that he comes to look at the water, but the others know that he comes to remember: every story he has told, and every person who was in them.",
+          "description_2": "Among hunter-gatherer peoples studied in recent times, the elders hold knowledge that no one else has: where to find water in a drought that comes once in a lifetime, which plants heal, and which stories hold the group's history. When an elder dies, that knowledge is lost unless someone has learned it.",
+          "alt": "Oil painting of an elderly African man with short white curly hair and a white beard, in a hide cloak and a string of white shell beads, standing on a cliff at dawn with both hands on a wooden staff, looking out over the sea.",
+          "prompt_id": "ANC-31",
+          "source_name": "Ancestors-P1-Storyteller-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-01-portrait.jpg",
+          "width": 1289,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "At low tide he sits on a flat rock and calls the children to him. He holds up a mussel and shows them which ones are good to take, which pools are safe, and when the sea will turn. His leg keeps him from the far rocks now, so he makes sure that the children know them.",
+          "description_2": "At Pinnacle Point in South Africa, people gathered shellfish about 164,000 years ago. Archaeologists think that they timed their visits to the lowest tides, which follow the cycle of the moon. Knowing when and where to gather was knowledge that passed from the old to the young.",
+          "alt": "Oil painting of the elderly man sitting on a rock at low tide, holding up a black mussel and pointing to a cluster of mussels while three children watch, with a cave in a sandstone cliff behind them.",
+          "prompt_id": "ANC-33",
+          "source_name": "Ancestors-P1-Storyteller-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1073
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "Each morning the band walks away along the shore to gather food, and he stays behind at the shelter. The old wound on his leg has never fully healed. He watches them go until they are small dots on the sand. Then someone at the back always turns and waves.",
+          "description_2": "At Romito Cave in Italy, a young man buried about 11,000 years ago had a form of dwarfism that limited how he could move and work. He lived to adulthood because his group cared for him. Skeletons from many Stone Age sites show injuries that healed over many years in the same way.",
+          "alt": "Oil painting of the elderly man sitting at the mouth of a cliff-top cave shelter beside cold ashes, watching a small group of people walk away along a long beach far below, one child waving back.",
+          "prompt_id": "ANC-37",
+          "source_name": "Ancestors-P1-Storyteller-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "One evening by the fire, a little girl climbs onto his knee and tells him a story of her own. She lifts her hands high, the way he does, and makes up the words as she goes. He laughs until his eyes close. No story he has ever told has made him this happy.",
+          "description_2": "In Rouffignac Cave in France, children as young as three drew lines with their fingers in the soft clay of the cave walls. Some marks are so high that an adult must have lifted the child up to make them. Play and learning were part of the same life.",
+          "alt": "Oil painting of the elderly man laughing by a fire with a little girl in a hide tunic on his knee, her hands raised as she tells a story, with hand stencils on the cave wall and two smiling adults behind.",
+          "prompt_id": "ANC-40",
+          "source_name": "Ancestors-P1-Storyteller-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-04-joy.jpg",
+          "width": 1289,
+          "height": 1600
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "At sunset he sits on the cliff with the friend he has known all his life. They were boys together on these rocks. Now they sit side by side and say nothing at all. His friend's hand rests on his back. The man who tells every story needs no words here.",
+          "description_2": "Among the Ju/'hoan people of the Kalahari, a gift-exchange partnership called hxaro can last a whole lifetime and tie families together across long distances. Ostrich eggshell beads, the kind of gift that hxaro partners still give, travelled thousands of kilometres across Africa between 50,000 and 33,000 years ago.",
+          "alt": "Oil painting of two elderly men sitting side by side on a cliff at sunset above the sea, one with white curly hair and a staff, the other bald, his hand resting on his friend's back.",
+          "prompt_id": "ANC-41",
+          "source_name": "Ancestors-P1-Storyteller-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-05-bond.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "Tonight a young woman tells the story by the fire. She lifts her hands high, as he taught her, and the children lean in to listen. He sits at the edge of the light, where no one looks at him. That is how he wanted it. The stories no longer need him to live.",
+          "description_2": "In a study of Ju/'hoan conversations, anthropologist Polly Wiessner found that daytime talk was mostly about work and complaints. At night around the fire, most of the talk was stories: about people, places, and the past. Firelight, she argued, gave humans the time to pass on what they knew.",
+          "alt": "Oil painting of a young woman by a fire in a cave raising both hands as she tells a story to children in hide tunics, her hand shadows on a wall of hand stencils, while the elderly man watches from the edge of the light.",
+          "prompt_id": "ANC-43",
+          "source_name": "Ancestors-P1-Storyteller-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/storyteller/images/display/ancestors-p1-storyteller-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/storyteller/images/full/ancestors-p1-storyteller-06-legacy.jpg",
+          "width": 1600,
+          "height": 679
+        }
+      ]
+    }
+  ]
+}
