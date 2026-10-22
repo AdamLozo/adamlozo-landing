@@ -361,6 +361,96 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-painter",
+      "name": "The Painter",
+      "group": "Ice Age Europe",
+      "summary": "The mother who gives the band its pictures.",
+      "intro": "She paints the animals that the band lives among: horses, bison, the great wild ox. She grinds her own colours, crawls into the deepest parts of the cave, and works by the light of one small flame. Her husband is the Flute Player, and her daughter is learning to paint beside her.",
+      "seen_in": [
+        "06"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "Deep in the cave, she stands beside the horse she has just finished, red ochre still on her fingers. She holds the lamp low and looks at the work for a long time. Tomorrow she will start the next one.",
+          "description_2": "In Chauvet Cave in France, painters drew horses, lions, and rhinoceroses in charcoal and ochre about 36,000 years ago. They are among the oldest and most skilled cave paintings ever found.",
+          "alt": "Oil painting of an Ice Age woman with two dark braids and a smudge of red ochre on her cheek, standing in a dark cave beside a horse painted on the wall, one red-stained hand on the rock and a small stone lamp in the other.",
+          "prompt_id": "ANC-80",
+          "source_name": "Ancestors-P5-Painter-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "At the mouth of the cave, she grinds red ochre on a flat stone and lays out her colours in a row, from pale yellow to black. Every animal on the walls begins here, as powder and patience.",
+          "description_2": "Ice Age painters made red and yellow from ochre, an earth rich in iron, and black from charcoal and manganese. Some heated yellow ochre in the fire to turn it red, and mixed minerals to make new shades.",
+          "alt": "Oil painting of the woman kneeling at a cave mouth, grinding red ochre on a flat stone with a round hand stone, with small heaps of yellow, orange, red, and black pigment, lumps of ochre, charcoal sticks, and a shell of paint in front of her.",
+          "prompt_id": "ANC-81",
+          "source_name": "Ancestors-P5-Painter-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "The walls she must paint lie far inside the mountain. To reach them, she crawls on her elbows through a passage so low that the rock touches her back, pushing her small lamp ahead of her. If the flame goes out, there is no light at all.",
+          "description_2": "In Niaux Cave in France, the great panel of bison and horses known as the Salon Noir lies about 800 metres from the entrance, reached through long, dark passages. The painters chose the deepest places on purpose.",
+          "alt": "Oil painting of the woman in a hooded fur parka crawling through a narrow, low cave passage, her tense face lit from below by a small stone lamp on the rock floor in front of her, surrounded by darkness.",
+          "prompt_id": "ANC-82",
+          "source_name": "Ancestors-P5-Painter-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "By lamplight she sees it: a bulge in the wall with the exact shape of a bison's back. She adds a head, horns, and legs with a few lines of charcoal, and the animal steps out of the rock. She laughs out loud.",
+          "description_2": "In Altamira Cave in Spain, about 15,000 years ago, painters used natural bulges in the ceiling as the bodies of bison. The rock gave the shape, and the painter gave it life.",
+          "alt": "Oil painting of the woman laughing as she draws the head and legs of a bison onto a natural bulge in the cave wall that forms its body, holding a lit stone lamp low so its light rakes across the rock.",
+          "prompt_id": "ANC-86",
+          "source_name": "Ancestors-P5-Painter-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-04-joy.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "High on a ladder, she paints a great red wild ox across the ceiling. Below, her closest friend holds the ladder steady and the lamp high, and they laugh at something only the two of them understand.",
+          "description_2": "At Lascaux Cave in France, about 17,000 years ago, holes cut into the walls of one gallery show that people built scaffolding to reach and paint the high ceilings. Work like that needed more than one pair of hands.",
+          "alt": "Oil painting of the woman standing on a rough wooden ladder, painting a red aurochs among black horses on a cave ceiling, while her friend with bone pins in her hair holds the ladder and raises a stone lamp, both smiling.",
+          "prompt_id": "ANC-87",
+          "source_name": "Ancestors-P5-Painter-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-05-bond.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "Years after her daughter's first handprint, she kneels behind the child and guides her small hand along the wall. Together they draw one curving line: the back of a horse, the child's first.",
+          "description_2": "In Gargas Cave in France, some hand stencils are so small that they belong to young children. Ice Age art was not only made by experts. Children were there, learning, and leaving their own marks.",
+          "alt": "Oil painting of the woman kneeling behind her young daughter in a cave, guiding the child's hand to draw the first charcoal line of a horse beside two small red handprints, with a finished horse above them and a stone lamp on the floor.",
+          "prompt_id": "ANC-88",
+          "source_name": "Ancestors-P5-Painter-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/painter/images/display/ancestors-p5-painter-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/painter/images/full/ancestors-p5-painter-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
