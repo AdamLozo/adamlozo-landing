@@ -90,6 +90,97 @@
           "height": 679
         }
       ]
+    },
+    {
+      "slug": "the-grandmother",
+      "name": "The Grandmother",
+      "group": "Ice Age Europe",
+      "summary": "The elder who carries the band through winter.",
+      "intro": "She is the oldest woman of the Ice Age band. She has lived through more winters than anyone else, and she remembers every one. Her hands have sewn the coats that keep the band warm, and her memory holds the paths that lead them to safety.",
+      "seen_in": [
+        "04",
+        "08"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "Late at night, when the others sleep, she sits by the stone lamp and threads a needle. Her eyes are not as sharp as they were, so she holds the needle close to the flame. She has done this every winter night for fifty years.",
+          "description_2": "Bone needles with an eye, like the one she uses, appear at Ice Age sites across Europe and Asia. Some of the oldest are more than 40,000 years old. With them, people could sew fitted clothes from fur and hide.",
+          "alt": "Oil painting of an elderly Ice Age woman with long white hair, in a fur parka and a necklace of ivory beads with a fox tooth, threading a bone needle by the light of a stone lamp in a dark cave, a charcoal horse faint on the wall.",
+          "prompt_id": "ANC-47",
+          "source_name": "Ancestors-P2-Grandmother-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "By day, at the mouth of the cave, she fits a new parka on a little boy and checks each seam at his shoulder. A young woman kneels beside her and watches every stitch. One day she will sew the coats, and she must learn now.",
+          "description_2": "Body lice live only in clothing. Genetic studies show that they split from head lice at least 83,000 years ago. This suggests that people have worn clothing at least that long, and fitted clothing let them survive the cold.",
+          "alt": "Oil painting of the elderly woman kneeling at a snowy cave mouth, sewing a fur parka on a small boy with a bone needle, while a young woman with braids holds sinew thread and watches, with bone needles and a flint flake on a stone.",
+          "prompt_id": "ANC-50",
+          "source_name": "Ancestors-P2-Grandmother-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "It is the hardest winter she can remember. Snow blocks the door, and the fire is almost out. She has one strip of dried meat left. She gives it to her granddaughter and nods, as if she has already eaten.",
+          "description_2": "At Ice Age camps on the plains of Ukraine and Russia, people dug storage pits into the frozen ground to keep meat for the winter. In a long winter, the stores could run out before spring.",
+          "alt": "Oil painting of the elderly woman inside a mammoth-bone shelter at night, holding out a strip of dried meat to a young girl wrapped in fur, an empty stone on her lap, low embers, sleeping family behind, and snow at a doorway framed by tusks.",
+          "prompt_id": "ANC-52",
+          "source_name": "Ancestors-P2-Grandmother-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "The first warm day of spring. She sits in the sun outside the bone house with her eyes closed and her hands open to the warmth. Around her, the children she kept alive all winter run through the first flowers.",
+          "description_2": "The teeth of reindeer from Ice Age camps in France show the season in which each animal died. From them, archaeologists can see that people moved with the seasons and the herds.",
+          "alt": "Oil painting of the elderly woman sitting on a fur outside a hide-covered shelter in spring, face turned up to the sun with eyes closed and hands open, while four children in hide tunics run through yellow flowers, with a stream and reindeer behind.",
+          "prompt_id": "ANC-53",
+          "source_name": "Ancestors-P2-Grandmother-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-04-joy.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "By the fire, her grown daughter braids her long white hair, the way she once braided her daughter's. Something one of them says sets them both laughing, while the baby sleeps beside them.",
+          "description_2": "Small Ice Age carvings show that hair mattered. The ivory head from Brassempouy in France, about 25,000 years old, shows a woman's hair arranged in a careful grid pattern.",
+          "alt": "Oil painting of the elderly woman laughing with a hand over her mouth while her adult daughter braids her long white hair by a fire, a baby asleep in fur beside them, horse paintings on the cave wall and a stone lamp on a ledge.",
+          "prompt_id": "ANC-55",
+          "source_name": "Ancestors-P2-Grandmother-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-05-bond.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "She leads the young people over the high pass, the way her own grandmother once led her. At the stone marker she stops and points to the sheltered valley below. One day, one of them will stand here and point for someone else.",
+          "description_2": "Shells from the Mediterranean and the Atlantic coasts appear at Ice Age sites in central Europe, hundreds of kilometres from the sea. People travelled, traded, and passed on the knowledge of routes across great distances.",
+          "alt": "Oil painting of the elderly woman in a fur hood standing beside a stack of stones at a snowy mountain pass, pointing down to a river valley with reindeer, while five young people carrying hide bundles climb toward her.",
+          "prompt_id": "ANC-56",
+          "source_name": "Ancestors-P2-Grandmother-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/grandmother/images/display/ancestors-p2-grandmother-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/grandmother/images/full/ancestors-p2-grandmother-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
