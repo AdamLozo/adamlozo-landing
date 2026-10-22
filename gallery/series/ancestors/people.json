@@ -632,6 +632,97 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-child",
+      "name": "The Child",
+      "group": "Africa",
+      "summary": "The girl who will carry the stories.",
+      "intro": "She is the youngest person with a page. She wonders about everything, helps where she can, and listens to every story the old Storyteller tells. Her first bead came from the Bead-Maker. One day, the stories will be hers to tell.",
+      "seen_in": [
+        "01",
+        "05"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At dawn, while the others sleep, she sits at the mouth of the shelter with her first bead in her hand and watches the sea. She wants to know where it ends.",
+          "description_2": "Humans have the longest childhood of any primate. Studies of fossil teeth suggest that early modern humans already grew up slowly, with many years to learn before they became adults.",
+          "alt": "Oil painting of a little African girl with two small tufts of hair, in a hide tunic and cloak, sitting with her knees drawn up at the mouth of a rock shelter at dawn, holding the shell bead at her neck and gazing at the sea.",
+          "prompt_id": "ANC-111",
+          "source_name": "Ancestors-P8-Child-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "Every morning she carries an ostrich eggshell full of water up from the spring for the old Storyteller. She takes tiny steps and does not spill a drop. He waits at the top with his hands out.",
+          "description_2": "Among the Hadza of Tanzania, children as young as four or five help to gather food and fetch water. Children in foraging bands learn by working beside the adults.",
+          "alt": "Oil painting of the little girl carefully carrying a large ostrich eggshell of water up a rocky path, her tongue between her lips, while the white-bearded Storyteller smiles and holds out his hands from the mouth of the shelter.",
+          "prompt_id": "ANC-112",
+          "source_name": "Ancestors-P8-Child-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "The fog comes in while she gathers shells, and the cliff, the sea, and the shelter disappear. Then she sees smoke from the band's fire above the mist. She points, and she starts to walk home.",
+          "description_2": "At Langebaan Lagoon on the west coast of South Africa, footprints about 117,000 years old record a person walking down a wet dune toward the sea, on a shore much like this one.",
+          "alt": "Oil painting of the little girl standing alone on a beach in thick fog, holding a bag of shells and pointing toward a thin line of smoke and a small glow of fire on a distant cliff, her footprints behind her.",
+          "prompt_id": "ANC-113",
+          "source_name": "Ancestors-P8-Child-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "On a sunny afternoon, she and her friends race the waves, press their hands into the wet sand, and shriek every time the sea catches them.",
+          "description_2": "At White Sands in New Mexico, fossil footprints about 21,000 years old include many children's tracks, some running and splashing through puddles beside the adults.",
+          "alt": "Oil painting of the little girl running and laughing from a wave on a sunny beach, while two children press their hands into the wet sand and two older children splash in the surf, with a cliff cave behind them.",
+          "prompt_id": "ANC-114",
+          "source_name": "Ancestors-P8-Child-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-04-joy.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "By the fire, the Bead-Maker kneels and ties a cord around her neck, with one small shell on it. Her very first bead. She stands very still and does not breathe.",
+          "description_2": "At Border Cave in South Africa, a young child buried about 74,000 years ago was laid to rest with a pierced shell that had been coloured with ochre. Children wore beads too.",
+          "alt": "Oil painting of a woman with a high curly bun and strings of shell beads kneeling by a fire to tie a single shell bead on a cord around the neck of the little girl, who looks down at it in wonder.",
+          "prompt_id": "ANC-115",
+          "source_name": "Ancestors-P8-Child-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-05-bond.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "Years later, she kneels by the fire and lifts her hands the way the old Storyteller did, and the children lean in. His staff still leans against the wall. Her first bead still hangs at her neck.",
+          "description_2": "Some oral traditions last for thousands of years. Aboriginal Australian stories describe coastlines that the sea covered more than 7,000 years ago, passed down from one storyteller to the next.",
+          "alt": "Oil painting of the grown woman telling a story by a fire in a rock shelter with her hands raised, while children listen in a half circle, an old walking staff leans against the wall beside hand stencils, and stars shine over the sea.",
+          "prompt_id": "ANC-116",
+          "source_name": "Ancestors-P8-Child-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/child/images/display/ancestors-p8-child-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/child/images/full/ancestors-p8-child-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }

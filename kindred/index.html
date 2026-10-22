@@ -966,7 +966,7 @@ h1 {
   }
 
   var seriesReq = getJson('/gallery/series/ancestors/series.json?v=bfe58a49');
-  var peopleReq = getJson('/gallery/series/ancestors/people.json?v=bdd11a83').then(function (pd) {
+  var peopleReq = getJson('/gallery/series/ancestors/people.json?v=1f9cfc6d').then(function (pd) {
     if (!pd || !Array.isArray(pd.people)) throw new Error('empty');
     return pd.people;
   });
