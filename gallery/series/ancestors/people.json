@@ -541,6 +541,97 @@
           "height": 893
         }
       ]
+    },
+    {
+      "slug": "the-friend",
+      "name": "The Friend",
+      "group": "Africa",
+      "summary": "The young man who pulls everyone through.",
+      "intro": "He is the one everyone calls when something needs doing, and the one who laughs loudest when it goes wrong. He gathers food from the sea, makes the band's stone blades, and carries the old Storyteller when the old man cannot walk. His best friend has been beside him since they were boys.",
+      "seen_in": [
+        "05",
+        "07"
+      ],
+      "facets": [
+        {
+          "number": "01",
+          "facet": "Portrait",
+          "description_1": "At low tide in the morning, he works the rocks with a laugh that carries across the water. A wave breaks white behind him, and he does not even turn around.",
+          "description_2": "At Klasies River on the south coast of South Africa, people lived in sea caves more than 100,000 years ago and ate mussels, limpets, seals, and penguins.",
+          "alt": "Oil painting of a young African man with short coiled hair and a shell necklace with an abalone pendant, laughing on wet rocks at low tide as a wave bursts into white spray behind him, with a cave in a sandstone cliff beyond.",
+          "prompt_id": "ANC-98",
+          "source_name": "Ancestors-P7-Friend-01-Portrait.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-01-portrait.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-01-portrait.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "02",
+          "facet": "Responsibility",
+          "description_1": "He buries lumps of silcrete under the coals and lets them heat slowly. Then he strikes off thin, glossy blades, sharper than any he could make from raw stone. Two boys watch every blow.",
+          "description_2": "At Pinnacle Point in South Africa, about 72,000 years ago, people heated silcrete in fire to make it easier to flake into fine blades. It is one of the oldest known uses of heat to change a material.",
+          "alt": "Oil painting of the young man sitting cross-legged in a rock shelter, striking a reddish stone core with a river cobble while two boys watch, with stones heating under a fire and glossy red blades on a hide.",
+          "prompt_id": "ANC-100",
+          "source_name": "Ancestors-P7-Friend-02-Responsibility.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-02-responsibility.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-02-responsibility.jpg",
+          "width": 1600,
+          "height": 1195
+        },
+        {
+          "number": "03",
+          "facet": "Challenge",
+          "description_1": "The tide turns, a storm comes in, and the waves reach the gatherers on the rocks. He picks up a frightened boy, holds him against his chest with his back to the sea, and does not let go until they are safe.",
+          "description_2": "The shell middens of southern Africa contain species that live low on the rocks, uncovered only at the lowest tides. Gathering them meant working close to the breaking waves.",
+          "alt": "Oil painting of the young man carrying a boy against his chest on wet rocks as a huge wave breaks behind him in a storm, a beam of light on them, while others climb toward a cliff cave and one reaches back.",
+          "prompt_id": "ANC-101",
+          "source_name": "Ancestors-P7-Friend-03-Challenge.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-03-challenge.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-03-challenge.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "04",
+          "facet": "Joy",
+          "description_1": "The work is done and the sun is high. He runs to the edge of the highest rock and leaps, shouting, while his friends cheer and line up to follow.",
+          "description_2": "Bony growths in the ear canal, known today as surfer's ear, form after years in cold water. They appear in many ancient human skulls, a sign that people spent much of their lives in the water.",
+          "alt": "Oil painting of the young man leaping from a high sandstone rock into a deep turquoise pool, arms spread and shouting with joy, while two friends run to the edge behind him and two boys swim below.",
+          "prompt_id": "ANC-103",
+          "source_name": "Ancestors-P7-Friend-04-Joy.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-04-joy.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-04-joy.jpg",
+          "width": 1195,
+          "height": 1600
+        },
+        {
+          "number": "05",
+          "facet": "Bond",
+          "description_1": "Before dawn, he lifts the old Storyteller onto his back and climbs the cliff path, step by step, so that the man who told him every story can watch the sun come up over the sea once more.",
+          "description_2": "Shanidar 1, a Neanderthal man from Iraq who lived about 50,000 years ago, survived a crushed arm, a blind eye, and probable deafness for many years. He could not have lived so long without others to help him.",
+          "alt": "Oil painting of the young man carrying the white-bearded old Storyteller on his back to the top of a cliff path at sunrise, the old man holding a staff and looking out over the silver sea.",
+          "prompt_id": "ANC-104",
+          "source_name": "Ancestors-P7-Friend-05-Bond.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-05-bond.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-05-bond.jpg",
+          "width": 1600,
+          "height": 893
+        },
+        {
+          "number": "06",
+          "facet": "Legacy",
+          "description_1": "Forty years later, his hair is grey, and he pulls a soaked boy out of a tide pool, just as he once pulled out his friend. That friend, bald now, sits on the rock and laughs as hard as ever.",
+          "description_2": "A study of the Hadza of Tanzania found that people form lasting friendships beyond their own families, especially with those who share and cooperate. Some researchers think such friendships helped our species survive.",
+          "alt": "Oil painting of the Friend as a grey-haired older man laughing as he pulls a soaked boy out of a tide pool on rocks at sunset, while his bald old friend sits nearby laughing, with a cliff cave and breaking waves behind them.",
+          "prompt_id": "ANC-108",
+          "source_name": "Ancestors-P7-Friend-06-Legacy.jpg",
+          "display": "/gallery/series/ancestors/people/friend/images/display/ancestors-p7-friend-06-legacy.webp",
+          "full": "/gallery/series/ancestors/people/friend/images/full/ancestors-p7-friend-06-legacy.jpg",
+          "width": 1600,
+          "height": 893
+        }
+      ]
     }
   ]
 }
