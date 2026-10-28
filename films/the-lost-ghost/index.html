@@ -190,6 +190,14 @@ h1 {
   line-height: 1.75;
   color: var(--dim);
 }
+.about a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.about a:hover, .about a:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
 
 /* ---------- footer ---------- */
 .footer {
