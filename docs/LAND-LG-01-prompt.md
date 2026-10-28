@@ -6,19 +6,19 @@
 
 1. **New film page:** `films/the-lost-ghost/index.html`. Copy the structure, styles and markup of `films/lady-eleanores-mantle/index.html` exactly. Change only the content of decision 2.
 2. **Content of the new page:**
-   - YouTube ID: `29aI89Jdyz8`. Embed: `https://www.youtube-nocookie.com/embed/29aI89Jdyz8`. Watch link: `https://youtu.be/29aI89Jdyz8`.
+   - YouTube ID: `CEqOjUfjpfo`. Embed: `https://www.youtube-nocookie.com/embed/CEqOjUfjpfo`. Watch link: `https://youtu.be/CEqOjUfjpfo`.
    - Page title: `The Lost Ghost — Adam Lozo`.
    - H1: `The Lost Ghost`.
    - Sub line, meta description, `og:description` and `twitter:description`: `A 20-minute AI film after Mary E. Wilkins Freeman's ghost story "The Lost Ghost" (1903).` Escape the quotes in the meta tags as `&quot;`, as the Mantle page does.
    - `og:url`: `https://adamlozo.com/films/the-lost-ghost/`.
-   - `og:image` and `twitter:image`: `https://i.ytimg.com/vi/29aI89Jdyz8/maxresdefault.jpg` (1280×720).
+   - `og:image` and `twitter:image`: `https://i.ytimg.com/vi/CEqOjUfjpfo/maxresdefault.jpg` (1280×720).
    - Player frame: `aspect-ratio: 1920 / 1152;` (the film is 1920×1152).
    - About paragraph (use this text exactly):
      `One winter, a young schoolteacher boards with two sisters in a quiet New England house. At night, a small child comes to the doors, looking for her mother. Years later, by the parlour window, the teacher tells the story for the first time. Every image and voice was made with AI tools on one home PC, and directed, cut and finished by hand.`
    - Add a second paragraph with the same `about` style, directly after the first:
      `Dedicated to Christine (@WICKED_Queen12), the most Halloween person I've ever known. The Lost Ghost is yours.`
      Link `@WICKED_Queen12` to `https://x.com/WICKED_Queen12`, with `rel="noopener"`.
-3. **Main page list (`index.html`):** find the list item for Lady Eleanore's Mantle. Add a new item for The Lost Ghost in the same markup and style, **above** the Mantle item, because it is the newest film. Link it to `/films/the-lost-ghost/`. Use the same type of label, short text and any badge or tag that the Mantle item has. Its short text: `A 20-minute AI ghost film after Mary E. Wilkins Freeman (1903).` If the Mantle item shows an image, use `https://i.ytimg.com/vi/29aI89Jdyz8/maxresdefault.jpg` in the same way.
+3. **Main page list (`index.html`):** find the list item for Lady Eleanore's Mantle. Add a new item for The Lost Ghost in the same markup and style, **above** the Mantle item, because it is the newest film. Link it to `/films/the-lost-ghost/`. Use the same type of label, short text and any badge or tag that the Mantle item has. Its short text: `A 20-minute AI ghost film after Mary E. Wilkins Freeman (1903).` If the Mantle item shows an image, use `https://i.ytimg.com/vi/CEqOjUfjpfo/maxresdefault.jpg` in the same way.
 4. **Do not change** any other page, style or file. Do not change the Mantle page or the Mantle list item.
 
 ## Step 0 — checks
@@ -36,14 +36,14 @@
 ## Step 2 — check
 
 1. Serve the site locally (for example `python -m http.server`). Open `/` and `/films/the-lost-ghost/`.
-2. Check: the new list item shows above Mantle and its link opens the new page; the player loads the video ID `29aI89Jdyz8`; the back links work; the X link opens the right profile; there are no console errors.
+2. Check: the new list item shows above Mantle and its link opens the new page; the player loads the video ID `CEqOjUfjpfo`; the back links work; the X link opens the right profile; there are no console errors.
 3. Check the page at a phone width (390 px): no horizontal scroll, and the player fits.
 4. Validate that both HTML files have no unclosed tags (for example with `python -m html.parser` or a small script).
 
 ## Step 3 — push and live check
 
 1. Commit with `git commit -F <msgfile>`: "Add The Lost Ghost film page and list item". Push, and check that `git ls-remote origin main` = HEAD.
-2. Render publishes the site from the push. Wait up to 5 minutes. Then check that `https://adamlozo.com/films/the-lost-ghost/` returns 200 and contains `29aI89Jdyz8`, and that `https://adamlozo.com/` contains `/films/the-lost-ghost/`. If the site is not updated after 5 minutes, report it. Do not trigger a deploy by other means.
+2. Render publishes the site from the push. Wait up to 5 minutes. Then check that `https://adamlozo.com/films/the-lost-ghost/` returns 200 and contains `CEqOjUfjpfo`, and that `https://adamlozo.com/` contains `/films/the-lost-ghost/`. If the site is not updated after 5 minutes, report it. Do not trigger a deploy by other means.
 
 ## Stop rules
 
